@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIE | Altas y Bajas</title>
+  <link rel="stylesheet" href="css/estilos.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <style>
+    body{background:#f5f6f8;}
+    .kpi-card{border:0;position:relative;overflow:hidden;}
+    .kpi-card .kpi-value{font-size:1.4rem;font-weight:600;}
+    th.sortable{cursor:pointer;user-select:none;white-space:nowrap;}
+    th.sortable .sort-ind{font-size:.65rem;margin-left:.25rem;opacity:.7;}
+    .table-responsive{max-height:55vh;}
+    .toast-container{position:fixed;top:1rem;right:1rem;display:flex;flex-direction:column;gap:.5rem;z-index:3000;}
+    .form-section-title{font-size:.75rem;text-transform:uppercase;font-weight:600;color:#666;margin:0 0 .25rem;letter-spacing:.5px;}
+  </style>
+</head>
+<body class="has-sidebar">
+  <a href="#contenidoPrincipal" class="visually-hidden-focusable position-absolute top-0 start-0 m-2 btn btn-danger btn-sm">Saltar al contenido</a>
+  <!-- Navegación unificada (expandida) -->
+  <nav class="navbar navbar-dark cie-bg-dark d-lg-none fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="img/cie_sin_fondo.png" alt="CIE" height="36" class="rounded" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMovil" aria-controls="sidebarMovil" aria-label="Abrir menú">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
+  <div class="offcanvas offcanvas-start cie-bg-dark text-white" tabindex="-1" id="sidebarMovil" aria-labelledby="sidebarMovilLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title d-flex align-items-center gap-2" id="sidebarMovilLabel"><img src="img/cie_sin_fondo.png" alt="Logo" style="height:40px;width:auto;" class="rounded"> <span class="d-none">CIE Panel</span></h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column">
+      <ul class="nav flex-column flex-grow-1 small">
+        <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="usuarios.html"><i class="bi bi-person me-1"></i> Usuarios</a></li>
+        <li class="nav-item"><a class="nav-link" href="equipos.html"><i class="bi bi-laptop me-1"></i> Equipos</a></li>
+        <li class="nav-item"><a class="nav-link" href="inventario.html"><i class="bi bi-archive me-1"></i> Inventario</a></li>
+        <li class="nav-item"><a class="nav-link" href="altas_bajas.html"><i class="bi bi-arrow-left-right me-1"></i> Altas/Bajas</a></li>
+        <li class="nav-item"><a class="nav-link" href="garantias.html"><i class="bi bi-shield-check me-1"></i> Garantías</a></li>
+        <li class="nav-item"><a class="nav-link" href="cedula_res.html"><i class="bi bi-file-earmark-text me-1"></i> Cédula Resguardo</a></li>
+        <li class="nav-item"><a class="nav-link" href="historial.html"><i class="bi bi-clock-history me-1"></i> Historial</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-gear me-1"></i> Configuración</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-question-circle me-1"></i> Ayuda</a></li>
+      </ul>
+      <div class="mt-3 text-white-50 small text-center"><i class="bi bi-info-circle"></i> soporte@cie.com.mx</div>
+      <a class="btn btn-danger w-100 mt-3 d-flex align-items-center justify-content-center gap-2" href="#"><i class="bi bi-box-arrow-right"></i> <span class="fw-bold">Salir</span></a>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <nav class="col-lg-2 sidebar cie-bg-dark pt-4 d-lg-block d-none position-fixed top-0 start-0 h-100" style="z-index:1040; min-width:220px;">
+        <div class="d-flex flex-column h-100">
+          <div class="mb-4 px-3 text-center">
+            <a href="index.html" class="d-block">
+              <img src="img/cie_sin_fondo.png" alt="Logo CIE" class="sidebar-logo-img">
+            </a>
+          </div>
+          <ul class="nav flex-column flex-grow-1 small">
+            <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="usuarios.html"><i class="bi bi-person me-1"></i> Usuarios</a></li>
+            <li class="nav-item"><a class="nav-link" href="equipos.html"><i class="bi bi-laptop me-1"></i> Equipos</a></li>
+            <li class="nav-item"><a class="nav-link" href="inventario.html"><i class="bi bi-archive me-1"></i> Inventario</a></li>
+            <li class="nav-item"><a class="nav-link active" href="altas_bajas.html"><i class="bi bi-arrow-left-right me-1"></i> Altas/Bajas</a></li>
+            <li class="nav-item"><a class="nav-link" href="garantias.html"><i class="bi bi-shield-check me-1"></i> Garantías</a></li>
+            <li class="nav-item"><a class="nav-link" href="cedula_res.html"><i class="bi bi-file-earmark-text me-1"></i> Cédula Resguardo</a></li>
+            <li class="nav-item"><a class="nav-link" href="historial.html"><i class="bi bi-clock-history me-1"></i> Historial</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-gear me-1"></i> Configuración</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-question-circle me-1"></i> Ayuda</a></li>
+          </ul>
+          <div class="mt-auto px-3 pb-3">
+            <hr class="bg-light">
+            <a class="btn btn-danger w-100 d-flex align-items-center justify-content-center gap-2" href="#"><i class="bi bi-box-arrow-right"></i> <span class="fw-bold">Salir</span></a>
+            <div class="mt-3 text-white-50 small text-center"><i class="bi bi-info-circle"></i> soporte@cie.com.mx</div>
+          </div>
+        </div>
+      </nav>
+  <div class="container-fluid">
+    <div class="row">
+      <main id="contenidoPrincipal" class="col-lg-10 ms-auto px-4 pt-4" tabindex="-1">
+        <!-- Encabezado -->
+        <section class="cie-section-bar rounded-4 px-3 px-md-4 py-3 d-flex flex-column flex-md-row align-items-center gap-3 mb-4" style="min-height:80px;">
+          <div class="flex-shrink-0 d-flex align-items-center justify-content-center" style="width:44px;height:44px;">
+            <i class="bi bi-arrow-left-right" style="font-size:2rem;color:var(--cie-primary);"></i>
+          </div>
+          <div class="flex-grow-1 text-center text-md-start">
+            <h1 class="fw-semibold mb-1" style="font-size:1.35rem;color:var(--cie-primary);letter-spacing:.01em;">Gestión de Altas y Bajas</h1>
+            <div class="text-secondary small fw-semibold">Registra movimientos y genera reportes filtrados por fecha.</div>
+          </div>
+        </section>
+        <!-- KPIs (movidos arriba) -->
+        <div class="row g-3 mb-4 kpi-grid" id="resumenSemana">
+          <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm kpi-card kpi-altas h-100">
+              <div class="kpi-card-body">
+                <div class="kpi-icon-wrap kpi-altas-icon"><i class="bi bi-arrow-up-circle"></i></div>
+                <div class="kpi-text">
+                  <div class="kpi-label">Altas</div>
+                  <div class="kpi-value text-success" id="totalAltas">0</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm kpi-card kpi-bajas h-100">
+              <div class="kpi-card-body">
+                <div class="kpi-icon-wrap kpi-bajas-icon"><i class="bi bi-arrow-down-circle"></i></div>
+                <div class="kpi-text">
+                  <div class="kpi-label">Bajas</div>
+                  <div class="kpi-value text-danger" id="totalBajas">0</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm kpi-card kpi-cambios h-100">
+              <div class="kpi-card-body">
+                <div class="kpi-icon-wrap kpi-cambios-icon"><i class="bi bi-arrow-repeat"></i></div>
+                <div class="kpi-text">
+                  <div class="kpi-label">Cambios</div>
+                  <div class="kpi-value text-primary" id="totalCambios">0</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm kpi-card kpi-rango h-100">
+              <div class="kpi-card-body">
+                <div class="kpi-icon-wrap kpi-rango-icon"><i class="bi bi-calendar-range"></i></div>
+                <div class="kpi-text">
+                  <div class="kpi-label">Rango</div>
+                  <div class="kpi-range" id="rangoTexto">-</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Acciones principales -->
+        <div class="d-flex flex-wrap align-items-center gap-2 mb-3" id="toolbarAcciones">
+          <div class="btn-group btn-group-sm" role="group" aria-label="Rangos rápidos">
+            <button type="button" class="btn btn-outline-secondary" id="btnSemana">Semana</button>
+            <button type="button" class="btn btn-outline-secondary" id="btnMes">Mes</button>
+            <button type="button" class="btn btn-outline-secondary" id="btnHoy">Hoy</button>
+            <button type="button" class="btn btn-outline-primary" id="btnMostrarTodo"><i class="bi bi-eye"></i><span class="d-none d-sm-inline"> Todo</span></button>
+          </div>
+          <div class="ms-auto d-flex flex-wrap gap-2">
+            <button class="btn btn-outline-success btn-sm" id="btnExportar" type="button" title="Exportar CSV"><i class="bi bi-file-earmark-spreadsheet"></i><span class="d-none d-md-inline"> CSV</span></button>
+            <button class="btn btn-outline-danger btn-sm" id="btnPdf" type="button" title="Exportar PDF"><i class="bi bi-filetype-pdf"></i><span class="d-none d-md-inline"> PDF</span></button>
+            <button class="btn btn-outline-primary btn-sm" id="btnImportMov" type="button" title="Importar Excel"><i class="bi bi-upload"></i><span class="d-none d-md-inline"> Importar</span></button>
+            <button class="btn btn-outline-secondary btn-sm" id="btnAudit" type="button" title="Auditoría"><i class="bi bi-shield-lock"></i><span class="d-none d-lg-inline"> Auditoría</span></button>
+            <button class="btn btn-danger btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#modalMovimiento"><i class="bi bi-plus-circle"></i><span class="d-none d-sm-inline"> Registrar</span></button>
+            <button class="btn btn-outline-cyan btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#modalCambio" title="Registrar Cambio (Baja + Alta)"><i class="bi bi-arrow-repeat"></i><span class="d-none d-sm-inline"> Cambio</span></button>
+          </div>
+        </div>
+
+  <!-- Filtros -->
+
+  <div class="card shadow-sm mb-3">
+              <div class="card-body">
+                <form id="formFiltroMovimientos" class="row g-3 align-items-end" autocomplete="off">
+                  <div class="col-6 col-md-2">
+                    <label class="form-label" for="fechaInicio">Desde</label>
+                    <input type="date" id="fechaInicio" class="form-control" required>
+                  </div>
+                  <div class="col-6 col-md-2">
+                    <label class="form-label" for="fechaFin">Hasta</label>
+                    <input type="date" id="fechaFin" class="form-control" required>
+                  </div>
+                    <div class="col-6 col-md-2">
+                    <label class="form-label" for="tipoFiltro">Tipo</label>
+                    <select id="tipoFiltro" class="form-select">
+                      <option value="">Todos</option>
+                      <option value="ALTA">Altas</option>
+                      <option value="BAJA">Bajas</option>
+                      <option value="CAMBIO">Cambios</option>
+                    </select>
+                  </div>
+                  <div class="col-6 col-md-2">
+                    <label class="form-label" for="usuarioFiltro">Usuario</label>
+                    <input type="text" id="usuarioFiltro" class="form-control" placeholder="Filtrar...">
+                  </div>
+                  <div class="col-12 col-md-4">
+                    <label class="form-label" for="busquedaMov">Búsqueda libre</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-search"></i></span>
+                      <input type="text" id="busquedaMov" class="form-control" placeholder="Texto...">
+                      <button class="btn btn-outline-secondary" id="btnLimpiarBusqueda" type="button"><i class="bi bi-x"></i></button>
+                    </div>
+                  </div>
+                  <div class="col-12 d-flex gap-2 flex-wrap">
+                    <button class="btn btn-danger" type="submit"><i class="bi bi-funnel"></i> Aplicar</button>
+                    <button type="button" class="btn btn-outline-secondary" id="btnResumenUsuarios"><i class="bi bi-people"></i> Resumen Usuarios</button>
+                    <span class="small text-muted ms-auto">Filtro CAMBIO listará solo los movimientos generados por un cambio (ALTA/BAJA relacionadas).</span>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+  <!-- Tabla -->
+  <div class="card shadow-sm mb-4">
+              <div class="card-header d-flex flex-wrap align-items-center gap-2 py-2">
+                <strong class="text-danger d-flex align-items-center gap-1"><i class="bi bi-list-ul"></i> Movimientos</strong>
+                <div class="ms-auto small text-secondary" id="lblRegistros"></div>
+                <div class="d-flex align-items-center gap-1">Mostrar
+                  <select id="pageSize" class="form-select form-select-sm" style="width:auto;">
+                    <option value="5">5</option>
+                    <option value="10" selected>10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                  </select>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table id="tablaMovimientos" class="table table-hover align-middle table-striped mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <th class="sortable" data-field="numInv">Inventario <span class="sort-ind"></span></th>
+                      <th class="sortable text-center" data-field="tipo">Tipo <span class="sort-ind"></span></th>
+                      <th class="sortable" data-field="fecha">Fecha <span class="sort-ind"></span></th>
+                      <th class="sortable" data-field="usuario">Usuario <span class="sort-ind"></span></th>
+                      <th class="sortable" data-field="equipo">Descripción <span class="sort-ind"></span></th>
+                      <th class="sortable" data-field="marca">Marca <span class="sort-ind"></span></th>
+                      <th class="sortable" data-field="modelo">Modelo <span class="sort-ind"></span></th>
+                      <th class="sortable" data-field="complemento">Complemento <span class="sort-ind"></span></th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+              <div class="p-2 border-top bg-light">
+                <ul class="pagination pagination-sm mb-0" id="paginador"></ul>
+              </div>
+              <div class="text-center py-4 d-none" id="tablaMovVacia"><i class="bi bi-inbox fs-4 d-block text-secondary"></i><span class="text-muted small">Sin movimientos</span></div>
+            </div>
+  </div>
+
+  <!-- Modal Movimiento -->
+          <div class="modal fade" id="modalMovimiento" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down">
+              <div class="modal-content modal-fast cie-modal">
+                <div class="modal-header py-2 compact bg-danger text-white">
+                  <h6 class="modal-title mb-0 d-flex align-items-center gap-2"><i class="bi bi-plus-circle"></i><span id="tituloModalMov">Registrar Movimiento</span></h6>
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <form id="formMovimiento" novalidate>
+                  <div class="modal-body compact">
+                    <div class="row g-fast">
+                      <div class="col-6 col-md-4 col-lg-3">
+                        <label class="form-label" for="numInvMov">Inventario</label>
+                        <input type="text" id="numInvMov" class="form-control" required pattern="[0-9A-Za-z_-]{3,40}" placeholder="INV001" data-focus-first>
+                      </div>
+                      <div class="col-6 col-md-2 col-lg-2">
+                        <label class="form-label" for="tipoMov">Tipo</label>
+                        <select id="tipoMov" class="form-select" required>
+                          <option value="ALTA">ALTA</option>
+                          <option value="BAJA">BAJA</option>
+                        </select>
+                      </div>
+                      <div class="col-6 col-md-2 col-lg-2">
+                        <label class="form-label" for="fechaMov">Fecha</label>
+                        <input type="date" id="fechaMov" class="form-control" required>
+                      </div>
+                      <div class="col-6 col-md-4 col-lg-2">
+                        <label class="form-label" for="marcaMov">Marca</label>
+                        <input type="text" id="marcaMov" class="form-control to-upper" required list="dlMarcasMov" autocomplete="off">
+                      </div>
+                      <div class="col-6 col-md-4 col-lg-3">
+                        <label class="form-label" for="modeloMov">Modelo</label>
+                        <input type="text" id="modeloMov" class="form-control to-upper" required maxlength="60" list="dlModelosMov" autocomplete="off">
+                      </div>
+                      <div class="col-12 col-md-6 col-lg-4">
+                        <label class="form-label" for="apellidosMov">Apellidos</label>
+                        <input type="text" id="apellidosMov" class="form-control to-upper" required list="dlApellidosMov" autocomplete="off" pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ \-]{2,60}">
+                      </div>
+                      <div class="col-12 col-md-6 col-lg-4">
+                        <label class="form-label d-flex justify-content-between align-items-center" for="nombresMov"><span>Nombres</span><button type="button" class="btn btn-sm btn-outline-secondary py-0" id="btnCopyNombre" title="Copiar apellidos al campo nombres (si aplica)"><i class="bi bi-arrow-down"></i></button></label>
+                        <input type="text" id="nombresMov" class="form-control to-upper" required list="dlNombresMov" autocomplete="off" pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ \-]{2,60}">
+                      </div>
+                      <div class="col-6 col-lg-4 col-md-4">
+                        <label class="form-label" for="equipoMov">Descripción</label>
+                        <input type="text" id="equipoMov" class="form-control to-upper" required placeholder="Ej: LAPTOP" list="dlEquiposMov" autocomplete="off">
+                      </div>
+                      <div class="col-12 col-lg-8">
+                        <label class="form-label" for="complementoMov">Complemento / Comentarios</label>
+                        <textarea id="complementoMov" class="form-control" rows="2" maxlength="500" placeholder="Notas, kit, condiciones..."></textarea>
+                        <div class="form-text text-end"><span id="complementoCount">0/500</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer compact d-flex flex-wrap gap-2">
+                    <button type="reset" class="btn btn-outline-secondary me-auto" id="btnMovReset"><i class="bi bi-eraser"></i> Limpiar</button>
+                    <button type="button" class="btn btn-outline-danger d-none" id="btnGenerarBajaEdit"><i class="bi bi-arrow-down-circle"></i> Generar Baja</button>
+                    <button type="button" class="btn btn-outline-secondary" id="btnMovGuardarNuevo" data-submit-mode="save-new"><i class="bi bi-plus-circle"></i> Guardar y Nuevo</button>
+                    <button type="submit" class="btn btn-danger" id="btnMovGuardar" data-submit-mode="save-close"><i class="bi bi-check-circle"></i> Guardar</button>
+                    <div class="w-100 text-end shortcut-hint">Ctrl+Enter Guardar+Nuevo • Alt+S Guardar • Alt+N Nuevo • Alt+C Cambio</div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- Datalists para autocompletar modal movimientos -->
+          <datalist id="dlApellidosMov"></datalist>
+          <datalist id="dlNombresMov"></datalist>
+          <datalist id="dlEquiposMov"></datalist>
+          <datalist id="dlMarcasMov"></datalist>
+          <datalist id="dlModelosMov"></datalist>
+
+  <!-- Modal Cambio (Baja + Alta en un solo paso) -->
+          <div class="modal fade" id="modalCambio" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down">
+              <div class="modal-content modal-fast cie-modal">
+                <div class="modal-header py-2 bg-danger text-white compact">
+                  <h6 class="modal-title mb-0 d-flex align-items-center gap-2"><i class="bi bi-arrow-repeat"></i> Cambio de Equipo</h6>
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <form id="formCambio" novalidate>
+                  <div class="modal-body compact">
+                    <div class="alert alert-warning py-1 small mb-2"><i class="bi bi-info-circle"></i> Genera BAJA (anterior) y ALTA (nuevo).</div>
+                    <div class="row g-fast">
+                      <div class="col-12"><span class="form-section-title small">Usuario</span></div>
+                      <div class="col-6 col-md-4 col-lg-3">
+                        <label class="form-label" for="cambioApellidos">Apellidos</label>
+                        <input type="text" id="cambioApellidos" class="form-control" required pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ \-]{2,60}" data-focus-first>
+                      </div>
+                      <div class="col-6 col-md-4 col-lg-3">
+                        <label class="form-label" for="cambioNombres">Nombres</label>
+                        <input type="text" id="cambioNombres" class="form-control" required pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ \-]{2,60}">
+                      </div>
+                      <div class="col-6 col-md-3 col-lg-2">
+                        <label class="form-label" for="cambioFecha">Fecha</label>
+                        <input type="date" id="cambioFecha" class="form-control" required>
+                      </div>
+                      <div class="col-12 pt-1"><span class="form-section-title small">Equipo Anterior</span></div>
+                      <div class="col-6 col-md-3 col-lg-2">
+                        <label class="form-label" for="cambioInvOld">Inv. Ant.</label>
+                        <input type="text" id="cambioInvOld" class="form-control" required pattern="[0-9A-Za-z_-]{3,40}">
+                      </div>
+                      <div class="col-6 col-md-3 col-lg-2">
+                        <label class="form-label" for="cambioEquipoOld">Equipo</label>
+                        <input type="text" id="cambioEquipoOld" class="form-control" placeholder="LAPTOP">
+                      </div>
+                      <div class="col-6 col-md-3 col-lg-2">
+                        <label class="form-label" for="cambioMarcaOld">Marca</label>
+                        <input type="text" id="cambioMarcaOld" class="form-control" placeholder="DELL">
+                      </div>
+                      <div class="col-6 col-md-3 col-lg-2">
+                        <label class="form-label" for="cambioModeloOld">Modelo</label>
+                        <input type="text" id="cambioModeloOld" class="form-control" placeholder="LATITUDE">
+                      </div>
+                      <div class="col-12 pt-1"><span class="form-section-title small">Equipo Nuevo</span></div>
+                      <div class="col-6 col-md-3 col-lg-2">
+                        <label class="form-label" for="cambioInvNew">Inv. Nuevo</label>
+                        <input type="text" id="cambioInvNew" class="form-control" required pattern="[0-9A-Za-z_-]{3,40}">
+                      </div>
+                      <div class="col-6 col-md-3 col-lg-2">
+                        <label class="form-label" for="cambioEquipoNew">Equipo</label>
+                        <input type="text" id="cambioEquipoNew" class="form-control" required placeholder="LAPTOP">
+                      </div>
+                      <div class="col-6 col-md-3 col-lg-2">
+                        <label class="form-label" for="cambioMarcaNew">Marca</label>
+                        <input type="text" id="cambioMarcaNew" class="form-control" required placeholder="DELL">
+                      </div>
+                      <div class="col-6 col-md-3 col-lg-2">
+                        <label class="form-label" for="cambioModeloNew">Modelo</label>
+                        <input type="text" id="cambioModeloNew" class="form-control" required placeholder="LATITUDE">
+                      </div>
+                      <div class="col-12 col-lg-4 col-md-6">
+                        <label class="form-label" for="cambioComplementoNew">Comentarios</label>
+                        <textarea id="cambioComplementoNew" class="form-control" rows="2" maxlength="300" placeholder="Motivo, kit, condición..."></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer compact d-flex flex-wrap gap-2">
+                    <button type="reset" class="btn btn-outline-secondary me-auto"><i class="bi bi-eraser"></i> Limpiar</button>
+                    <button type="submit" class="btn btn-danger"><i class="bi bi-check-circle"></i> Guardar Cambio</button>
+                    <div class="w-100 text-end shortcut-hint">Ctrl+Enter Guardar+Nuevo Mov • Alt+S Guardar • Alt+N Nuevo Mov • Alt+C Cambio</div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+  <!-- Modal Historial -->
+          <div class="modal fade" id="modalHistorialEquipo" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down">
+              <div class="modal-content cie-modal">
+                <div class="modal-header bg-danger text-white py-2">
+                  <h5 class="modal-title mb-0"><i class="bi bi-clock-history me-2"></i>Historial de Equipo</h5>
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="historialEquipoBody"></div>
+                <div class="modal-footer bg-light py-2 small d-flex flex-wrap gap-2">
+                  <div class="me-auto" id="historialResumenDias"></div>
+                  <button type="button" class="btn btn-outline-success btn-sm" id="btnHistCsv"><i class="bi bi-file-earmark-spreadsheet"></i> CSV</button>
+                  <button type="button" class="btn btn-outline-danger btn-sm" id="btnHistPdf"><i class="bi bi-filetype-pdf"></i> PDF</button>
+                  <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+  <!-- Modal Auditoría -->
+          <div class="modal fade" id="modalAudit" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down">
+              <div class="modal-content cie-modal">
+                <div class="modal-header bg-dark text-white py-2">
+                  <h5 class="modal-title mb-0"><i class="bi bi-shield-lock me-2"></i>Auditoría</h5>
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="d-flex flex-wrap gap-2 mb-2 small">
+                    <div class="input-group input-group-sm" style="max-width:240px;">
+                      <span class="input-group-text"><i class="bi bi-search"></i></span>
+                      <input type="text" id="auditSearch" class="form-control" placeholder="Buscar...">
+                    </div>
+                    <select id="auditActionFilter" class="form-select form-select-sm" style="max-width:150px;">
+                      <option value="">Acción</option>
+                      <option value="ALTA">ALTA</option>
+                      <option value="BAJA">BAJA</option>
+                      <option value="CAMBIO">CAMBIO</option>
+                      <option value="EDIT">EDIT</option>
+                      <option value="DELETE">DELETE</option>
+                    </select>
+                    <button class="btn btn-outline-secondary btn-sm" id="btnExportAudit"><i class="bi bi-download"></i></button>
+                    <button class="btn btn-outline-danger btn-sm" id="btnClearAudit"><i class="bi bi-trash"></i></button>
+                    <div class="ms-auto" id="auditCount"></div>
+                  </div>
+                  <div class="table-responsive border rounded">
+                    <table class="table table-sm table-hover mb-0" id="tablaAudit">
+                      <thead class="table-light"><tr><th>TS</th><th>Acción</th><th>Inventario</th><th>Fecha Mov.</th><th>Tipo</th><th>Usuario</th><th>Equipo</th><th>Modelo</th></tr></thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+                  <div class="small text-muted mt-2" id="auditInfo"></div>
+                </div>
+                <div class="modal-footer py-2">
+                  <button class="btn btn-danger btn-sm" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <!-- Contenedor toasts -->
+        <div class="toast-container" id="toastContainer"></div>
+      </main>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Librería XLSX para importación -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.19.3/dist/xlsx.full.min.js"></script>
+  <script src="js/altas_bajas.js"></script>
+  <script src="js/nav.js"></script>
+
+  <!-- Modal Importar Movimientos -->
+  <div class="modal fade" id="modalImportMov" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down">
+      <div class="modal-content cie-modal">
+        <div class="modal-header py-2 bg-danger text-white">
+          <h5 class="modal-title mb-0"><i class="bi bi-upload me-2"></i>Importar Movimientos</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3 small">
+            <div class="col-12 col-md-5">
+              <label class="form-label" for="fileImportMov">Archivo .xlsx / .xls</label>
+              <input type="file" id="fileImportMov" class="form-control form-control-sm" accept=".xlsx,.xls" />
+              <div class="form-text">Columnas requeridas: <code>Inventario, Tipo, Fecha, Apellidos, Nombres, Equipo, Marca, Modelo</code>. Complemento opcional.</div>
+              <div class="alert alert-warning py-1 px-2 mt-2 mb-0 small">Se omiten duplicados exactos (Inventario + Tipo + Fecha).</div>
+            </div>
+            <div class="col-12 col-md-7">
+              <div class="border rounded p-2 h-100 bg-light" style="min-height:140px;">
+                <div id="importPreviewMov" class="small text-muted">Seleccione un archivo...</div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div id="importResumenMov" class="fw-semibold small"></div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer py-2 d-flex flex-wrap gap-2">
+          <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-outline-secondary btn-sm" id="btnDescargarPlantillaMov"><i class="bi bi-filetype-xlsx"></i> Plantilla</button>
+          <button type="button" class="btn btn-primary btn-sm" id="btnProcesarImportMov" disabled><i class="bi bi-check-circle"></i> Procesar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

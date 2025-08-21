@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIE | Dashboard</title>
+  <link rel="stylesheet" href="css/estilos.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body class="has-sidebar">
+  <!-- Navegación unificada (expandida) -->
+  <!-- Navbar móvil -->
+  <nav class="navbar navbar-dark cie-bg-dark d-lg-none fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="img/cie_sin_fondo.png" alt="CIE" height="36" class="rounded" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMovil" aria-controls="sidebarMovil" aria-label="Abrir menú">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
+  <!-- Offcanvas móvil -->
+  <div class="offcanvas offcanvas-start cie-bg-dark text-white" tabindex="-1" id="sidebarMovil" aria-labelledby="sidebarMovilLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title d-flex align-items-center gap-2" id="sidebarMovilLabel">
+        <img src="img/cie_sin_fondo.png" alt="Logo" style="height:40px;width:auto;" class="rounded">
+        <span class="d-none">CIE Panel</span>
+      </h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column">
+      <ul class="nav flex-column flex-grow-1 small">
+        <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="usuarios.html"><i class="bi bi-person me-1"></i> Usuarios</a></li>
+        <li class="nav-item"><a class="nav-link" href="equipos.html"><i class="bi bi-laptop me-1"></i> Equipos</a></li>
+        <li class="nav-item"><a class="nav-link" href="inventario.html"><i class="bi bi-archive me-1"></i> Inventario</a></li>
+  <li class="nav-item"><a class="nav-link" href="altas_bajas.html"><i class="bi bi-arrow-left-right me-1"></i> Altas/Bajas</a></li>
+  <li class="nav-item"><a class="nav-link" href="garantias.html"><i class="bi bi-shield-check me-1"></i> Garantías</a></li>
+  <li class="nav-item"><a class="nav-link" href="dictamen_tecnico.html"><i class="bi bi-file-earmark-medical me-1"></i> Dictamen Técnico</a></li>
+  <li class="nav-item"><a class="nav-link" href="cedula_res.html"><i class="bi bi-file-earmark-text me-1"></i> Cédula Resguardo</a></li>
+  <li class="nav-item"><a class="nav-link" href="modelos.html"><i class="bi bi-grid me-1"></i> Modelos</a></li>
+  <li class="nav-item"><a class="nav-link" href="historial.html"><i class="bi bi-clock-history me-1"></i> Historial</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-gear me-1"></i> Configuración</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-question-circle me-1"></i> Ayuda</a></li>
+      </ul>
+      <div class="mt-3 text-white-50 small text-center"><i class="bi bi-info-circle"></i> soporte@cie.com.mx</div>
+      <a class="btn btn-danger w-100 mt-3 d-flex align-items-center justify-content-center gap-2" href="#"><i class="bi bi-box-arrow-right"></i> <span class="fw-bold">Salir</span></a>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar desktop -->
+      <nav class="col-lg-2 sidebar cie-bg-dark pt-4 d-lg-block d-none position-fixed top-0 start-0 h-100" style="z-index:1040; min-width:220px;">
+        <div class="d-flex flex-column h-100">
+          <div class="mb-4 px-3 text-center">
+            <a href="index.html" class="d-block">
+              <img src="img/cie_sin_fondo.png" alt="Logo CIE" class="sidebar-logo-img">
+            </a>
+          </div>
+          <ul class="nav flex-column flex-grow-1 small">
+            <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="usuarios.html"><i class="bi bi-person me-1"></i> Usuarios</a></li>
+            <li class="nav-item"><a class="nav-link" href="equipos.html"><i class="bi bi-laptop me-1"></i> Equipos</a></li>
+            <li class="nav-item"><a class="nav-link" href="inventario.html"><i class="bi bi-archive me-1"></i> Inventario</a></li>
+            <li class="nav-item"><a class="nav-link" href="altas_bajas.html"><i class="bi bi-arrow-left-right me-1"></i> Altas/Bajas</a></li>
+            <li class="nav-item"><a class="nav-link" href="garantias.html"><i class="bi bi-shield-check me-1"></i> Garantías</a></li>
+            <li class="nav-item"><a class="nav-link" href="dictamen_tecnico.html"><i class="bi bi-file-earmark-medical me-1"></i> Dictamen Técnico</a></li>
+            <li class="nav-item"><a class="nav-link" href="cedula_res.html"><i class="bi bi-file-earmark-text me-1"></i> Cédula Resguardo</a></li>
+            <li class="nav-item"><a class="nav-link" href="modelos.html"><i class="bi bi-grid me-1"></i> Modelos</a></li>
+            <li class="nav-item"><a class="nav-link" href="historial.html"><i class="bi bi-clock-history me-1"></i> Historial</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-gear me-1"></i> Configuración</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-question-circle me-1"></i> Ayuda</a></li>
+          </ul>
+          <div class="mt-auto px-3 pb-3">
+            <hr class="bg-light">
+            <a class="btn btn-danger w-100 d-flex align-items-center justify-content-center gap-2" href="#"><i class="bi bi-box-arrow-right"></i> <span class="fw-bold">Salir</span></a>
+            <div class="mt-3 text-white-50 small text-center"><i class="bi bi-info-circle"></i> soporte@cie.com.mx</div>
+          </div>
+        </div>
+      </nav>
+      <main class="col-12 col-lg-10 ms-auto px-4 pt-4">
+        <!-- Encabezado visual unificado -->
+        <section class="mb-3">
+          <div class="cie-section-bar rounded-4 px-3 px-md-4 py-3 d-flex flex-column flex-md-row align-items-center gap-3 gap-md-4 mb-2" style="min-height:80px;">
+            <div class="flex-shrink-0 d-flex align-items-center justify-content-center" style="width:44px;height:44px;">
+              <i class="bi bi-speedometer2" style="font-size:2rem; color:var(--cie-primary);"></i>
+            </div>
+            <div class="flex-grow-1 text-center text-md-start">
+              <h1 class="fw-semibold mb-1" style="font-size:1.35rem; color:var(--cie-primary); letter-spacing:0.01em;">Panel General</h1>
+              <div class="text-muted" style="font-size:1rem;">Resumen de inventario, usuarios y actividad reciente</div>
+            </div>
+          </div>
+        </section>
+        <!-- KPIs principales (formato unificado) -->
+        <div class="row g-3 mb-4 kpi-grid" id="dashboardCards">
+          <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm kpi-card h-100">
+              <div class="kpi-card-body">
+                <div class="kpi-icon-wrap kpi-equipos-icon"><i class="bi bi-laptop"></i></div>
+                <div class="kpi-text">
+                  <div class="kpi-label">Equipos</div>
+                  <div class="kpi-value" id="totalEquipos">-</div>
+                  <div class="small text-muted" id="kpiEquiposSub">&nbsp;</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm kpi-card h-100">
+              <div class="kpi-card-body">
+                <div class="kpi-icon-wrap kpi-usuarios-icon"><i class="bi bi-person"></i></div>
+                <div class="kpi-text">
+                  <div class="kpi-label">Usuarios</div>
+                  <div class="kpi-value" id="totalUsuarios">-</div>
+                  <div class="small text-muted" id="kpiUsuariosSub">&nbsp;</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm kpi-card h-100">
+              <div class="kpi-card-body">
+                <div class="kpi-icon-wrap kpi-garantia-icon"><i class="bi bi-shield-check"></i></div>
+                <div class="kpi-text">
+                  <div class="kpi-label">Garantía</div>
+                  <div class="kpi-value" id="equiposGarantia">-</div>
+                  <div class="small text-muted" id="kpiGarantiaSub">&nbsp;</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm kpi-card h-100">
+              <div class="kpi-card-body">
+                <div class="kpi-icon-wrap kpi-alertas-icon"><i class="bi bi-exclamation-triangle"></i></div>
+                <div class="kpi-text">
+                  <div class="kpi-label">Alertas</div>
+                  <div class="kpi-value" id="totalAlertas">-</div>
+                  <div class="small text-muted" id="kpiAlertasSub">&nbsp;</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Tarjetas secundarias -->
+        <div class="row g-3 g-lg-4 mb-4" id="dashboardCardsSecundarias">
+          <div class="col-12 col-sm-6 col-lg-3 d-flex">
+            <div class="card cie-card shadow-lg border-0 w-100 rounded-4 bg-info-subtle position-relative overflow-hidden p-2" style="min-height:140px;">
+              <div class="card-body d-flex flex-column align-items-center justify-content-center text-center p-3 gap-1">
+                <span class="mb-2" data-bs-toggle="tooltip" title="Equipos actualmente en reparación"><i class="bi bi-tools" style="font-size:2.5rem;color:#0dcaf0;"></i></span>
+                <h6 class="card-title fw-bold text-info-emphasis mb-1">En reparación</h6>
+                <p class="card-text fs-4 fw-bold text-dark mb-1" id="equiposReparacion">-</p>
+                <span class="badge bg-info text-dark fs-6 px-3 py-2 shadow-sm">0 activos</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3 d-flex">
+            <div class="card cie-card shadow-lg border-0 w-100 rounded-4 bg-secondary-subtle position-relative overflow-hidden p-2" style="min-height:140px;">
+              <div class="card-body d-flex flex-column align-items-center justify-content-center text-center p-3 gap-1">
+                <span class="mb-2" data-bs-toggle="tooltip" title="Equipos dados de baja"><i class="bi bi-archive" style="font-size:2.5rem;color:#6c757d;"></i></span>
+                <h6 class="card-title fw-bold text-secondary-emphasis mb-1">Dados de baja</h6>
+                <p class="card-text fs-4 fw-bold text-dark mb-1" id="equiposBaja">-</p>
+                <span class="badge bg-secondary text-white fs-6 px-3 py-2 shadow-sm">0 equipos</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3 d-flex">
+            <div class="card cie-card shadow-lg border-0 w-100 rounded-4 bg-primary-subtle position-relative overflow-hidden animate__animated animate__fadeIn p-2" style="min-height:140px;">
+              <div class="card-body d-flex flex-column align-items-center justify-content-center text-center p-3 gap-1">
+                <span class="mb-2" data-bs-toggle="tooltip" title="Equipos arrendados"><i class="bi bi-truck" style="font-size:2.5rem;color:#0d6efd;"></i></span>
+                <h6 class="card-title fw-bold text-primary-emphasis mb-1">Arrendados</h6>
+                <p class="card-text fs-4 fw-bold text-dark mb-1" id="equiposArrendados">-</p>
+                <span class="badge bg-primary text-white fs-6 px-3 py-2 shadow-sm">0 equipos</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3 d-flex">
+            <div class="card cie-card shadow-lg border-0 w-100 rounded-4 bg-danger-subtle position-relative overflow-hidden p-2" style="min-height:140px;">
+              <div class="card-body d-flex flex-column align-items-center justify-content-center text-center p-3 gap-1">
+                <span class="mb-2" data-bs-toggle="tooltip" title="Equipos extraviados o sin localizar"><i class="bi bi-question-diamond" style="font-size:2.5rem;color:#dc3545;"></i></span>
+                <h6 class="card-title fw-bold text-danger-emphasis mb-1">Extraviados</h6>
+                <p class="card-text fs-4 fw-bold text-dark mb-1" id="equiposExtraviados">-</p>
+                <span class="badge bg-danger text-white fs-6 px-3 py-2 shadow-sm">0 equipos</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Panel de gráficas -->
+        <div class="row mb-4">
+          <div class="col-12 col-lg-4 mb-3 mb-lg-0">
+            <div class="card shadow-lg border-0 h-100 rounded-4">
+              <div class="card-header bg-white fw-bold fs-5 rounded-top-4 border-bottom-0">
+                <i class="bi bi-bar-chart-line cie-red"></i> Resumen de Inventario
+              </div>
+              <div class="card-body">
+                <canvas id="graficaInventario" height="120"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-4 mb-3 mb-lg-0">
+            <div class="card shadow-lg border-0 h-100 rounded-4">
+              <div class="card-header bg-white fw-bold fs-5 rounded-top-4 border-bottom-0">
+                <i class="bi bi-pie-chart cie-red"></i> Equipos por Empresa
+              </div>
+              <div class="card-body">
+                <canvas id="graficaEmpresa" height="120"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-4 mb-3 mb-lg-0">
+            <div class="card shadow-lg border-0 h-100 rounded-4">
+              <div class="card-header bg-white fw-bold fs-5 rounded-top-4 border-bottom-0">
+                <i class="bi bi-bar-chart-steps cie-red"></i> Equipos por Estado
+              </div>
+              <div class="card-body">
+                <canvas id="graficaEstados" height="120"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col-12 col-lg-6 mb-3 mb-lg-0">
+            <div class="card shadow-lg border-0 h-100 rounded-4">
+              <div class="card-header bg-white fw-bold fs-5 rounded-top-4 border-bottom-0">
+                <i class="bi bi-graph-up-arrow cie-red"></i> Evolución de Equipos
+              </div>
+              <div class="card-body">
+                <canvas id="graficaEvolucion" height="120"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="card shadow-lg border-0 h-100 rounded-4">
+              <div class="card-header bg-white fw-bold fs-5 rounded-top-4 border-bottom-0">
+                <i class="bi bi-bar-chart-fill cie-red"></i> Comparativo por Estado
+              </div>
+              <div class="card-body">
+                <canvas id="graficaComparativo" height="120"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Panel de actividades recientes y tareas rápidas -->
+        <div class="row mb-4">
+          <div class="col-12 col-lg-6 mb-3 mb-lg-0">
+            <div class="card shadow-lg border-0 h-100 rounded-4">
+              <div class="card-header bg-white fw-bold fs-5 rounded-top-4 border-bottom-0">
+                <i class="bi bi-clock-history cie-red"></i> Actividad Reciente
+              </div>
+              <div class="card-body">
+                <ul class="list-group list-group-flush" id="actividadReciente">
+                  <li class="list-group-item py-3"><i class="bi bi-arrow-right-circle text-success"></i> Equipo Dell asignado a Juan Pérez</li>
+                  <li class="list-group-item py-3"><i class="bi bi-arrow-right-circle text-success"></i> Nuevo usuario registrado: Ana López</li>
+                  <li class="list-group-item py-3"><i class="bi bi-arrow-right-circle text-warning"></i> Garantía próxima a vencer: HP EliteBook</li>
+                  <li class="list-group-item py-3"><i class="bi bi-arrow-right-circle text-info"></i> Equipo Lenovo dado de baja</li>
+                  <li class="list-group-item py-3"><i class="bi bi-arrow-right-circle text-primary"></i> Reporte mensual generado</li>
+                  <!-- Dinámico JS -->
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="card shadow-lg border-0 h-100 rounded-4">
+              <div class="card-header bg-white fw-bold fs-5 rounded-top-4 border-bottom-0">
+                <i class="bi bi-lightning-charge cie-red"></i> Tareas Rápidas
+              </div>
+              <div class="card-body">
+                <div class="d-grid gap-3">
+                  <a href="inventario.html" class="btn btn-outline-primary btn-lg fw-bold"><i class="bi bi-archive"></i> Ver Inventario</a>
+                  <a href="usuarios.html" class="btn btn-outline-success btn-lg fw-bold"><i class="bi bi-person-plus"></i> Agregar Usuario</a>
+                  <a href="equipos.html" class="btn btn-outline-danger btn-lg fw-bold"><i class="bi bi-plus-circle"></i> Nuevo Equipo</a>
+                  <button class="btn btn-outline-secondary btn-lg fw-bold"><i class="bi bi-file-earmark-text"></i> Generar Reporte</button>
+                  <button class="btn btn-outline-warning btn-lg fw-bold"><i class="bi bi-bell"></i> Ver Alertas</button>
+                  <button class="btn btn-outline-info btn-lg fw-bold"><i class="bi bi-question-circle"></i> Ayuda</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Panel resumen -->
+        <div class="bg-light rounded p-4 shadow-sm mb-4">
+          <h5 class="cie-red mb-3 fw-bold fs-4"><i class="bi bi-info-circle"></i> Resumen</h5>
+          <ul class="list-group list-group-flush fs-5">
+            <li class="list-group-item py-3">Panel general del inventario de la empresa</li>
+            <li class="list-group-item py-3">Consulta rápida de equipos, usuarios y garantías</li>
+            <li class="list-group-item py-3">Acceso a inventario, historial y gestión de usuarios</li>
+            <li class="list-group-item py-3">Alertas y tareas rápidas para gestión eficiente</li>
+            <li class="list-group-item py-3">Exporta reportes en PDF y Excel</li>
+            <li class="list-group-item py-3">Filtra y busca información fácilmente</li>
+            <li class="list-group-item py-3">Panel de ayuda y soporte disponible</li>
+          </ul>
+        </div>
+        <!-- Scripts de gráficas -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+          document.addEventListener('DOMContentLoaded', function(){
+    initDashboardCharts();
+  });
+  function initDashboardCharts(){
+    const cfgBar = {
+      type:'bar',
+      data:{ labels:['Equipos','Usuarios','Garantía'], datasets:[{ label:'Cantidad', data:[12,8,5], backgroundColor:['#dc3545','#0d6efd','#198754'], borderRadius:5 }]},
+      options:{ plugins:{ legend:{ display:false }}, scales:{ y:{ beginAtZero:true }}}
+    };
+    const elInv = document.getElementById('graficaInventario'); if(elInv){ new Chart(elInv.getContext('2d'), cfgBar); }
+    const elEmp = document.getElementById('graficaEmpresa'); if(elEmp){ new Chart(elEmp.getContext('2d'), { type:'pie', data:{ labels:['CIE','CIE Eventos','CIE Producción'], datasets:[{ data:[6,3,3], backgroundColor:['#0d6efd','#dc3545','#ffc107'] }]}, options:{ plugins:{ legend:{ position:'bottom' }}} }); }
+    const elEvo = document.getElementById('graficaEvolucion'); if(elEvo){ new Chart(elEvo.getContext('2d'), { type:'line', data:{ labels:['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago'], datasets:[ {label:'Activos', data:[8,9,10,11,12,12,13,14], borderColor:'#0d6efd', backgroundColor:'rgba(13,110,253,0.1)', tension:.4, fill:true}, {label:'Arrendados', data:[1,1,2,2,2,3,3,4], borderColor:'#0dcaf0', backgroundColor:'rgba(13,202,240,0.1)', tension:.4, fill:true} ]}, options:{ plugins:{ legend:{ position:'bottom'}}, scales:{ y:{ beginAtZero:true }}} }); }
+    const elCmp = document.getElementById('graficaComparativo'); if(elCmp){ new Chart(elCmp.getContext('2d'), { type:'bar', data:{ labels:['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago'], datasets:[ {label:'En reparación', data:[1,1,1,2,2,2,1,1], backgroundColor:'#0dcaf0', stack:'Estados'}, {label:'Dados de baja', data:[0,0,1,1,1,1,1,1], backgroundColor:'#6c757d', stack:'Estados'}, {label:'Extraviados', data:[0,0,0,0,0,0,1,1], backgroundColor:'#dc3545', stack:'Estados'} ]}, options:{ plugins:{ legend:{ position:'bottom'}}, responsive:true, scales:{ x:{ stacked:true }, y:{ stacked:true, beginAtZero:true }}} }); }
+  }
+  // Subtextos KPI (placeholder simple basado en valores simulados)
+  const subEquipos = document.getElementById('kpiEquiposSub');
+  const subUsuarios = document.getElementById('kpiUsuariosSub');
+  const subGarantia = document.getElementById('kpiGarantiaSub');
+  const subAlertas = document.getElementById('kpiAlertasSub');
+  if(subEquipos){ subEquipos.textContent = ''; }
+  if(subUsuarios){ subUsuarios.textContent = ''; }
+  if(subGarantia){ subGarantia.textContent = ''; }
+  if(subAlertas){ subAlertas.textContent = ''; }
+        </script>
+      </main>
+    </div>
+  </div>
+  <script src="js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- ...existing code for charts/pdf... -->
+  <script src="js/nav.js"></script>
+</body>
+</html>

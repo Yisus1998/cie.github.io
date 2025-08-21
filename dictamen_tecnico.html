@@ -1,0 +1,417 @@
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIE | Dictamen Técnico</title>
+<link rel="stylesheet" href="css/estilos.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- SheetJS para exportar usando plantilla Excel -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" integrity="sha384-U+YV1bHovuCUpA0RRPbq/zKpE9MfYlWDdXmVc9qliFeZyW0DvpvZqG5sEyOXpWbV" crossorigin="anonymous"></script>
+<style>
+  body{background:#f5f6f8;}
+  th.sortable{cursor:pointer;user-select:none;white-space:nowrap;}
+  th.sortable .sort-ind{font-size:.65rem;margin-left:.25rem;opacity:.7;}
+  .table-responsive{max-height:55vh;}
+  .toast-container{position:fixed;top:1rem;right:1rem;display:flex;flex-direction:column;gap:.5rem;z-index:3000;}
+  .form-section-title{font-size:.75rem;text-transform:uppercase;font-weight:600;color:#666;margin:0 0 .25rem;letter-spacing:.5px;}
+  /* Estilos formato documento */
+  .dictamen-doc{width:790px;margin:0 auto;font-family:Arial,Helvetica,sans-serif;font-size:11.5px;color:#111;}
+  .dictamen-doc h2{font-size:18px;margin:0 0 4px;font-weight:700;letter-spacing:.5px;}
+  .dictamen-doc .subhead{font-size:11px;color:#444;margin-bottom:6px;}
+  .dictamen-doc table.meta, .dictamen-doc table.detalle{width:100%;border-collapse:collapse;margin-bottom:10px;}
+  .dictamen-doc table.meta th, .dictamen-doc table.meta td, .dictamen-doc table.detalle th, .dictamen-doc table.detalle td{border:1px solid #555;padding:4px 6px;vertical-align:top;}
+  .dictamen-doc table.meta th{background:#f1f1f1;font-weight:600;width:22%;}
+  .dictamen-doc table.detalle th{background:#fafafa;font-weight:600;width:22%;}
+  .firmas-grid{display:flex;justify-content:space-between;gap:28px;margin-top:52px;}
+  .firma-col{flex:1;text-align:center;font-size:11px;}
+  .firma-line{border-top:1px solid #000;padding-top:3px;margin-top:60px;}
+  .watermark{position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);font-size:54px;color:#0002;letter-spacing:4px;font-weight:700;pointer-events:none;}
+  @media print{body{background:#fff;} .no-print{display:none!important;} .dictamen-doc{width:auto;margin:0;padding:0;} }
+</style>
+</head>
+<body class="has-sidebar">
+<a href="#contenidoPrincipal" class="visually-hidden-focusable position-absolute top-0 start-0 m-2 btn btn-danger btn-sm">Saltar al contenido</a>
+<!-- Navegación (copiada del unificado para independencia) -->
+<nav class="navbar navbar-dark cie-bg-dark d-lg-none fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center" href="index.html"><img src="img/cie_sin_fondo.png" alt="CIE" height="36" class="rounded" /></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMovil" aria-controls="sidebarMovil" aria-label="Abrir menú"><span class="navbar-toggler-icon"></span></button>
+  </div>
+</nav>
+<div class="offcanvas offcanvas-start cie-bg-dark text-white" tabindex="-1" id="sidebarMovil" aria-labelledby="sidebarMovilLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title d-flex align-items-center gap-2" id="sidebarMovilLabel"><img src="img/cie_sin_fondo.png" alt="Logo" style="height:40px;width:auto;" class="rounded"><span class="d-none">CIE Panel</span></h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+  </div>
+  <div class="offcanvas-body d-flex flex-column">
+    <ul class="nav flex-column flex-grow-1 small">
+      <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
+      <li class="nav-item"><a class="nav-link" href="usuarios.html"><i class="bi bi-person me-1"></i> Usuarios</a></li>
+      <li class="nav-item"><a class="nav-link" href="equipos.html"><i class="bi bi-laptop me-1"></i> Equipos</a></li>
+      <li class="nav-item"><a class="nav-link" href="inventario.html"><i class="bi bi-archive me-1"></i> Inventario</a></li>
+      <li class="nav-item"><a class="nav-link" href="altas_bajas.html"><i class="bi bi-arrow-left-right me-1"></i> Altas/Bajas</a></li>
+      <li class="nav-item"><a class="nav-link" href="garantias.html"><i class="bi bi-shield-check me-1"></i> Garantías</a></li>
+  <li class="nav-item"><a class="nav-link" href="dictamen_tecnico.html"><i class="bi bi-file-earmark-medical me-1"></i> Dictamen Técnico</a></li>
+  <li class="nav-item"><a class="nav-link" href="cedula_res.html"><i class="bi bi-file-earmark-text me-1"></i> Cédula Resguardo</a></li>
+  <li class="nav-item"><a class="nav-link" href="modelos.html"><i class="bi bi-grid me-1"></i> Modelos</a></li>
+  <li class="nav-item"><a class="nav-link" href="historial.html"><i class="bi bi-clock-history me-1"></i> Historial</a></li>
+      <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-gear me-1"></i> Configuración</a></li>
+      <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-question-circle me-1"></i> Ayuda</a></li>
+    </ul>
+    <div class="mt-3 text-white-50 small text-center"><i class="bi bi-info-circle"></i> soporte@cie.com.mx</div>
+    <a class="btn btn-danger w-100 mt-3 d-flex align-items-center justify-content-center gap-2" href="#"><i class="bi bi-box-arrow-right"></i> <span class="fw-bold">Salir</span></a>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-lg-2 sidebar cie-bg-dark pt-4 d-lg-block d-none position-fixed top-0 start-0 h-100" style="z-index:1040; min-width:220px;">
+      <div class="d-flex flex-column h-100">
+        <div class="mb-4 px-3 text-center"><a href="index.html" class="d-block"><img src="img/cie_sin_fondo.png" alt="Logo CIE" class="sidebar-logo-img"></a></div>
+        <ul class="nav flex-column flex-grow-1 small">
+          <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="usuarios.html"><i class="bi bi-person me-1"></i> Usuarios</a></li>
+          <li class="nav-item"><a class="nav-link" href="equipos.html"><i class="bi bi-laptop me-1"></i> Equipos</a></li>
+          <li class="nav-item"><a class="nav-link" href="inventario.html"><i class="bi bi-archive me-1"></i> Inventario</a></li>
+          <li class="nav-item"><a class="nav-link" href="altas_bajas.html"><i class="bi bi-arrow-left-right me-1"></i> Altas/Bajas</a></li>
+          <li class="nav-item"><a class="nav-link" href="garantias.html"><i class="bi bi-shield-check me-1"></i> Garantías</a></li>
+          <li class="nav-item"><a class="nav-link active" href="dictamen_tecnico.html"><i class="bi bi-file-earmark-medical me-1"></i> Dictamen Técnico</a></li>
+          <li class="nav-item"><a class="nav-link" href="cedula_res.html"><i class="bi bi-file-earmark-text me-1"></i> Cédula Resguardo</a></li>
+          <li class="nav-item"><a class="nav-link" href="modelos.html"><i class="bi bi-grid me-1"></i> Modelos</a></li>
+          <li class="nav-item"><a class="nav-link" href="historial.html"><i class="bi bi-clock-history me-1"></i> Historial</a></li>
+          <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-gear me-1"></i> Configuración</a></li>
+          <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-question-circle me-1"></i> Ayuda</a></li>
+        </ul>
+        <div class="mt-auto px-3 pb-3"><hr class="bg-light"><a class="btn btn-danger w-100 d-flex align-items-center justify-content-center gap-2" href="#"><i class="bi bi-box-arrow-right"></i> <span class="fw-bold">Salir</span></a><div class="mt-3 text-white-50 small text-center"><i class="bi bi-info-circle"></i> soporte@cie.com.mx</div></div>
+      </div>
+    </nav>
+    <main id="contenidoPrincipal" class="col-lg-10 ms-auto px-4 pt-4" tabindex="-1">
+      <section class="cie-section-bar rounded-4 px-3 px-md-4 py-3 d-flex flex-column flex-md-row align-items-center gap-3 mb-4" style="min-height:80px;">
+        <div class="flex-shrink-0 d-flex align-items-center justify-content-center" style="width:44px;height:44px;">
+          <i class="bi bi-file-earmark-medical" style="font-size:2rem;color:var(--cie-primary);"></i>
+        </div>
+        <div class="flex-grow-1 text-center text-md-start">
+          <h1 class="fw-semibold mb-1" style="font-size:1.35rem;color:var(--cie-primary);letter-spacing:.01em;">Dictamen Técnico (Bajas de Equipos)</h1>
+          <div class="text-secondary small fw-semibold">Genera dictámenes de baja con trazabilidad y exportación.</div>
+        </div>
+      </section>
+
+      <!-- KPIs -->
+      <div class="row g-3 mb-4">
+        <div class="col-6 col-lg-3">
+          <div class="card border-0 shadow-sm kpi-card h-100">
+            <div class="kpi-card-body d-flex align-items-center gap-3">
+              <div class="kpi-icon-wrap"><i class="bi bi-collection text-primary" style="font-size:2rem;"></i></div>
+              <div class="kpi-text">
+                <div class="kpi-label mini-label">Total Dictámenes</div>
+                <div class="kpi-value text-primary" id="kpiTotal">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="card border-0 shadow-sm kpi-card h-100">
+            <div class="kpi-card-body d-flex align-items-center gap-3">
+              <div class="kpi-icon-wrap"><i class="bi bi-exclamation-diamond text-danger" style="font-size:2rem;"></i></div>
+              <div class="kpi-text">
+                <div class="kpi-label mini-label">Motivo Frec.</div>
+                <div class="kpi-value text-danger" id="kpiTopMotivo">-</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="d-flex flex-wrap align-items-center gap-2 mb-3" id="toolbarDictamen">
+        <div class="input-group input-group-sm" style="max-width:320px;">
+          <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+          <input type="text" id="busquedaGlobal" class="form-control" placeholder="Buscar inventario, equipo, marca..." autocomplete="off">
+          <button class="btn btn-outline-secondary" id="btnClearSearch" type="button"><i class="bi bi-x"></i></button>
+        </div>
+        <div class="ms-auto d-flex flex-wrap gap-2">
+          <button class="btn btn-outline-success btn-sm" id="btnExportCsv" type="button" title="Exportar CSV"><i class="bi bi-file-earmark-spreadsheet"></i><span class="d-none d-md-inline ms-1"> CSV</span></button>
+          <button class="btn btn-outline-danger btn-sm" id="btnExportPdf" type="button" title="Exportar PDF"><i class="bi bi-filetype-pdf"></i><span class="d-none d-md-inline ms-1"> PDF</span></button>
+          <button class="btn btn-outline-primary btn-sm" id="btnImportDictamen" type="button" title="Importar Excel"><i class="bi bi-upload"></i><span class="d-none d-md-inline ms-1"> Importar</span></button>
+          <button class="btn btn-danger btn-sm" id="btnNuevoDictamen" type="button" data-bs-toggle="modal" data-bs-target="#modalDictamen"><i class="bi bi-plus-circle"></i><span class="d-none d-sm-inline ms-1"> Registrar</span></button>
+        </div>
+      </div>
+
+      <!-- Filtros -->
+      <div class="card shadow-sm mb-3">
+        <div class="card-body">
+          <form id="formFiltros" class="row g-3 align-items-end" autocomplete="off">
+            <div class="col-6 col-md-3 col-lg-2">
+              <label class="form-label" for="filtroMotivo">Motivo</label>
+              <select id="filtroMotivo" class="form-select">
+                <option value="">Todos</option>
+                <option value="DAÑO">Daño</option>
+                <option value="OBSOLETO">Obsoleto</option>
+                <option value="ROBO">Robo</option>
+                <option value="EXTRAVIO">Extravío</option>
+                <option value="OTRO">Otro</option>
+              </select>
+            </div>
+            <div class="col-6 col-md-3 col-lg-2">
+              <label class="form-label" for="fechaDesde">Fecha desde</label>
+              <input type="date" id="fechaDesde" class="form-control">
+            </div>
+            <div class="col-6 col-md-3 col-lg-2">
+              <label class="form-label" for="fechaHasta">Fecha hasta</label>
+              <input type="date" id="fechaHasta" class="form-control">
+            </div>
+            <div class="col-12 col-md-4 d-flex gap-2 flex-wrap">
+              <button type="submit" class="btn btn-danger"><i class="bi bi-funnel"></i> Aplicar</button>
+              <button type="button" class="btn btn-outline-secondary" id="btnLimpiarFiltros"><i class="bi bi-eraser"></i> Limpiar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Tabla -->
+      <div class="card shadow-sm mb-4">
+        <div class="card-header d-flex flex-wrap align-items-center gap-2 py-2">
+          <strong class="text-danger d-flex align-items-center gap-1"><i class="bi bi-list-ul"></i> Dictámenes</strong>
+          <div class="ms-auto small text-secondary" id="lblRegistros"></div>
+          <div class="d-flex align-items-center gap-1">Mostrar
+            <select id="pageSize" class="form-select form-select-sm" style="width:auto;">
+              <option value="5">5</option>
+              <option value="10" selected>10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table id="tablaDictamen" class="table table-hover align-middle table-striped mb-0">
+            <thead class="table-light">
+              <tr>
+                <th class="sortable" data-field="inventario">Inventario <span class="sort-ind"></span></th>
+                <th class="sortable" data-field="fecha">Fecha <span class="sort-ind"></span></th>
+                <th>Equipo</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Serie</th>
+                <th class="sortable" data-field="motivo">Motivo <span class="sort-ind"></span></th>
+                <th>Estado</th>
+                <th class="text-end sortable" data-field="valorResidual">Valor Residual <span class="sort-ind"></span></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="p-2 small text-center d-none" id="tablaVacia">Sin registros</div>
+        <div class="card-footer py-2">
+          <nav aria-label="Paginación">
+            <ul class="pagination pagination-sm mb-0 justify-content-center" id="paginador"></ul>
+          </nav>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalDictamen" tabindex="-1" aria-labelledby="tituloModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable modal-fullscreen-md-down">
+    <div class="modal-content cie-modal">
+      <form id="formDictamen" autocomplete="off">
+        <div class="modal-header py-2">
+          <h5 class="modal-title d-flex align-items-center gap-2" id="tituloModal"><i class="bi bi-file-earmark-minus"></i> Registrar Dictamen</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-6 col-md-4">
+              <label class="form-label d-flex justify-content-between align-items-center" for="inventario"><span>Número de Inventario</span><button type="button" class="btn btn-sm btn-outline-secondary py-0" id="btnFetchInv" title="Buscar datos por inventario"><i class="bi bi-search"></i></button></label>
+              <input type="text" id="inventario" class="form-control to-upper" placeholder="CM16EQ0046" required list="dlInventarios">
+            </div>
+            <div class="col-6 col-md-4">
+              <label class="form-label" for="fecha">Fecha Dictamen</label>
+              <input type="date" id="fecha" class="form-control" required>
+            </div>
+            <div class="col-6 col-md-4">
+              <label class="form-label" for="motivo">Motivo</label>
+              <select id="motivo" class="form-select" required>
+                <option value="">Seleccionar...</option>
+                <option value="DAÑO">Daño</option>
+                <option value="OBSOLETO">Obsoleto</option>
+                <option value="ROBO">Robo</option>
+                <option value="EXTRAVIO">Extravío</option>
+                <option value="OTRO">Otro</option>
+              </select>
+            </div>
+            <div class="col-6 col-md-3">
+              <label class="form-label" for="equipo">Equipo</label>
+              <input type="text" id="equipo" class="form-control to-upper" placeholder="LAPTOP" required list="dlEquipos">
+            </div>
+            <div class="col-6 col-md-3">
+              <label class="form-label" for="marca">Marca</label>
+              <input type="text" id="marca" class="form-control to-upper" placeholder="HP" required list="dlMarcas">
+            </div>
+            <div class="col-6 col-md-3">
+              <label class="form-label" for="modelo">Modelo</label>
+              <input type="text" id="modelo" class="form-control to-upper" placeholder="PROBOOK" required list="dlModelos">
+            </div>
+            <div class="col-6 col-md-3">
+              <label class="form-label" for="serie">Serie</label>
+              <input type="text" id="serie" class="form-control to-upper" placeholder="S/N" required list="dlSeries">
+            </div>
+            <div class="col-6 col-md-4">
+              <label class="form-label" for="estadoFisico">Estado Físico</label>
+              <select id="estadoFisico" class="form-select" required>
+                <option value="">Seleccionar...</option>
+                <option value="FUNCIONAL">Funcional</option>
+                <option value="PARCIAL">Parcial</option>
+                <option value="NO FUNCIONAL">No Funcional</option>
+              </select>
+            </div>
+            <div class="col-6 col-md-4">
+              <label class="form-label" for="valorResidual">Valor Residual ($)</label>
+              <input type="number" min="0" step="0.01" id="valorResidual" class="form-control" placeholder="0.00">
+            </div>
+            <!-- Datos de usuario / área -->
+            <div class="col-6 col-md-3">
+              <label class="form-label d-flex justify-content-between align-items-center" for="usuarioResponsable"><span>Usuario Responsable</span><button type="button" class="btn btn-sm btn-outline-secondary py-0" id="btnCopyResp" title="Copiar a Colaborador"><i class="bi bi-arrow-down"></i></button></label>
+              <input type="text" id="usuarioResponsable" class="form-control to-upper" placeholder="JUAN PEREZ" required list="dlUsuarios">
+            </div>
+            <div class="col-6 col-md-3">
+              <label class="form-label" for="colaborador">Colaborador</label>
+              <input type="text" id="colaborador" class="form-control to-upper" placeholder="MARIA LOPEZ" required list="dlColaboradores">
+            </div>
+            <div class="col-6 col-md-3">
+              <label class="form-label" for="puesto">Puesto</label>
+              <input type="text" id="puesto" class="form-control to-upper" placeholder="ANALISTA TI" required list="dlPuestos">
+            </div>
+            <div class="col-6 col-md-3">
+              <label class="form-label" for="areaDepto">Área / Depto.</label>
+              <input type="text" id="areaDepto" class="form-control to-upper" placeholder="TECNOLOGÍAS" list="dlAreas">
+            </div>
+            <div class="col-12">
+              <label class="form-label d-flex justify-content-between" for="observaciones"><span>Observaciones</span><span class="small text-muted" id="obsCount">0/1000</span></label>
+              <textarea id="observaciones" class="form-control" rows="4" maxlength="1000" placeholder="Notas adicionales..."></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer py-2">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-danger">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal datos para Excel -->
+<div class="modal fade" id="modalDatosExcel" tabindex="-1" aria-labelledby="tituloModalExcel" aria-hidden="true">
+  <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down">
+    <div class="modal-content cie-modal">
+      <form id="formDatosExcel" autocomplete="off">
+        <div class="modal-header py-2">
+          <h5 class="modal-title" id="tituloModalExcel"><i class="bi bi-file-earmark-excel"></i> Datos para Plantilla</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="excelUsuario">Nombre Usuario / Responsable</label>
+              <input type="text" id="excelUsuario" class="form-control" placeholder="Juan Pérez" required>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="excelColaborador">Persona que Labora (Colaborador)</label>
+              <input type="text" id="excelColaborador" class="form-control" placeholder="María López" required>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="excelPuesto">Puesto</label>
+              <input type="text" id="excelPuesto" class="form-control" placeholder="Analista TI" required>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="excelArea">Área / Departamento</label>
+              <input type="text" id="excelArea" class="form-control" placeholder="Tecnologías de Información">
+            </div>
+            <div class="col-12">
+              <label class="form-label" for="excelNotas">Notas adicionales (opcional)</label>
+              <textarea id="excelNotas" class="form-control" rows="2" maxlength="300" placeholder="Observaciones para el documento"></textarea>
+            </div>
+          </div>
+          <div class="small text-muted mt-2">Estos datos no se guardan en el registro, solo se insertan en la hoja Excel.</div>
+        </div>
+        <div class="modal-footer py-2">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-success"><i class="bi bi-file-earmark-excel"></i> Generar Excel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="js/dictamen_tecnico.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/nav.js"></script>
+<!-- Modal Import Dictamen -->
+<div class="modal fade" id="modalImportDictamen" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down">
+    <div class="modal-content cie-modal">
+      <div class="modal-header py-2 bg-danger text-white">
+        <h5 class="modal-title mb-0"><i class="bi bi-upload me-2"></i>Importar Dictámenes</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3 small">
+          <div class="col-12 col-md-5">
+            <label class="form-label" for="fileImportDictamen">Archivo .xlsx / .xls</label>
+            <input type="file" id="fileImportDictamen" class="form-control form-control-sm" accept=".xlsx,.xls" />
+            <div class="form-text">Columnas: <code>Inventario, Fecha, Equipo, Marca, Modelo, Serie, Motivo, EstadoFisico, ValorResidual, UsuarioResponsable, Colaborador, Puesto, Area, Observaciones</code>. ValorResidual opcional.</div>
+          </div>
+          <div class="col-12 col-md-7">
+            <div class="border rounded p-2 h-100 bg-light" style="min-height:140px;">
+              <div id="importPreviewDictamen" class="small text-muted">Seleccione un archivo...</div>
+            </div>
+          </div>
+          <div class="col-12"><div id="importResumenDictamen" class="fw-semibold small"></div></div>
+        </div>
+      </div>
+      <div class="modal-footer py-2 d-flex flex-wrap gap-2">
+        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" id="btnPlantillaDictamen"><i class="bi bi-filetype-xlsx"></i> Plantilla</button>
+        <button type="button" class="btn btn-primary btn-sm" id="btnProcesarImportDictamen" disabled><i class="bi bi-check-circle"></i> Procesar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.19.3/dist/xlsx.full.min.js"></script>
+<script>
+(function(){
+  if(!window.XLSX) return; // se carga al final
+  let buffer=[];
+  function toast(msg,t){ if(window.toast) return window.toast(msg,t); const c=document.getElementById('toastContainer')||(()=>{const d=document.createElement('div');d.id='toastContainer';d.className='toast-container';document.body.appendChild(d);return d;})(); const el=document.createElement('div'); el.className='text-white small px-3 py-2 rounded shadow-sm'; el.style.background=t==='success'? '#198754': t==='danger'? '#dc3545': t==='warning'? '#ffc107':'#0d6efd'; el.textContent=msg; c.appendChild(el); setTimeout(()=>{el.style.transition='opacity .4s'; el.style.opacity='0'; setTimeout(()=>el.remove(),400);},3000); }
+  function loadState(){ try{return JSON.parse(localStorage.getItem('dictamenTecnicoData')||'[]');}catch{return [];} }
+  function saveState(d){ try{ localStorage.setItem('dictamenTecnicoData', JSON.stringify(d)); }catch(e){} }
+  function open(){ document.getElementById('fileImportDictamen').value=''; document.getElementById('importPreviewDictamen').textContent=''; document.getElementById('importResumenDictamen').textContent=''; document.getElementById('btnProcesarImportDictamen').disabled=true; new bootstrap.Modal(document.getElementById('modalImportDictamen')).show(); }
+  function handle(e){ const f=e.target.files?.[0]; buffer=[]; document.getElementById('importPreviewDictamen').textContent=''; document.getElementById('importResumenDictamen').textContent=''; document.getElementById('btnProcesarImportDictamen').disabled=true; if(!f) return; if(f.size>5*1024*1024){ toast('Archivo grande','danger'); return; } const reader=new FileReader(); reader.onload=evt=>{ try{ const wb=XLSX.read(new Uint8Array(evt.target.result),{type:'array'}); const ws=wb.Sheets[wb.SheetNames[0]]; const json=XLSX.utils.sheet_to_json(ws,{defval:''}); if(!json.length){ toast('Hoja vacía','warning'); return; } const req=['Inventario','Fecha','Equipo','Marca','Modelo','Serie','Motivo','EstadoFisico','UsuarioResponsable','Colaborador','Puesto']; const falta=req.filter(c=>!Object.keys(json[0]).includes(c)); if(falta.length){ toast('Faltan: '+falta.join(', '),'danger'); return; } const existing=loadState(); let duplicados=0, invalidos=0; json.forEach(r=>{ const inventario=(r['Inventario']||'').toString().trim().toUpperCase(); const fecha=(r['Fecha']||'').toString().trim(); const equipo=(r['Equipo']||'').toString().trim().toUpperCase(); const marca=(r['Marca']||'').toString().trim().toUpperCase(); const modelo=(r['Modelo']||'').toString().trim().toUpperCase(); const serie=(r['Serie']||'').toString().trim().toUpperCase(); const motivo=(r['Motivo']||'').toString().trim().toUpperCase(); const estado=(r['EstadoFisico']||'').toString().trim().toUpperCase(); const valorRaw=(r['ValorResidual']||'').toString().trim(); const usuarioResponsable=(r['UsuarioResponsable']||'').toString().trim().toUpperCase(); const colaborador=(r['Colaborador']||'').toString().trim().toUpperCase(); const puesto=(r['Puesto']||'').toString().trim().toUpperCase(); const area=(r['Area']||'').toString().trim().toUpperCase(); const observaciones=(r['Observaciones']||'').toString().trim(); if(!(inventario && fecha && equipo && marca && modelo && motivo && estado && usuarioResponsable && colaborador && puesto)){ invalidos++; return; } if(!/^[0-9A-Z_-]{3,40}$/.test(inventario)){ invalidos++; return; } if(!/^\d{4}-\d{2}-\d{2}$/.test(fecha)){ invalidos++; return; } if(existing.some(x=>x.inventario===inventario && x.fecha===fecha && x.motivo===motivo)){ duplicados++; return; } let valor=null; if(valorRaw){ const n=Number(valorRaw.replace(/,/g,'')); if(!isNaN(n) && n>=0) valor=n; }
+      buffer.push({ id:crypto.randomUUID?crypto.randomUUID():Math.random().toString(36).slice(2)+Date.now(), inventario, fecha, equipo, marca, modelo, serie, motivo, estado, valorResidual:valor, usuarioResponsable, colaborador, puesto, areaDepto:area, observaciones }); }); document.getElementById('importPreviewDictamen').innerHTML=`<div class='small'>Filas: ${json.length}<br>Nuevos válidos: <span class='text-success fw-semibold'>${buffer.length}</span><br>Duplicados: ${duplicados}<br>Inválidos: ${invalidos}</div>`; document.getElementById('importResumenDictamen').textContent=`${buffer.length} listo(s)`; document.getElementById('btnProcesarImportDictamen').disabled=buffer.length===0; }catch(err){ console.error(err); toast('Error leyendo Excel','danger'); } }; reader.readAsArrayBuffer(f); }
+  function procesar(){ if(!buffer.length) return; const data=loadState(); data.push(...buffer); saveState(data); buffer=[]; toast('Importado(s)','success'); document.getElementById('btnProcesarImportDictamen').disabled=true; document.getElementById('importResumenDictamen').textContent='Completado'; location.reload(); }
+  function plantilla(){ const headers=['Inventario','Fecha','Equipo','Marca','Modelo','Serie','Motivo','EstadoFisico','ValorResidual','UsuarioResponsable','Colaborador','Puesto','Area','Observaciones']; const ejemplo=['INV00001', (new Date()).toISOString().slice(0,10),'LAPTOP','DELL','LATITUDE','SER123','DAÑO','NO FUNCIONAL','0','JUAN PEREZ','MARIA LOPEZ','ANALISTA','TECNOLOGIAS','SIN DAÑOS']; const ws=XLSX.utils.aoa_to_sheet([headers,ejemplo]); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'PlantillaDictamen'); const out=XLSX.write(wb,{bookType:'xlsx',type:'array'}); const blob=new Blob([out],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='plantilla_dictamen.xlsx'; document.body.appendChild(a); a.click(); a.remove(); }
+  document.getElementById('btnImportDictamen')?.addEventListener('click', open);
+  document.getElementById('fileImportDictamen')?.addEventListener('change', handle);
+  document.getElementById('btnProcesarImportDictamen')?.addEventListener('click', procesar);
+  document.getElementById('btnPlantillaDictamen')?.addEventListener('click', plantilla);
+})();
+</script>
+<!-- Datalists para autocompletar -->
+<datalist id="dlInventarios"></datalist>
+<datalist id="dlEquipos"></datalist>
+<datalist id="dlMarcas"></datalist>
+<datalist id="dlModelos"></datalist>
+<datalist id="dlSeries"></datalist>
+<datalist id="dlUsuarios"></datalist>
+<datalist id="dlColaboradores"></datalist>
+<datalist id="dlPuestos"></datalist>
+<datalist id="dlAreas"></datalist>
+</body>
+</html>

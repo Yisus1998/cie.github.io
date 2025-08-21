@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIE | Usuarios</title>
+  <link rel="stylesheet" href="css/estilos.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body class="has-sidebar">
+  <!-- Navegación unificada expandida -->
+  <nav class="navbar navbar-dark cie-bg-dark d-lg-none fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="img/cie_sin_fondo.png" alt="CIE" height="36" class="rounded" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMovil" aria-controls="sidebarMovil" aria-label="Abrir menú">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
+  <div class="offcanvas offcanvas-start cie-bg-dark text-white" tabindex="-1" id="sidebarMovil" aria-labelledby="sidebarMovilLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title d-flex align-items-center gap-2" id="sidebarMovilLabel"><img src="img/cie_sin_fondo.png" alt="Logo" style="height:40px;width:auto;" class="rounded"> <span class="d-none">CIE Panel</span></h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column">
+      <ul class="nav flex-column flex-grow-1 small">
+        <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link active" href="usuarios.html"><i class="bi bi-person me-1"></i> Usuarios</a></li>
+        <li class="nav-item"><a class="nav-link" href="equipos.html"><i class="bi bi-laptop me-1"></i> Equipos</a></li>
+        <li class="nav-item"><a class="nav-link" href="inventario.html"><i class="bi bi-archive me-1"></i> Inventario</a></li>
+        <li class="nav-item"><a class="nav-link" href="altas_bajas.html"><i class="bi bi-arrow-left-right me-1"></i> Altas/Bajas</a></li>
+        <li class="nav-item"><a class="nav-link" href="garantias.html"><i class="bi bi-shield-check me-1"></i> Garantías</a></li>
+        <li class="nav-item"><a class="nav-link" href="dictamen_tecnico.html"><i class="bi bi-file-earmark-medical me-1"></i> Dictamen Técnico</a></li>
+        <li class="nav-item"><a class="nav-link" href="cedula_res.html"><i class="bi bi-file-earmark-text me-1"></i> Cédula Resguardo</a></li>
+        <li class="nav-item"><a class="nav-link" href="modelos.html"><i class="bi bi-grid me-1"></i> Modelos</a></li>
+        <li class="nav-item"><a class="nav-link" href="historial.html"><i class="bi bi-clock-history me-1"></i> Historial</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-gear me-1"></i> Configuración</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-question-circle me-1"></i> Ayuda</a></li>
+      </ul>
+    <!-- Links completos -->
+    <ul class="nav flex-column flex-grow-1 small">
+    </ul>
+      <div class="mt-3 text-white-50 small text-center"><i class="bi bi-info-circle"></i> soporte@cie.com.mx</div>
+      <a class="btn btn-danger w-100 mt-3 d-flex align-items-center justify-content-center gap-2" href="#"><i class="bi bi-box-arrow-right"></i> <span class="fw-bold">Salir</span></a>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <nav class="col-lg-2 sidebar cie-bg-dark pt-4 d-lg-block d-none position-fixed top-0 start-0 h-100" style="z-index:1040; min-width:220px;">
+        <div class="d-flex flex-column h-100">
+          <div class="mb-4 px-3 text-center">
+            <a href="index.html" class="d-block">
+              <img src="img/cie_sin_fondo.png" alt="Logo CIE" class="sidebar-logo-img">
+            </a>
+          </div>
+          <ul class="nav flex-column flex-grow-1 small">
+            <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link active" href="usuarios.html"><i class="bi bi-person me-1"></i> Usuarios</a></li>
+            <li class="nav-item"><a class="nav-link" href="equipos.html"><i class="bi bi-laptop me-1"></i> Equipos</a></li>
+            <li class="nav-item"><a class="nav-link" href="inventario.html"><i class="bi bi-archive me-1"></i> Inventario</a></li>
+            <li class="nav-item"><a class="nav-link" href="altas_bajas.html"><i class="bi bi-arrow-left-right me-1"></i> Altas/Bajas</a></li>
+            <li class="nav-item"><a class="nav-link" href="garantias.html"><i class="bi bi-shield-check me-1"></i> Garantías</a></li>
+            <li class="nav-item"><a class="nav-link" href="dictamen_tecnico.html"><i class="bi bi-file-earmark-medical me-1"></i> Dictamen Técnico</a></li>
+            <li class="nav-item"><a class="nav-link" href="cedula_res.html"><i class="bi bi-file-earmark-text me-1"></i> Cédula Resguardo</a></li>
+            <li class="nav-item"><a class="nav-link" href="modelos.html"><i class="bi bi-grid me-1"></i> Modelos</a></li>
+            <li class="nav-item"><a class="nav-link" href="historial.html"><i class="bi bi-clock-history me-1"></i> Historial</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-gear me-1"></i> Configuración</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-question-circle me-1"></i> Ayuda</a></li>
+          </ul>
+          <div class="mt-auto px-3 pb-3">
+            <hr class="bg-light">
+            <a class="btn btn-danger w-100 d-flex align-items-center justify-content-center gap-2" href="#"><i class="bi bi-box-arrow-right"></i> <span class="fw-bold">Salir</span></a>
+            <div class="mt-3 text-white-50 small text-center"><i class="bi bi-info-circle"></i> soporte@cie.com.mx</div>
+          </div>
+        </div>
+      </nav>
+      <main id="contenidoPrincipal" class="col-lg-10 ms-auto px-3 px-md-4 pt-5 pt-lg-4">
+        <!-- Encabezado visual unificado -->
+        <section class="mb-3">
+          <div class="cie-section-bar rounded-4 px-3 px-md-4 py-3 d-flex flex-column flex-md-row align-items-center gap-3 gap-md-4 mb-2 cie-min-h-80">
+            <div class="flex-shrink-0 d-flex align-items-center justify-content-center cie-icon-wrap-44">
+              <i class="bi bi-people cie-icon-lg cie-red"></i>
+            </div>
+            <div class="flex-grow-1 text-center text-md-start">
+              <h1 class="fw-semibold mb-1 cie-title-lg cie-red">Usuarios Registrados</h1>
+              <div class="text-muted">Panel de consulta y gestión de usuarios registrados</div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Filtros -->
+        <div class="row g-3 mb-3" id="filaKpisUsuarios">
+          <div class="col-6 col-md-3 col-lg-2">
+            <div class="card shadow-sm border-0 h-100">
+              <div class="card-body py-2 px-3 d-flex flex-column justify-content-center">
+                <div class="small text-muted">Total</div>
+                <div class="fw-bold" style="font-size:1.2rem;" id="kpiTotalUsuarios">0</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3 col-lg-2">
+            <div class="card shadow-sm border-0 h-100">
+              <div class="card-body py-2 px-3 d-flex flex-column justify-content-center">
+                <div class="small text-muted">Filtrados</div>
+                <div class="fw-bold" style="font-size:1.2rem;" id="kpiFiltradosUsuarios">0</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-8 d-flex align-items-stretch">
+            <div class="card shadow-sm border-0 w-100">
+              <div class="card-body py-2 px-3 d-flex flex-wrap align-items-center gap-2">
+                <span class="small text-muted fw-semibold">Rangos:</span>
+                <div class="btn-group btn-group-sm flex-wrap rangos-responsive" role="group" aria-label="Rangos usuarios">
+                  <button type="button" class="btn btn-outline-secondary" id="btnUsuariosHoy">Hoy</button>
+                  <button type="button" class="btn btn-outline-secondary" id="btnUsuariosSemana">Semana</button>
+                  <button type="button" class="btn btn-outline-secondary" id="btnUsuariosMes">Mes</button>
+                  <button type="button" class="btn btn-outline-secondary" id="btnUsuarios90d">Trimestre</button>
+                  <button type="button" class="btn btn-outline-secondary" id="btnUsuariosAnio">Año</button>
+                  <button type="button" class="btn btn-outline-primary" id="btnUsuariosTodos"><i class="bi bi-eye"></i> Todos</button>
+                </div>
+                <div class="d-flex align-items-center gap-2 ms-auto">
+                  <span class="badge rounded-pill text-bg-light border" id="badgeUsuariosFiltros" style="display:none;"><i class="bi bi-funnel"></i> <span id="badgeUsuariosFiltrosNum">0</span></span>
+                  <button class="btn btn-outline-secondary btn-sm d-none d-md-inline" type="button" id="btnUsuariosDensidad" title="Modo compacto"><i class="bi bi-arrows-collapse"></i></button>
+                  <button class="btn btn-outline-secondary btn-sm" type="button" id="btnUsuariosReload" title="Recargar datos"><i class="bi bi-arrow-clockwise"></i></button>
+                  <div class="small text-secondary" id="lblRangoUsuarios">Todos</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card shadow-sm mb-3" id="cardFiltrosUsuarios">
+          <div class="card-header py-2 d-flex d-sm-none justify-content-between align-items-center bg-white border-0">
+            <span class="small text-secondary fw-semibold d-flex align-items-center gap-1"><i class="bi bi-funnel"></i> Filtros</span>
+            <button class="btn btn-outline-secondary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFiltrosUsuarios" aria-expanded="false" aria-controls="collapseFiltrosUsuarios"><i class="bi bi-sliders"></i></button>
+          </div>
+          <div class="card-body pt-3 pt-sm-3 pb-2">
+            <div class="collapse show" id="collapseFiltrosUsuarios">
+              <form id="formFiltrosUsuarios" class="row g-3 align-items-end small filtro-compact" autocomplete="off">
+                <!-- Eliminados filtros específicos de Usuario y Nombre; se unifica en búsqueda global -->
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                  <label class="form-label" for="fDepto">Depto</label>
+                  <input type="text" id="fDepto" class="form-control form-control-sm" list="dlDepartamentos" placeholder="depto">
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                  <label class="form-label" for="fEmpresa">Empresa</label>
+                  <input type="text" id="fEmpresa" class="form-control form-control-sm" list="dlEmpresas" placeholder="empresa">
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                  <label class="form-label" for="fCentro">Centro Costos</label>
+                  <input type="text" id="fCentro" class="form-control form-control-sm" list="dlCentroCostos" placeholder="centro">
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                  <label class="form-label" for="fDesde">Desde</label>
+                  <input type="date" id="fDesde" class="form-control form-control-sm">
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                  <label class="form-label" for="fHasta">Hasta</label>
+                  <input type="date" id="fHasta" class="form-control form-control-sm">
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                  <label class="form-label" for="fStatus">Estatus</label>
+                  <select id="fStatus" class="form-select form-select-sm">
+                    <option value="">Todos</option>
+                    <option value="ACTIVO">ACTIVO</option>
+                    <option value="BAJA">BAJA</option>
+                  </select>
+                </div>
+                <div class="col-12 d-flex flex-wrap gap-2 justify-content-start justify-content-md-start mt-1">
+                  <button class="btn btn-danger btn-sm" type="submit"><i class="bi bi-funnel"></i> Aplicar</button>
+                  <button class="btn btn-outline-secondary btn-sm" type="button" id="btnLimpiarFiltros"><i class="bi bi-eraser"></i> Limpiar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+          <!-- Toolbar estilo Garantías (debajo de filtros) -->
+          <div class="d-flex flex-wrap align-items-center gap-2 mb-3" id="toolbarUsuarios">
+            <div class="input-group input-group-sm" style="max-width:320px;">
+              <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+              <input type="text" id="fTexto" class="form-control" placeholder="Buscar usuario, depto, centro..." autocomplete="off" aria-label="Búsqueda usuarios">
+              <button class="btn btn-outline-secondary" id="btnClearSearchUsuarios" type="button" data-bs-toggle="tooltip" data-bs-title="Limpiar"><i class="bi bi-x"></i></button>
+            </div>
+            <div class="ms-auto d-flex flex-wrap gap-2">
+              <button class="btn btn-outline-success btn-sm" id="btnExportUsuarios" type="button" data-bs-toggle="tooltip" data-bs-title="Exportar CSV"><i class="bi bi-file-earmark-spreadsheet"></i><span class="d-none d-md-inline ms-1"> CSV</span></button>
+              <button class="btn btn-outline-danger btn-sm" id="btnPdfUsuarios" type="button" data-bs-toggle="tooltip" data-bs-title="Exportar PDF"><i class="bi bi-filetype-pdf"></i><span class="d-none d-md-inline ms-1"> PDF</span></button>
+              <button class="btn btn-outline-primary btn-sm" id="btnImportUsuarios" type="button" data-bs-toggle="tooltip" data-bs-title="Importar Excel"><i class="bi bi-upload"></i><span class="d-none d-md-inline ms-1"> Importar</span></button>
+              <button class="btn btn-danger btn-sm" id="btnNuevoUsuario" type="button"><i class="bi bi-plus-circle"></i><span class="d-none d-sm-inline ms-1"> Nuevo</span></button>
+            </div>
+          </div>
+
+        <!-- Tabla usuarios -->
+        <div class="card shadow-sm mb-4">
+          <div class="card-header d-flex flex-wrap align-items-center gap-2 py-2">
+            <strong class="text-danger d-flex align-items-center gap-1"><i class="bi bi-people"></i> Usuarios</strong>
+            <div class="ms-auto small text-secondary" id="lblUsuarios"></div>
+            <div class="d-flex align-items-center gap-1">Mostrar
+              <select id="pageSizeUsuarios" class="form-select form-select-sm" style="width:auto;">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+              </select>
+            </div>
+          </div>
+    <div class="table-responsive" style="max-height:60vh;">
+            <table id="tablaUsuarios" class="table table-hover align-middle table-striped mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th class="sortable" data-field="nombre">Nombre <span class="sort-ind"></span></th>
+                  <th class="sortable d-none d-md-table-cell" data-field="apellido">Apellido <span class="sort-ind"></span></th>
+                  <th class="sortable" data-field="email">Email <span class="sort-ind"></span></th>
+                  <th class="sortable d-none d-md-table-cell" data-field="puesto">Puesto <span class="sort-ind"></span></th>
+                  <th class="sortable" data-field="departamento">Depto <span class="sort-ind"></span></th>
+                  <th class="sortable d-none d-lg-table-cell" data-field="localizacion">Localización <span class="sort-ind"></span></th>
+                  <th class="sortable d-none d-lg-table-cell" data-field="centroCostos">Centro Costos <span class="sort-ind"></span></th>
+                  <th class="sortable d-none d-lg-table-cell" data-field="postalCode">Postal <span class="sort-ind"></span></th>
+                  <th class="sortable d-none d-xl-table-cell" data-field="jefeDirecto">Jefe <span class="sort-ind"></span></th>
+                  <th class="sortable d-none d-xl-table-cell" data-field="empresa">Empresa <span class="sort-ind"></span></th>
+                  <th class="sortable d-none d-md-table-cell" data-field="createdDateTime">Creado <span class="sort-ind"></span></th>
+                  <th class="sortable" data-field="status">Estatus <span class="sort-ind"></span></th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="p-2 border-top bg-light">
+            <ul class="pagination pagination-sm mb-0" id="paginadorUsuarios"></ul>
+          </div>
+          <div class="text-center py-4 d-none" id="tablaUsuariosVacia"><i class="bi bi-inbox fs-4 d-block text-secondary"></i><span class="text-muted small">Sin usuarios</span></div>
+        </div>
+
+        <!-- Modal Usuario -->
+        <div class="modal fade" id="modalAgregarUsuario" tabindex="-1" aria-labelledby="modalAgregarUsuarioLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable modal-fullscreen-md-down">
+            <div class="modal-content shadow border-0 cie-modal">
+              <form id="formAgregarUsuario" autocomplete="off" class="needs-validation" novalidate>
+                <div class="modal-header bg-danger text-white align-items-center">
+                  <div class="d-flex align-items-center gap-2 flex-grow-1">
+                    <i class="bi bi-person-plus display-6" id="iconModalUsuario"></i>
+                    <div>
+                      <h5 class="modal-title mb-0" id="modalAgregarUsuarioLabel">Añadir Usuario</h5>
+                      <small class="text-white-50" id="modalSubtituloUsuario">Campos marcados * son obligatorios</small>
+                    </div>
+                    <span class="badge rounded-pill bg-white text-danger ms-2" id="badgeUsuarioReq" style="font-size:.65rem;">0/5</span>
+                  </div>
+                  <div class="ms-auto ps-2">
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                  </div>
+                </div>
+                <div class="modal-body py-3 px-3">
+                  <div class="modal-fast">
+                    <!-- Sección: Identidad -->
+                    <div class="mb-2">
+                      <div class="modal-section-title"><i class="bi bi-person me-1"></i> Identidad</div>
+                      <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                          <label for="nombreUsuario" class="form-label fw-semibold small mb-1">Nombre *</label>
+                          <input type="text" class="form-control form-control-sm to-upper" id="nombreUsuario" required maxlength="60" autocomplete="off" placeholder="Ej. JUAN">
+                        </div>
+                        <div class="col-12 col-md-6">
+                          <label for="apellidoUsuario" class="form-label fw-semibold small mb-1">Apellido *</label>
+                          <input type="text" class="form-control form-control-sm to-upper" id="apellidoUsuario" required maxlength="80" autocomplete="off" placeholder="Ej. PEREZ">
+                        </div>
+                        
+                      </div>
+                      <div class="row g-3 mt-1">
+                        <div class="col-12 col-sm-6 col-md-3">
+                          <label for="numEmpUsuario" class="form-label fw-semibold small mb-1"><i class="bi bi-hash"></i> No. Empleado</label>
+                          <input type="text" class="form-control form-control-sm" id="numEmpUsuario" inputmode="numeric" pattern="\\d{4}" maxlength="4" placeholder="0000" autocomplete="off" required>
+                          <div class="form-text mt-0 pt-0" style="margin-top:-2px;font-size:.65rem;">Exactamente 4 dígitos</div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Sección: Contacto -->
+                    <div class="mb-2">
+                      <div class="modal-section-title"><i class="bi bi-envelope-at me-1"></i> Contacto</div>
+                      <div class="row g-3">
+                        <div class="col-12 col-md-6 col-lg-4">
+                          <label for="emailUsuario" class="form-label fw-semibold small mb-1">Email *</label>
+                          <div class="input-group input-group-sm">
+                            <span class="input-group-text"><i class="bi bi-at"></i></span>
+                            <input type="email" class="form-control form-control-sm" id="emailUsuario" required maxlength="120" autocomplete="off" placeholder="correo@cie.com">
+                          </div>
+                        </div>
+                        <div class="col-6 col-md-3 col-lg-2">
+                          <label for="postalCodeUsuario" class="form-label fw-semibold small mb-1">Postal</label>
+                          <input type="text" class="form-control form-control-sm to-upper" id="postalCodeUsuario" list="dlPostalCodes" maxlength="12" pattern="[A-Z0-9-]{1,12}" placeholder="GPO-10">
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Sección: Organización -->
+                    <div class="mb-2">
+                      <div class="modal-section-title"><i class="bi bi-diagram-3 me-1"></i> Organización</div>
+                      <div class="row g-3">
+                        <div class="col-12 col-md-6 col-lg-4">
+                          <label for="departamentoUsuario" class="form-label fw-semibold small mb-1">Departamento *</label>
+                          <input type="text" class="form-control form-control-sm to-upper" id="departamentoUsuario" list="dlDepartamentos" required maxlength="120" placeholder="Ej. SISTEMAS">
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                          <label for="puestoUsuario" class="form-label fw-semibold small mb-1">Puesto *</label>
+                          <input type="text" class="form-control form-control-sm to-upper" id="puestoUsuario" list="dlPuestos" required maxlength="100" placeholder="Ej. ANALISTA">
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                          <label for="empresaUsuario" class="form-label fw-semibold small mb-1">Empresa</label>
+                          <input type="text" class="form-control form-control-sm to-upper" id="empresaUsuario" list="dlEmpresas" maxlength="120" placeholder="Ej. CIE S.A. DE C.V.">
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                          <label for="centroCostosUsuario" class="form-label fw-semibold small mb-1">Centro de Costos</label>
+                          <input type="text" class="form-control form-control-sm to-upper" id="centroCostosUsuario" list="dlCentroCostos" maxlength="60" placeholder="Ej. CC-SISTEMAS">
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                          <label for="jefeDirecto" class="form-label fw-semibold small mb-1">Jefe</label>
+                          <input type="text" class="form-control form-control-sm to-upper" id="jefeDirecto" list="dlJefes" maxlength="120" placeholder="Ej. MARIO">
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Sección: Ubicación -->
+                    <div class="mb-1">
+                      <div class="modal-section-title"><i class="bi bi-building me-1"></i> Ubicación</div>
+                      <div class="row g-3">
+                        <div class="col-12 col-md-6 col-lg-4">
+                          <label for="localizacionUsuario" class="form-label fw-semibold small mb-1">Localización</label>
+                          <input type="text" class="form-control form-control-sm to-upper" id="localizacionUsuario" list="dlLocalizaciones" maxlength="120" placeholder="Ej. BLAS PASCAL">
+                        </div>
+                      </div>
+                    </div>
+                    <input type="hidden" id="statusUsuario" value="ACTIVO" />
+                    <input type="hidden" id="createdDateTime" />
+                    <div>
+                      <div class="alert alert-info py-2 px-3 mb-0 small d-flex justify-content-between align-items-center" id="previewCreated" role="alert" style="display:none;">
+                        <span><i class="bi bi-clock-history me-1"></i> Registrado: <span id="previewCreatedValue"></span></span>
+                        <span class="small text-white-50" id="previewEditInfo"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-between flex-wrap gap-2 bg-light border-0 py-2">
+                  <div class="d-flex flex-wrap gap-2">
+                    <button type="reset" class="btn btn-outline-danger btn-sm" id="btnResetUsuario"><i class="bi bi-eraser"></i> Limpiar</button>
+                    <button type="button" class="btn btn-outline-warning btn-sm d-none" id="btnMarcarBaja"><i class="bi bi-person-dash"></i> Dar de baja</button>
+                  </div>
+                  <div class="d-flex flex-wrap gap-2">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-danger btn-sm" id="btnGuardarYNuevo"><i class="bi bi-plus-circle"></i> Guardar y Nuevo</button>
+                    <button type="submit" class="btn btn-danger btn-sm px-3" id="btnGuardarUsuario"><i class="bi bi-check-circle"></i> Guardar</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Datalist comunes -->
+        <datalist id="dlDepartamentos"><option>AUDITORIA INTERNA</option><option>CONTRALORIA GRUPO CIE</option><option>MERCADOTECNIA F1</option><option>COMERCIAL F1</option><option>SOPORTE Y MONITOREO</option><option>COMEDOR F1</option></datalist>
+        <datalist id="dlLocalizaciones"><option>HIPODROMO GRADA 3 NIVEL 1</option><option>HIPODROMO GRADA 3 NIVEL 2</option><option>BLAS PASCAL</option><option>CENTRUM PARK</option></datalist>
+        <datalist id="dlEmpresas"><option>MAKE PRO S.A. DE C.V.</option><option>CIE S.A. DE C.V.</option></datalist>
+        <datalist id="dlPostalCodes"><option>GPO-0</option><option>GPO-4</option><option>GPO-5</option><option>GPO-10</option><option>GPO-15</option></datalist>
+        <datalist id="dlPuestos"><option>AUDITORA ENCARGADA</option><option>CONTADORA C</option><option>DISEÑADORA GRAFICA F1</option><option>EJECUTIVA VENTAS F1</option><option>COORDINADOR BASIS</option><option>ANALISTA EXPERIENCIA CULINARIA F1</option></datalist>
+        <datalist id="dlJefes"><option>GIOVANNI ISRAEL</option><option>NADIA LUCERO</option><option>ANDREA</option><option>SANDOR PADILLA</option><option>CRISTINA MACIAS</option></datalist>
+  <datalist id="dlCentroCostos"><option>CC-ADMIN</option><option>CC-SISTEMAS</option><option>CC-FINANZAS</option><option>CC-OPERACIONES</option></datalist>
+        <!-- Toasts -->
+        <div class="toast-container" id="toastUsuarios"></div>
+      </main>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.19.3/dist/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Helper PDF unificado -->
+  <script src="js/pdf_helper.js"></script>
+  <script src="js/usuarios.js"></script>
+  <style>
+  /* Unificación estilos encabezado (coincidir con inventario) */
+  .cie-section-bar{background:#fff;border:1.5px solid #f3f3f3;box-shadow:0 4px 18px -6px rgba(190,43,58,.08),0 2px 4px -2px rgba(0,0,0,.08);}    
+  .cie-icon-wrap-44{width:44px;height:44px;}
+  .cie-icon-lg{font-size:2rem;}
+  .cie-red{color:#be2b3a;}
+  .cie-title-lg{font-size:1.35rem;letter-spacing:.01em;}
+  .cie-min-h-80{min-height:80px;}
+    th.sortable{cursor:pointer;user-select:none;white-space:nowrap;}
+    th.sortable .sort-ind{font-size:.65rem;margin-left:.25rem;opacity:.7;}
+    .toast-container{position:fixed;top:1rem;right:1rem;display:flex;flex-direction:column;gap:.5rem;z-index:3000;}
+    .filtro-compact .form-label{font-size:.7rem;text-transform:uppercase;font-weight:600;letter-spacing:.5px;color:#666;margin-bottom:.15rem;}
+    #cardFiltrosUsuarios .form-control-sm, #cardFiltrosUsuarios .form-select-sm{min-height:32px;}
+    @media (max-width: 575.98px){
+      #cardFiltrosUsuarios .card-body{padding-top:.5rem!important;}
+      .filtro-compact .col-6{padding-bottom:.25rem;}
+    }
+    @media (max-width: 767.98px) {
+      .w-md-auto { width: 100% !important; }
+      .cie-search-bar-responsive { flex-direction: column !important; align-items: stretch !important; gap: 0.5rem; }
+      .cie-search-btn { width: 100%; margin-left: 0 !important; }
+    }
+    @media (min-width: 768px) {
+      .w-md-auto { width: auto !important; }
+      .cie-search-bar-responsive { flex-direction: row; gap: 0.5rem; }
+      .cie-search-btn { width: auto; }
+    }
+  body.usuarios-denso #tablaUsuarios tbody tr td, body.usuarios-denso #tablaUsuarios thead th{padding:.25rem .5rem;font-size:.7rem;}
+  body.usuarios-denso #tablaUsuarios code{font-size:.65rem;}
+  /* Ajustes extra para pantallas pequeñas */
+  @media (max-width: 575.98px){
+    #tablaUsuarios tbody td, #tablaUsuarios thead th{padding:.35rem .5rem;font-size:.72rem;}
+    #tablaUsuarios tbody td a{word-break:break-all;}
+  /* Ajuste email: ahora es la 3ra columna (antes era 4ta) */
+  #tablaUsuarios tbody td:nth-child(3){max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  }
+  /* Mejor legibilidad de inputs en el modal en móviles */
+  @media (max-width: 767.98px){
+    #modalAgregarUsuario .modal-body{padding: .75rem .75rem;}
+    .modal-fast .form-control, .modal-fast .form-select{padding:.5rem .65rem;font-size:.9rem;}
+    .modal-fast .form-label{font-size:.75rem;}
+  }
+  .modal-fast .form-label{font-size:.66rem;letter-spacing:.3px;}
+  .modal-fast .form-control,.modal-fast .form-select{padding:.3rem .5rem;font-size:.7rem;}
+  #modalAgregarUsuario .modal-body{background:linear-gradient(#ffffff,#fafafa);}  
+  #modalAgregarUsuario .modal-footer{box-shadow:0 -2px 4px rgba(0,0,0,.04);} 
+  .rangos-responsive{overflow-x:auto;white-space:nowrap;}
+  .rangos-responsive .btn{flex:0 0 auto;}
+  body.usuarios-denso .pagination .page-link{padding:.15rem .45rem;font-size:.65rem;}
+  .badge-status{font-size:.6rem;letter-spacing:.5px;padding:.35em .55em;border:1px solid transparent;}
+  .badge-status.ACTIVO{background:#d1e7dd;color:#0f5132;border-color:#badbcc;}
+  .badge-status.BAJA{background:#f8d7da;color:#842029;border-color:#f5c2c7;}
+  #btnUsuariosDensidad,#btnUsuariosReload{min-width:34px;}
+  /* Títulos de secciones del modal */
+  .modal-section-title{font-size:.7rem;text-transform:uppercase;letter-spacing:.6px;color:#6c757d;margin-bottom:.25rem;display:flex;align-items:center;gap:.35rem;font-weight:700;}
+    .cie-search-bar-responsive {
+      width: 100%;
+      display: flex;
+      background: #fff;
+      border-radius: 2.2em;
+      box-shadow: 0 2px 12px #be2b3a0a;
+      padding: 0.25rem 0.5rem 0.25rem 0.7rem;
+      border: 1.5px solid #e6e6e6;
+      min-height: 44px;
+      margin-left: 0;
+    }
+    .cie-search-input {
+      border: none;
+      background: transparent;
+      font-size: 1.08rem;
+      padding: 0.5em 0.2em;
+      outline: none;
+      box-shadow: none;
+      flex: 1 1 0%;
+      min-width: 0;
+    }
+    .cie-search-input:focus {
+      background: #fafbfc;
+      border: none;
+      outline: none;
+      box-shadow: none;
+    }
+    .cie-search-btn {
+      border-radius: 2em;
+      font-size: 1.01rem;
+      font-weight: 500;
+      padding: 0.45em 1.5em;
+      background: #fff;
+      color: #be2b3a;
+      border: 1.5px solid #be2b3a;
+      transition: background 0.16s, color 0.16s, border 0.16s;
+      box-shadow: none;
+    }
+    .cie-search-btn:hover, .cie-search-btn:focus {
+      background: #be2b3a;
+      color: #fff;
+      border-color: #be2b3a;
+    }
+    .btn-danger, .btn-danger:focus, .btn-danger:active {
+      box-shadow: 0 2px 8px #be2b3a22;
+      background: linear-gradient(90deg,#be2b3a 80%,#a81e2a 100%);
+      border: none;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      transition: background 0.18s, box-shadow 0.18s;
+    }
+    .btn-danger:hover {
+      background: linear-gradient(90deg,#a81e2a 60%,#be2b3a 100%);
+      box-shadow: 0 4px 16px #be2b3a33;
+    }
+    .btn:active, .btn:focus {
+      outline: none !important;
+      box-shadow: 0 0 0 2px #be2b3a33 !important;
+    }
+  </style>
+  <!-- Modal Importar Usuarios -->
+  <div class="modal fade" id="modalImportUsuarios" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down">
+      <div class="modal-content modal-fast cie-modal">
+        <div class="modal-header bg-danger text-white py-2 compact">
+          <h6 class="modal-title mb-0 d-flex align-items-center gap-2"><i class="bi bi-upload"></i> Importar Usuarios (Excel)</h6>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body compact">
+          <div class="row g-fast">
+            <div class="col-12 col-lg-7">
+              <label class="form-label" for="fileImportUsuarios">Archivo .xlsx / .xls</label>
+              <input type="file" id="fileImportUsuarios" class="form-control form-control-sm" accept=".xlsx,.xls" />
+              <div class="form-text small">Solo primera hoja. Máx ~5MB.</div>
+              <div id="importPreviewUsuarios" class="small mt-2"></div>
+            </div>
+            <div class="col-12 col-lg-5">
+              <div class="small fw-semibold mb-1">Cabeceras esperadas (formato Altas/Bajas, mismo orden):</div>
+              <pre class="bg-light border small p-2 mb-2">Apellidos | Nombres | Email | NumEmp | Puesto | Departamento | CentroCostos | Empresa | Localizacion | Postal | Jefe | Estatus
+PEREZ | JUAN | juan@cie.com | 0000 | ANALISTA | SISTEMAS | CC-SISTEMAS | CIE | CDMX | 01234 | MARIO | ACTIVO</pre>
+              <ul class="small ps-3 mb-2">
+                <li>Obligatorios: Apellidos, Nombres, Email, Puesto, Departamento.</li>
+                <li>Usuario no va en el Excel; se autogenera internamente como nombre.apellido y debe ser único.</li>
+                <li>NumEmp se normaliza a 4 dígitos (0000 por defecto).</li>
+                <li>Estatus: ACTIVO o BAJA (si falta, ACTIVO).</li>
+                <li>Usuario debe ser único; duplicados se omiten.</li>
+              </ul>
+              <button class="btn btn-outline-secondary btn-sm" type="button" id="btnDescargarPlantillaUsuarios"><i class="bi bi-filetype-xlsx"></i> Plantilla</button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer compact d-flex flex-wrap gap-2">
+          <div class="me-auto small" id="importResumenUsuarios"></div>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-danger" id="btnProcesarImportUsuarios" disabled><i class="bi bi-check-circle"></i> Importar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="js/nav.js"></script>
+</body>
+</html>

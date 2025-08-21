@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIE | Inventario</title>
+  <link rel="stylesheet" href="css/estilos.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <style>
+    /* Inventario avanzado */
+    #tablaInventario thead th.sortable{cursor:pointer;user-select:none;}
+    #tablaInventario thead th.sortable.table-active{background:#f8d7da;}
+    #tablaInventario code{font-size:.75rem;}
+    .badge-estado{padding:.25rem .5rem;font-size:.65rem;border-radius:999px;letter-spacing:.5px;font-weight:600;}
+    .badge-estado.ACTIVO{background:#d1e7dd;color:#0f5132;}
+    .badge-estado[estado="EN REPARACIÓN"], .badge-estado.REPARACION{background:#fff3cd;color:#664d03;}
+    .badge-estado.BAJA{background:#f8d7da;color:#842029;}
+    .badge-estado.EXTRAVIADO{background:#fde2e1;color:#842029;}
+    .badge-estado.PRESTADO{background:#cff4fc;color:#055160;}
+    body.inv-denso #tablaInventario tbody td, body.inv-denso #tablaInventario thead th{padding:.3rem .5rem;font-size:.7rem;}
+    body.inv-denso #tablaInventario code{font-size:.6rem;}
+    @media (max-width: 767.98px){
+      /* Nueva ordenación columnas: 1 Inv,2 Serie,3 Equipo,4 Marca,5 Modelo,6 Estado,7 Empresa,8 Garantía,9 Creado,10 Acciones */
+      /* Ocultamos Modelo (5), Empresa (7), Garantía (8) */
+      #tablaInventario thead th:nth-child(5),
+      #tablaInventario tbody td:nth-child(5),
+      #tablaInventario thead th:nth-child(7),
+      #tablaInventario tbody td:nth-child(7),
+      #tablaInventario thead th:nth-child(8),
+      #tablaInventario tbody td:nth-child(8){display:none;}
+    }
+    .rangos-responsive{overflow-x:auto;white-space:nowrap;}
+    .rangos-responsive .btn{flex:0 0 auto;}
+  </style>
+</head>
+<body class="has-sidebar">
+  <!-- Navegación unificada expandida -->
+  <nav class="navbar navbar-dark cie-bg-dark d-lg-none fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="img/cie_sin_fondo.png" alt="CIE" height="36" class="rounded" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMovil" aria-controls="sidebarMovil" aria-label="Abrir menú">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
+  <div class="offcanvas offcanvas-start cie-bg-dark text-white" tabindex="-1" id="sidebarMovil" aria-labelledby="sidebarMovilLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title d-flex align-items-center gap-2" id="sidebarMovilLabel"><img src="img/cie_sin_fondo.png" alt="Logo" style="height:40px;width:auto;" class="rounded"> <span class="d-none">CIE Panel</span></h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column">
+      <ul class="nav flex-column flex-grow-1 small">
+        <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="usuarios.html"><i class="bi bi-person me-1"></i> Usuarios</a></li>
+        <li class="nav-item"><a class="nav-link" href="equipos.html"><i class="bi bi-laptop me-1"></i> Equipos</a></li>
+        <li class="nav-item"><a class="nav-link active" href="inventario.html"><i class="bi bi-archive me-1"></i> Inventario</a></li>
+  <li class="nav-item"><a class="nav-link" href="altas_bajas.html"><i class="bi bi-arrow-left-right me-1"></i> Altas/Bajas</a></li>
+  <li class="nav-item"><a class="nav-link" href="garantias.html"><i class="bi bi-shield-check me-1"></i> Garantías</a></li>
+  <li class="nav-item"><a class="nav-link" href="dictamen_tecnico.html"><i class="bi bi-file-earmark-medical me-1"></i> Dictamen Técnico</a></li>
+  <li class="nav-item"><a class="nav-link" href="cedula_res.html"><i class="bi bi-file-earmark-text me-1"></i> Cédula Resguardo</a></li>
+  <li class="nav-item"><a class="nav-link" href="modelos.html"><i class="bi bi-grid me-1"></i> Modelos</a></li>
+  <li class="nav-item"><a class="nav-link" href="historial.html"><i class="bi bi-clock-history me-1"></i> Historial</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-gear me-1"></i> Configuración</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-question-circle me-1"></i> Ayuda</a></li>
+      </ul>
+      <div class="mt-3 text-white-50 small text-center"><i class="bi bi-info-circle"></i> soporte@cie.com.mx</div>
+      <a class="btn btn-danger w-100 mt-3 d-flex align-items-center justify-content-center gap-2" href="#"><i class="bi bi-box-arrow-right"></i> <span class="fw-bold">Salir</span></a>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <nav class="col-lg-2 sidebar cie-bg-dark pt-4 d-lg-block d-none position-fixed top-0 start-0 h-100" style="z-index:1040; min-width:220px;">
+        <div class="d-flex flex-column h-100">
+          <div class="mb-4 px-3 text-center">
+            <a href="index.html" class="d-block">
+              <img src="img/cie_sin_fondo.png" alt="Logo CIE" class="sidebar-logo-img">
+            </a>
+          </div>
+          <ul class="nav flex-column flex-grow-1 small">
+            <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="usuarios.html"><i class="bi bi-person me-1"></i> Usuarios</a></li>
+            <li class="nav-item"><a class="nav-link" href="equipos.html"><i class="bi bi-laptop me-1"></i> Equipos</a></li>
+            <li class="nav-item"><a class="nav-link active" href="inventario.html"><i class="bi bi-archive me-1"></i> Inventario</a></li>
+            <li class="nav-item"><a class="nav-link" href="altas_bajas.html"><i class="bi bi-arrow-left-right me-1"></i> Altas/Bajas</a></li>
+            <li class="nav-item"><a class="nav-link" href="garantias.html"><i class="bi bi-shield-check me-1"></i> Garantías</a></li>
+            <li class="nav-item"><a class="nav-link" href="cedula_res.html"><i class="bi bi-file-earmark-text me-1"></i> Cédula Resguardo</a></li>
+            <li class="nav-item"><a class="nav-link" href="historial.html"><i class="bi bi-clock-history me-1"></i> Historial</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-gear me-1"></i> Configuración</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-question-circle me-1"></i> Ayuda</a></li>
+          </ul>
+          <div class="mt-auto px-3 pb-3">
+            <hr class="bg-light">
+            <a class="btn btn-danger w-100 d-flex align-items-center justify-content-center gap-2" href="#"><i class="bi bi-box-arrow-right"></i> <span class="fw-bold">Salir</span></a>
+            <div class="mt-3 text-white-50 small text-center"><i class="bi bi-info-circle"></i> soporte@cie.com.mx</div>
+          </div>
+        </div>
+      </nav>
+      <main id="contenidoPrincipal" class="col-lg-10 ms-auto px-3 px-md-4 pt-5 pt-lg-4">
+        <!-- Encabezado visual unificado (igual estilo que usuarios.html) -->
+        <section class="mb-3">
+          <div class="cie-section-bar rounded-4 px-3 px-md-4 py-3 d-flex flex-column flex-md-row align-items-center gap-3 gap-md-4 mb-2 cie-min-h-80">
+            <div class="flex-shrink-0 d-flex align-items-center justify-content-center cie-icon-wrap-44">
+              <i class="bi bi-archive cie-icon-lg cie-red"></i>
+            </div>
+            <div class="flex-grow-1 text-center text-md-start">
+              <h1 class="fw-semibold mb-1 cie-title-lg cie-red">Inventario General</h1>
+              <div class="text-muted">Panel de consulta y gestión de equipos registrados</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- KPIs y RANGO -->
+        <div class="row g-3 mb-3">
+          <div class="col-6 col-md-3 col-lg-2">
+            <div class="card shadow-sm border-0 h-100">
+              <div class="card-body py-2 px-3 d-flex flex-column justify-content-center">
+                <div class="small text-muted">Total</div>
+                <div class="fw-bold" style="font-size:1.2rem;" id="kpiInvTotal">0</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3 col-lg-2">
+            <div class="card shadow-sm border-0 h-100">
+              <div class="card-body py-2 px-3 d-flex flex-column justify-content-center">
+                <div class="small text-muted">Filtrados</div>
+                <div class="fw-bold" style="font-size:1.2rem;" id="kpiInvFiltrados">0</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-8 d-flex align-items-stretch">
+            <div class="card shadow-sm border-0 w-100">
+              <div class="card-body py-2 px-3 d-flex flex-wrap align-items-center gap-2">
+                <span class="small text-muted fw-semibold">Rangos:</span>
+                <div class="btn-group btn-group-sm flex-wrap rangos-responsive" role="group" aria-label="Rangos inventario">
+                  <button type="button" class="btn btn-outline-secondary" id="btnInvHoy">Hoy</button>
+                  <button type="button" class="btn btn-outline-secondary" id="btnInvSemana">Semana</button>
+                  <button type="button" class="btn btn-outline-secondary" id="btnInvMes">Mes</button>
+                  <button type="button" class="btn btn-outline-secondary" id="btnInvTrimestre">Trimestre</button>
+                  <button type="button" class="btn btn-outline-secondary" id="btnInvAnio">Año</button>
+                  <button type="button" class="btn btn-outline-primary" id="btnInvTodos"><i class="bi bi-eye"></i> Todos</button>
+                </div>
+                <div class="d-flex align-items-center gap-2 ms-auto">
+                  <span class="badge rounded-pill text-bg-light border" id="badgeInvFiltros" style="display:none;"><i class="bi bi-funnel"></i> <span id="badgeInvFiltrosNum">0</span></span>
+                  <button class="btn btn-outline-secondary btn-sm d-none d-md-inline" type="button" id="btnInvDensidad" title="Modo compacto"><i class="bi bi-arrows-collapse"></i></button>
+                  <button class="btn btn-outline-secondary btn-sm" type="button" id="btnInvReload" title="Recargar datos"><i class="bi bi-arrow-clockwise"></i></button>
+                  <div class="small text-secondary" id="lblInvRango">Todos</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filtros avanzados -->
+        <div class="card shadow-sm mb-3" id="cardFiltrosInv">
+          <div class="card-header py-2 d-flex d-sm-none justify-content-between align-items-center bg-white border-0">
+            <span class="small text-secondary fw-semibold d-flex align-items-center gap-1"><i class="bi bi-funnel"></i> Filtros</span>
+            <button class="btn btn-outline-secondary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFiltrosInv" aria-expanded="false" aria-controls="collapseFiltrosInv"><i class="bi bi-sliders"></i></button>
+          </div>
+          <div class="card-body pt-3 pt-sm-3 pb-2">
+            <div class="collapse show" id="collapseFiltrosInv">
+              <form id="formFiltrosInv" class="row g-3 align-items-end small filtro-compact" autocomplete="off">
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                  <label class="form-label" for="fEquipo">Equipo</label>
+                  <div class="d-flex flex-column gap-1">
+                    <select id="fEquipo" class="form-select form-select-sm">
+                      <option value="">Todos</option>
+                      <option value="LAPTOP">LAPTOP</option>
+                      <option value="MONITOR">MONITOR</option>
+                      <option value="TECLADO">TECLADO</option>
+                      <option value="MOUSE">MOUSE</option>
+                      <option value="TECLADO Y MOUSE">TECLADO Y MOUSE</option>
+                      <option value="DOCKING STATION">DOCKING STATION</option>
+                      <option value="OTRO">OTRO</option>
+                    </select>
+                    <input type="text" id="fEquipoOtro" class="form-control form-control-sm d-none" placeholder="ESPECIFICAR">
+                  </div>
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                  <label class="form-label" for="fMarcaInv">Marca</label>
+                  <div class="d-flex flex-column gap-1">
+                    <select id="fMarcaInv" class="form-select form-select-sm">
+                      <option value="">Todas</option>
+                      <option value="HP">HP</option>
+                      <option value="DELL">DELL</option>
+                      <option value="APPLE">APPLE</option>
+                      <option value="ASUS">ASUS</option>
+                      <option value="ACER">ACER</option>
+                      <option value="LENOVO">LENOVO</option>
+                      <option value="MICROSOFT">MICROSOFT</option>
+                      <option value="MSI">MSI</option>
+                      <option value="SAMSUNG">SAMSUNG</option>
+                      <option value="SONY">SONY</option>
+                      <option value="TOSHIBA">TOSHIBA</option>
+                      <option value="OTRO">OTRO</option>
+                    </select>
+                    <input type="text" id="fMarcaOtro" class="form-control form-control-sm d-none" placeholder="ESPECIFICAR">
+                  </div>
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                  <label class="form-label" for="fModelo">Modelo</label>
+                  <input type="text" id="fModelo" class="form-control form-control-sm" placeholder="Modelo">
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                  <label class="form-label" for="fEmpresaInv">Empresa</label>
+                  <input type="text" id="fEmpresaInv" class="form-control form-control-sm" placeholder="Empresa">
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                  <label class="form-label" for="fEstadoInv">Estado</label>
+                  <select id="fEstadoInv" class="form-select form-select-sm">
+                    <option value="">Todos</option>
+                    <option>Activo</option>
+                    <option>En reparación</option>
+                    <option>Baja</option>
+                    <option>Extraviado</option>
+                    <option>Prestado</option>
+                  </select>
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                  <label class="form-label" for="fDesdeInv">Desde</label>
+                  <input type="date" id="fDesdeInv" class="form-control form-control-sm">
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+                  <label class="form-label" for="fHastaInv">Hasta</label>
+                  <input type="date" id="fHastaInv" class="form-control form-control-sm">
+                </div>
+                
+                <div class="col-12 d-flex flex-wrap gap-2 justify-content-start justify-content-md-start mt-1">
+                  <button class="btn btn-danger btn-sm" type="submit"><i class="bi bi-funnel"></i> Aplicar</button>
+                  <button class="btn btn-outline-secondary btn-sm" type="button" id="btnLimpiarFiltrosInv"><i class="bi bi-eraser"></i> Limpiar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- Toolbar estilo Garantías: botones abajo de filtros a la derecha -->
+        <div class="d-flex flex-wrap align-items-center gap-2 mb-3" id="toolbarInventario">
+          <div class="input-group input-group-sm" style="max-width:320px;">
+            <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+            <input type="text" id="fTextoInv" class="form-control" placeholder="Buscar Inv / Serie" autocomplete="off" aria-label="Búsqueda inventario">
+            <button class="btn btn-outline-secondary" id="btnClearSearchInv" type="button" data-bs-toggle="tooltip" data-bs-title="Limpiar"><i class="bi bi-x"></i></button>
+          </div>
+          <div class="ms-auto d-flex flex-wrap gap-2">
+            <button class="btn btn-outline-success btn-sm" type="button" id="btnExportInvCsv" data-bs-toggle="tooltip" data-bs-title="Exportar CSV"><i class="bi bi-file-earmark-spreadsheet"></i><span class="d-none d-md-inline ms-1"> CSV</span></button>
+            <button class="btn btn-outline-danger btn-sm" type="button" id="btnExportInvPdf" data-bs-toggle="tooltip" data-bs-title="Exportar PDF"><i class="bi bi-filetype-pdf"></i><span class="d-none d-md-inline ms-1"> PDF</span></button>
+            <button class="btn btn-outline-primary btn-sm" type="button" id="btnImportInv" data-bs-toggle="tooltip" data-bs-title="Importar Excel"><i class="bi bi-upload"></i><span class="d-none d-md-inline ms-1"> Importar</span></button>
+            <button class="btn btn-danger btn-sm" type="button" id="btnNuevoInventario" data-bs-toggle="modal" data-bs-target="#modalRegistroInventario" title="Nuevo registro (Alt+N)"><i class="bi bi-plus-circle"></i><span class="d-none d-sm-inline ms-1"> Nuevo</span></button>
+          </div>
+        </div>
+
+        <!-- Tabla Inventario en card con header y paginación -->
+        <div class="card shadow-sm mb-4" id="cardInventario">
+          <div class="card-header d-flex flex-wrap align-items-center gap-2 py-2">
+            <strong class="text-danger d-flex align-items-center gap-1"><i class="bi bi-archive"></i> Inventario</strong>
+            <div class="ms-auto small text-secondary" id="lblRegistrosInv"></div>
+            <div class="d-flex align-items-center gap-1 small">Mostrar
+              <select id="pageSizeInv" class="form-select form-select-sm ms-1" style="width:auto;">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-responsive">
+    <table class="table table-hover align-middle table-striped mb-0" id="tablaInventario">
+              <thead class="table-light">
+                <tr>
+  <th class="sortable" data-field="numInv">Inventario <span class="sort-ind"></span></th>
+  <th class="sortable" data-field="usuario">Serie <span class="sort-ind"></span></th>
+  <th class="sortable" data-field="equipo">Equipo <span class="sort-ind"></span></th>
+  <th class="sortable" data-field="marca">Marca <span class="sort-ind"></span></th>
+  <th class="sortable" data-field="modelo">Modelo <span class="sort-ind"></span></th>
+  <th class="sortable" data-field="estado">Estado <span class="sort-ind"></span></th>
+  <th class="sortable" data-field="empresa">Empresa <span class="sort-ind"></span></th>
+  <th class="sortable" data-field="createdDateTime">Creado <span class="sort-ind"></span></th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="p-2 border-top bg-light">
+            <ul class="pagination pagination-sm mb-0" id="paginadorInv" aria-label="Paginación inventario"></ul>
+          </div>
+          <div class="text-center py-4 d-none" id="tablaInventarioVacia"><i class="bi bi-inbox fs-4 d-block text-secondary"></i><span class="text-muted small">Sin registros</span></div>
+        </div>
+        <!-- Modal para nuevo registro de inventario mejorado -->
+        <div class="modal fade" id="modalRegistroInventario" tabindex="-1" aria-labelledby="modalRegistroInventarioLabel" aria-hidden="true">
+          <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down">
+            <div class="modal-content shadow border-0 modal-fast cie-modal">
+              <form id="formRegistroInventario" autocomplete="off" class="needs-validation" novalidate>
+                <div class="modal-header bg-danger text-white align-items-center compact">
+                  <div class="d-flex align-items-center gap-2 flex-grow-1">
+                    <i class="bi bi-archive display-6"></i>
+                    <div>
+                      <h5 class="modal-title mb-0" id="modalRegistroInventarioLabel">Nuevo Registro de Inventario</h5>
+                      <small class="text-white-50">Completa todos los campos para registrar un nuevo equipo en inventario</small>
+                    </div>
+                  </div>
+                  <div class="ms-auto ps-2">
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar" style="float:right;"></button>
+                  </div>
+                </div>
+                <div class="modal-body compact">
+                  <div class="row g-fast">
+                    <div class="col-6 col-md-4 col-lg-3">
+                      <label for="numInventario" class="form-label fw-semibold"><i class="bi bi-123 me-1"></i> Inventario</label>
+                      <div class="input-group">
+                        <input type="text" class="form-control" id="numInventario" required placeholder="INV00001" data-focus-first>
+                        <button class="btn btn-outline-secondary" type="button" id="btnGenerarNumInv" title="Generar (Alt+G)"><i class="bi bi-magic"></i></button>
+                      </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                      <label for="equipo" class="form-label fw-semibold"><i class="bi bi-laptop me-1"></i> Equipo</label>
+                      <div class="d-flex flex-column gap-1">
+                        <select class="form-select" id="equipo" required>
+                          <option value="" disabled selected>Selecciona</option>
+                          <option value="LAPTOP">LAPTOP</option>
+                          <option value="MONITOR">MONITOR</option>
+                          <option value="TECLADO">TECLADO</option>
+                          <option value="MOUSE">MOUSE</option>
+                          <option value="TECLADO Y MOUSE">TECLADO Y MOUSE</option>
+                          <option value="DOCKING STATION">DOCKING STATION</option>
+                          <option value="OTRO">OTRO</option>
+                        </select>
+                        <input type="text" class="form-control d-none" id="equipoOtro" placeholder="ESPECIFICAR EQUIPO">
+                      </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                      <label for="modelo" class="form-label fw-semibold"><i class="bi bi-cpu me-1"></i> Modelo</label>
+                      <input type="text" class="form-control" id="modelo" required placeholder="Ej: Dell Latitude 5420">
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                      <label for="marcaInv" class="form-label fw-semibold"><i class="bi bi-tag me-1"></i> Marca</label>
+                      <div class="d-flex flex-column gap-1">
+                        <select class="form-select" id="marcaInv" required>
+                          <option value="" disabled selected>Selecciona</option>
+                          <option value="HP">HP</option>
+                          <option value="DELL">DELL</option>
+                          <option value="APPLE">APPLE</option>
+                          <option value="ASUS">ASUS</option>
+                          <option value="ACER">ACER</option>
+                          <option value="LENOVO">LENOVO</option>
+                          <option value="MICROSOFT">MICROSOFT</option>
+                          <option value="MSI">MSI</option>
+                          <option value="SAMSUNG">SAMSUNG</option>
+                          <option value="SONY">SONY</option>
+                          <option value="TOSHIBA">TOSHIBA</option>
+                          <option value="OTRO">OTRO</option>
+                        </select>
+                        <input type="text" class="form-control d-none" id="marcaOtro" placeholder="ESPECIFICAR MARCA">
+                      </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                      <label for="usuario" class="form-label fw-semibold"><i class="bi bi-hash me-1"></i> No. Serie</label>
+                      <div class="input-group">
+                        <input type="text" class="form-control" id="usuario" required placeholder="Ej: 3VMTJS">
+                        <button class="btn btn-outline-secondary" type="button" id="btnGenerarSerie" title="Generar"><i class="bi bi-magic"></i></button>
+                      </div>
+                      <div class="form-text">Identificador único del equipo.</div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                      <label for="empresa" class="form-label fw-semibold"><i class="bi bi-bank me-1"></i> Empresa</label>
+                      <input type="text" class="form-control" id="empresa" required placeholder="Ej: CIE S.A. de C.V.">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                      <label for="estado" class="form-label fw-semibold"><i class="bi bi-info-circle me-1"></i> Estado</label>
+                      <select class="form-select" id="estado" required>
+                        <option value="" disabled selected>Selecciona estado</option>
+                        <option value="Activo">Activo</option>
+                        <option value="En reparación">En reparación</option>
+                        <option value="Baja">Baja</option>
+                        <option value="Extraviado">Extraviado</option>
+                        <option value="Prestado">Prestado</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-between flex-wrap gap-2 bg-light border-0 compact">
+                  <div class="d-flex flex-wrap gap-2">
+                    <button type="reset" class="btn btn-outline-danger">
+                      <i class="bi bi-eraser"></i> Limpiar
+                    </button>
+                  </div>
+                  <div class="d-flex flex-wrap gap-2">
+                    <button type="button" class="btn btn-outline-secondary" id="btnGuardarNuevoInv" data-submit-mode="save-new" title="Guardar y seguir"><i class="bi bi-plus-circle"></i> Guardar y Nuevo</button>
+                    <button type="submit" class="btn btn-danger" id="btnGuardarCerrarInv" data-submit-mode="save-close">
+                      <i class="bi bi-check-circle"></i> Guardar
+                    </button>
+                  </div>
+                  <div class="w-100 text-end small text-muted shortcut-hint">Ctrl+Enter Guardar+Nuevo • Esc Cerrar • Alt+G Generar</div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <!-- Librería XLSX para importar Excel -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.19.3/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/inventario.js"></script>
+  <script src="js/nav.js"></script>
+  <!-- Modal Importar -->
+  <div class="modal fade" id="modalImportInv" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down">
+      <div class="modal-content modal-fast cie-modal">
+        <div class="modal-header bg-danger text-white py-2 compact">
+          <h6 class="modal-title mb-0 d-flex align-items-center gap-2"><i class="bi bi-upload"></i> Importar Inventario (Excel)</h6>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body compact">
+          <div class="row g-fast">
+            <div class="col-12 col-lg-7">
+              <label class="form-label" for="fileImportInv">Archivo .xlsx / .xls</label>
+              <input type="file" id="fileImportInv" class="form-control form-control-sm" accept=".xlsx,.xls" />
+              <div class="form-text small">Máx ~5MB. Solo primera hoja.</div>
+              <div class="mt-2 small" id="importPreviewInv"></div>
+            </div>
+            <div class="col-12 col-lg-5">
+              <div class="small fw-semibold mb-1">Formato esperado (cabeceras):</div>
+              <pre class="bg-light border small p-2 mb-2">Inventario | Serie | Equipo | Marca | Modelo | Estado | Empresa
+INV00001  | ABC123 | LAPTOP | DELL  | LAT345 | Activo | CIE</pre>
+              <ul class="small ps-3 mb-2">
+                <li>Campos obligatorios: Inventario, Serie, Equipo, Marca, Modelo, Estado, Empresa.</li>
+                <li>Estado válido: Activo, En reparación, Baja, Extraviado, Prestado.</li>
+                <li>Filas en blanco se ignoran.</li>
+                <li>Inventarios duplicados se saltan (se muestra conteo).</li>
+              </ul>
+              <button class="btn btn-outline-secondary btn-sm" type="button" id="btnDescargarPlantillaInv"><i class="bi bi-filetype-xlsx"></i> Plantilla</button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer compact d-flex flex-wrap gap-2">
+          <div class="me-auto small" id="importResumenInv"></div>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-danger" id="btnProcesarImportInv" disabled><i class="bi bi-check-circle"></i> Importar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

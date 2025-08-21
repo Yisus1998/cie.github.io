@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIE | Cédula Resguardo</title>
+  <link rel="stylesheet" href="css/estilos.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body class="has-sidebar">
+  <!-- Navegación unificada expandida -->
+  <nav class="navbar navbar-dark cie-bg-dark d-lg-none fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="img/cie_sin_fondo.png" alt="CIE" height="36" class="rounded" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMovil" aria-controls="sidebarMovil" aria-label="Abrir menú">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
+  <div class="offcanvas offcanvas-start cie-bg-dark text-white" tabindex="-1" id="sidebarMovil" aria-labelledby="sidebarMovilLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title d-flex align-items-center gap-2" id="sidebarMovilLabel"><img src="img/cie_sin_fondo.png" alt="Logo" style="height:40px;width:auto;" class="rounded"> <span class="d-none">CIE Panel</span></h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column">
+      <ul class="nav flex-column flex-grow-1 small">
+        <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="usuarios.html"><i class="bi bi-person me-1"></i> Usuarios</a></li>
+        <li class="nav-item"><a class="nav-link" href="equipos.html"><i class="bi bi-laptop me-1"></i> Equipos</a></li>
+        <li class="nav-item"><a class="nav-link" href="inventario.html"><i class="bi bi-archive me-1"></i> Inventario</a></li>
+        <li class="nav-item"><a class="nav-link" href="altas_bajas.html"><i class="bi bi-arrow-left-right me-1"></i> Altas/Bajas</a></li>
+  <li class="nav-item"><a class="nav-link" href="garantias.html"><i class="bi bi-shield-check me-1"></i> Garantías</a></li>
+  <li class="nav-item"><a class="nav-link" href="dictamen_tecnico.html"><i class="bi bi-file-earmark-medical me-1"></i> Dictamen Técnico</a></li>
+  <li class="nav-item"><a class="nav-link active" href="cedula_res.html"><i class="bi bi-file-earmark-text me-1"></i> Cédula Resguardo</a></li>
+  <li class="nav-item"><a class="nav-link" href="modelos.html"><i class="bi bi-grid me-1"></i> Modelos</a></li>
+  <li class="nav-item"><a class="nav-link" href="historial.html"><i class="bi bi-clock-history me-1"></i> Historial</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-gear me-1"></i> Configuración</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-question-circle me-1"></i> Ayuda</a></li>
+      </ul>
+      <div class="mt-3 text-white-50 small text-center"><i class="bi bi-info-circle"></i> soporte@cie.com.mx</div>
+      <a class="btn btn-danger w-100 mt-3 d-flex align-items-center justify-content-center gap-2" href="#"><i class="bi bi-box-arrow-right"></i> <span class="fw-bold">Salir</span></a>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <nav class="col-lg-2 sidebar cie-bg-dark pt-4 d-lg-block d-none position-fixed top-0 start-0 h-100" style="z-index:1040; min-width:220px;">
+        <div class="d-flex flex-column h-100">
+          <div class="mb-4 px-3 text-center">
+            <a href="index.html" class="d-block">
+              <img src="img/cie_sin_fondo.png" alt="Logo CIE" class="sidebar-logo-img">
+            </a>
+          </div>
+          <ul class="nav flex-column flex-grow-1 small">
+            <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="usuarios.html"><i class="bi bi-person me-1"></i> Usuarios</a></li>
+            <li class="nav-item"><a class="nav-link" href="equipos.html"><i class="bi bi-laptop me-1"></i> Equipos</a></li>
+            <li class="nav-item"><a class="nav-link" href="inventario.html"><i class="bi bi-archive me-1"></i> Inventario</a></li>
+            <li class="nav-item"><a class="nav-link" href="altas_bajas.html"><i class="bi bi-arrow-left-right me-1"></i> Altas/Bajas</a></li>
+            <li class="nav-item"><a class="nav-link" href="garantias.html"><i class="bi bi-shield-check me-1"></i> Garantías</a></li>
+            <li class="nav-item"><a class="nav-link" href="dictamen_tecnico.html"><i class="bi bi-file-earmark-medical me-1"></i> Dictamen Técnico</a></li>
+            <li class="nav-item"><a class="nav-link active" href="cedula_res.html"><i class="bi bi-file-earmark-text me-1"></i> Cédula Resguardo</a></li>
+            <li class="nav-item"><a class="nav-link" href="modelos.html"><i class="bi bi-grid me-1"></i> Modelos</a></li>
+            <li class="nav-item"><a class="nav-link" href="historial.html"><i class="bi bi-clock-history me-1"></i> Historial</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-gear me-1"></i> Configuración</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-question-circle me-1"></i> Ayuda</a></li>
+          </ul>
+          <div class="mt-auto px-3 pb-3">
+            <hr class="bg-light">
+            <a class="btn btn-danger w-100 d-flex align-items-center justify-content-center gap-2" href="#"><i class="bi bi-box-arrow-right"></i> <span class="fw-bold">Salir</span></a>
+            <div class="mt-3 text-white-50 small text-center"><i class="bi bi-info-circle"></i> soporte@cie.com.mx</div>
+          </div>
+        </div>
+      </nav>
+      <main id="contenidoPrincipal" class="col-lg-10 ms-auto px-3 px-md-4 pt-5 pt-lg-4">
+        <!-- Barra visual y encabezado -->
+        <div class="cie-section-bar mb-4 d-flex align-items-center gap-3 px-3 px-md-4 py-3 rounded-4 shadow-sm">
+          <div class="d-flex align-items-center justify-content-center cie-icon-wrap-44"><i class="bi bi-file-earmark-text cie-icon-lg cie-red"></i></div>
+          <h2 class="fw-bold mb-0 cie-title-lg cie-red flex-grow-1 text-center text-md-start">Cédula de Resguardo</h2>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-11 col-xl-10">
+            <div class="card cie-card border-0 rounded-4 mb-4 shadow-sm">
+              <div class="card-body p-4 p-md-5">
+  <!-- ================= FORMULARIO CÉDULA ================= -->
+  <form id="resguardoForm" class="cie-form" autocomplete="off" novalidate>
+          <!-- Sección: Datos del Usuario -->
+          <div class="cie-section-bar mb-3 d-flex align-items-center gap-2 px-2 px-md-3 py-2 rounded-4">
+            <i class="bi bi-person-circle cie-red cie-icon-sm" style="font-size:1.25rem;"></i>
+            <span class="fw-bold cie-red">Datos del Usuario</span>
+          </div>
+          <div class="row g-3">
+            <div class="col-6 col-sm-4 col-lg-2">
+              <label for="folio" class="form-label">Folio</label>
+              <input type="text" class="form-control cie-search-input" id="folio" maxlength="4" pattern="[A-Za-z0-9]{4}" placeholder="ABCD" required>
+              <div class="form-text small">4 caracteres</div>
+            </div>
+            <div class="col-6 col-sm-4 col-lg-2">
+              <label for="fecha" class="form-label">Fecha</label>
+              <input type="date" class="form-control cie-search-input" id="fecha" required>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control cie-search-input" id="nombre" required placeholder="NOMBRE COMPLETO">
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+              <label for="cargo" class="form-label">Cargo</label>
+              <input type="text" class="form-control cie-search-input" id="cargo" required placeholder="PUESTO">
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+              <label for="numEmpleado" class="form-label">No. Emp.</label>
+              <input type="text" class="form-control cie-search-input" id="numEmpleado" inputmode="numeric" maxlength="10" placeholder="1234">
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+              <label for="empresa" class="form-label">Empresa</label>
+              <input type="text" class="form-control cie-search-input" id="empresa" required placeholder="CIE">
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <label for="departamento" class="form-label">Depto.</label>
+              <input type="text" class="form-control cie-search-input" id="departamento" required placeholder="SISTEMAS">
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+              <label for="centroCostos" class="form-label">Centro Costos</label>
+              <input type="text" class="form-control cie-search-input" id="centroCostos" inputmode="numeric" maxlength="10" placeholder="1001">
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+              <label for="ubicacion" class="form-label">Ubicación Usuario</label>
+              <div class="d-flex flex-wrap align-items-center gap-2">
+                <select class="form-select cie-search-input flex-grow-1" id="ubicacion" data-otro-target="ubicacionOtro" data-extra-target="ubicacionHospital" required>
+                  <option value="">UBICACIÓN</option>
+                  <option value="CENTRUM PARK">CENTRUM PARK</option>
+                  <option value="HIPODROMO">HIPODROMO</option>
+                  <option value="HOSPITALES">HOSPITALES</option>
+                  <option value="otro">OTRO</option>
+                </select>
+                <input type="text" class="form-control cie-search-input d-none otro-input" id="ubicacionOtro" placeholder="ESPECIFICAR">
+                <input type="text" class="form-control cie-search-input d-none extra-input" id="ubicacionHospital" placeholder="CIUDAD / SEDE (URUAPAN, TLAHUAC, PUEBLA...)" maxlength="40">
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+              <label for="bienesLocalizadosEn" class="form-label">Bienes Localizados en</label>
+              <div class="d-flex flex-wrap align-items-center gap-2">
+                <select class="form-select cie-search-input flex-grow-1" id="bienesLocalizadosEn" data-otro-target="bienesLocalizadosEnOtro" data-extra-target="bienesLocalizadosEnHospital">
+                  <option value="">UBICACIÓN</option>
+                  <option value="CENTRUM PARK PISO 3">CENTRUM PARK PISO 3</option>
+                  <option value="ALMACEN TLALNEPANTLA">ALMACEN TLALNEPANTLA</option>
+                  <option value="HOSPITALES">HOSPITALES</option>
+                  <option value="HIPODROMO">HIPODROMO</option>
+                  <option value="otro">OTRO</option>
+                </select>
+                <input type="text" class="form-control cie-search-input d-none otro-input" id="bienesLocalizadosEnOtro" placeholder="ESPECIFICAR">
+                <input type="text" class="form-control cie-search-input d-none extra-input" id="bienesLocalizadosEnHospital" placeholder="CIUDAD / SEDE (URUAPAN, TLAHUAC, PUEBLA...)" maxlength="60">
+              </div>
+            </div>
+          </div>
+          <!-- Sección: Datos del Bien -->
+          <div class="cie-section-bar mb-3 mt-4 d-flex align-items-center gap-2 px-2 px-md-3 py-2 rounded-4">
+            <i class="bi bi-laptop cie-red" style="font-size:1.2rem;"></i>
+            <span class="fw-bold cie-red">Datos del Bien</span>
+          </div>
+          <div class="row g-3">
+            <div class="col-12 col-sm-6 col-lg-3">
+              <label for="noInventario" class="form-label">No. Inventario</label>
+              <input type="text" class="form-control cie-search-input" id="noInventario" placeholder="C139EQC0064">
+            </div>
+            <div class="col-12 col-sm-6 col-lg-3">
+              <label for="descripcion" class="form-label">Descripción</label>
+              <div class="d-flex flex-wrap align-items-center gap-2">
+                <select class="form-select cie-search-input flex-grow-1" id="descripcion" data-otro-target="descripcionOtro">
+                  <option value="">TIPO EQUIPO</option>
+                  <option value="LAPTOP">LAPTOP</option>
+                  <option value="MONITOR">MONITOR</option>
+                  <option value="TECLADO">TECLADO</option>
+                  <option value="MOUSE">MOUSE</option>
+                  <option value="TECLADO Y MOUSE">TECLADO Y MOUSE</option>
+                  <option value="DOCKING STATION">DOCKING STATION</option>
+                  <option value="otro">OTRO</option>
+                </select>
+                <input type="text" class="form-control cie-search-input d-none otro-input" id="descripcionOtro" placeholder="ESPECIFICAR">
+              </div>
+            </div>
+            <div class="col-4 col-sm-3 col-lg-2 col-xl-1">
+              <label for="cantidad" class="form-label">Cant.</label>
+              <input type="number" min="1" step="1" class="form-control cie-search-input" id="cantidad" value="1">
+            </div>
+            <div class="col-4 col-sm-3 col-lg-2 col-xl-1">
+              <label for="ef" class="form-label">E.F.</label>
+              <select class="form-select cie-search-input" id="ef">
+                <option value="">-</option>
+                <option value="N">N</option>
+                <option value="B" selected>B</option>
+                <option value="R">R</option>
+                <option value="M">M</option>
+              </select>
+            </div>
+            <div class="col-12 col-lg-4 col-xl-4">
+              <label for="ubicacionEquipo" class="form-label">Ubicación Bien</label>
+              <div class="d-flex flex-wrap align-items-center gap-2">
+                <select class="form-select cie-search-input flex-grow-1" id="ubicacionEquipo" data-otro-target="ubicacionEquipoOtro" data-extra-target="ubicacionEquipoHospital">
+                  <option value="">UBICACIÓN</option>
+                  <option value="CENTRUM PARK PISO 3">CENTRUM PARK PISO 3</option>
+                  <option value="ALMACEN TLALNEPANTLA">ALMACEN TLALEPANTLA</option>
+                  <option value="HOSPITALES">HOSPITALES</option>
+                  <option value="HIPODROMO">HIPODROMO</option>
+                  <option value="otro">OTRO</option>
+                </select>
+                <input type="text" class="form-control cie-search-input d-none otro-input" id="ubicacionEquipoOtro" placeholder="ESPECIFICAR">
+                <input type="text" class="form-control cie-search-input d-none extra-input" id="ubicacionEquipoHospital" placeholder="CIUDAD / SEDE (URUAPAN, TLAHUAC, PUEBLA...)" maxlength="60">
+              </div>
+            </div>
+            <div class="col-6 col-sm-4 col-lg-2">
+              <label for="marca" class="form-label">Marca</label>
+              <div class="d-flex flex-wrap align-items-center gap-2">
+                <select class="form-select cie-search-input flex-grow-1" id="marca" data-otro-target="marcaOtro">
+                 
+                   <option value="HP">HP</option>
+                   <option value="DELL">DELL</option>
+                  <option value="APPLE">APPLE</option>
+                  <option value="ASUS">ASUS</option>
+                  <option value="ACER">ACER</option>
+                  <option value="LENOVO">LENOVO</option>
+                  <option value="MICROSOFT">MICROSOFT</option>
+                  <option value="MSI">MSI</option>
+                  <option value="SAMSUNG">SAMSUNG</option>
+                  <option value="SONY">SONY</option>
+                  <option value="TOSHIBA">TOSHIBA</option>
+                  <option value="otro">OTRO</option>
+                </select>
+                <input type="text" class="form-control cie-search-input d-none otro-input" id="marcaOtro" placeholder="ESPECIFICAR">
+              </div>
+            </div>
+            <div class="col-6 col-sm-4 col-lg-2">
+              <label for="modelo" class="form-label">Modelo</label>
+              <input type="text" class="form-control cie-search-input" id="modelo" placeholder="LATITUDE">
+            </div>
+            <div class="col-12 col-sm-4 col-lg-2">
+              <label for="noSerie" class="form-label">No. Serie</label>
+              <input type="text" class="form-control cie-search-input" id="noSerie" maxlength="40" placeholder="3VMTJS">
+            </div>
+            <div class="col-12">
+              <label for="caracteristicas" class="form-label">Características</label>
+              <textarea class="form-control cie-search-input auto-grow" id="caracteristicas" rows="3" placeholder="DISCO 500GB, RAM 16GB, ..." style="resize:vertical;min-height:56px;"></textarea>
+            </div>
+          </div>
+          <!-- Acciones Bienes -->
+          <div class="d-flex flex-wrap gap-2 mt-3">
+            <button type="button" id="btnAgregarBien" class="btn btn-outline-primary fw-bold"><i class="bi bi-plus-circle"></i> Agregar Bien</button>
+            <button type="button" id="btnLimpiarBienes" class="btn btn-outline-secondary"><i class="bi bi-eraser"></i> Limpiar bienes</button>
+          </div>
+          <!-- Tabla Bienes Agregados -->
+          <div class="table-responsive mt-3">
+            <table class="table table-sm table-bordered align-middle" id="tablaBienes">
+              <thead class="table-light">
+                <tr>
+                  <th style="width:40px;">#</th>
+                  <th>No. Inv.</th>
+                  <th>Descripción</th>
+                  <th style="width:60px;">Cant.</th>
+                  <th style="width:60px;">E.F.</th>
+                  <th>Ubicación</th>
+                  <th>Marca</th>
+                  <th>Modelo</th>
+                  <th>No. Serie</th>
+                  <th style="min-width:180px;">Características</th>
+                  <th style="width:50px;"></th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="text-end small text-muted">Total bienes: <span id="totalBienes">0</span></div>
+          <!-- Sección: Observaciones -->
+          <div class="cie-section-bar mb-3 mt-4 d-flex align-items-center gap-2 px-2 px-md-3 py-2 rounded-4">
+            <i class="bi bi-chat-dots cie-red" style="font-size:1.2rem;"></i>
+            <span class="fw-bold cie-red">Observaciones</span>
+          </div>
+          <div class="row g-3">
+            <div class="col-12">
+              <textarea class="form-control cie-search-input auto-grow" id="observaciones" rows="3" placeholder="Observaciones adicionales" style="resize:vertical;min-height:56px;"></textarea>
+            </div>
+          </div>
+          <!-- Campo Unidad de -->
+          <div class="row g-3 mt-3">
+            <div class="col-12 col-sm-6 col-lg-3">
+              <label for="unidadDe" class="form-label">Unidad de</label>
+              <div class="d-flex flex-wrap align-items-center gap-2">
+                <select class="form-select cie-search-input flex-grow-1" id="unidadDe" data-otro-target="unidadDeOtro">
+                  <option value="">SELECCIONA</option>
+                  <option value="PROPIO">PROPIO</option>
+                  <option value="ARRENDADO">ARRENDADO</option>
+                  <option value="otro">OTRO</option>
+                </select>
+                <input type="text" class="form-control cie-search-input d-none otro-input" id="unidadDeOtro" placeholder="ESPECIFICAR">
+              </div>
+            </div>
+          </div>
+          <!-- Sección: Acciones -->
+          <div class="row g-3 mt-4">
+            <div class="col-12 d-flex flex-row gap-2 justify-content-end align-items-center flex-wrap text-end">
+              <div id="notificacionPdf" class="alert mt-0 mb-2 d-none fade" role="alert" style="min-width:260px;max-width:420px;"></div>
+              <button id="btnLimpiar" type="button" class="btn btn-outline-secondary fw-bold px-4 py-2">
+                <i class="bi bi-trash"></i> Limpiar
+              </button>
+              <button id="btnGenerarPdf" type="button" class="btn btn-danger fw-bold px-4 py-2">
+                <i class="bi bi-file-earmark-pdf"></i> Generar PDF
+              </button>
+              <!-- Modal PDF -->
+              <div class="modal fade" id="modalVistaPdf" tabindex="-1" aria-labelledby="modalVistaPdfLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down">
+                  <div class="modal-content cie-modal">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="modalVistaPdfLabel">Vista previa del PDF</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body p-0 pdf-modal-body">
+                      <div class="pdf-frame-wrapper">
+                        <iframe id="iframeVistaPdf" class="w-100 h-100"></iframe>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-success" id="btnGuardarPdf"><i class="bi bi-download"></i> Guardar</button>
+                      <button type="button" class="btn btn-primary" id="btnImprimirPdf"><i class="bi bi-printer"></i> Imprimir</button>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Barra fija móvil -->
+          <div class="d-lg-none position-fixed bottom-0 start-0 end-0 bg-white border-top shadow-sm p-2 d-flex gap-2 justify-content-end" style="z-index:1050;">
+            <button id="btnLimpiar_m" type="button" class="btn btn-outline-secondary flex-fill"><i class="bi bi-eraser"></i></button>
+            <button id="btnAgregarBien_m" type="button" class="btn btn-outline-primary flex-fill"><i class="bi bi-plus-circle"></i></button>
+            <button id="btnGenerarPdf_m" type="button" class="btn btn-danger flex-fill"><i class="bi bi-file-earmark-pdf"></i></button>
+          </div>
+        </form>
+        <div id="vistaPrevia" class="mt-5"></div>
+      </main>
+    </div>
+  </div>
+  <!-- Core genérico -->
+  <script src="js/scripts.js"></script>
+  <!-- Lógica específica de cédula -->
+  <script src="js/cedula_res.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNa5H6r5xWxppIqh+apMI2vlA38nSxrdbidKfnUSsfx8bVsgcF6edS5nl2xe50Tzw9uQWGWpZ6YG1Y6CZNWCOQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-/F2YF3P2tHFDigONydMUuN1ZpFdEyAJWCkJSN3kLBXjg5eQof8I4eAbOe+tfLOcAfeUeawuO/HEd1lBbSeKDLg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</html>

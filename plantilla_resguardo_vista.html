@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cédula de Resguardo - Responsive + Filas dinámicas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <style>
+    :root{
+      --cie-azul:#003366;
+      --borde:#000;
+      --txt:#111;
+      --hdr-gray:#d9dadb; /* legacy */
+      --hdr-bg:#d9dadb;   /* unified header background */
+      --hdr-txt:#000;     /* unified header text */
+      --fs-body:10px;
+      --fs-small:var(--fs-body);
+      --fs-title:var(--fs-body);
+      --line-body:1.18;
+      --firmas-row-height:28mm; /* altura ampliada para permitir firma */
+      --footer-fs:var(--fs-body);
+    }
+    *{ box-sizing:border-box; }
+    body{ margin:0; padding:12px; background:#eef1f7; color:var(--txt); font-family:'Roboto',Arial,Helvetica,sans-serif; font-size:var(--fs-body); line-height:var(--line-body); display:flex; flex-direction:column; align-items:center; gap:10px; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    .toolbar{ position:sticky; top:0; background:#eef1f7; padding:8px; z-index:10; display:flex; gap:8px; justify-content:flex-end; width:100%; max-width:1300px; }
+    .btn{ border:1px solid var(--cie-azul); background:#fff; color:var(--cie-azul); padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:bold; font-size:var(--fs-body); }
+    .btn.primary{ background:var(--cie-azul); color:#fff; }
+    .hint{ font-size:var(--fs-body); color:#333; }
+
+    .page-wrap{ width:100%; display:flex; justify-content:center; }
+    .page{ width:297mm; min-height:210mm; background:#fff; border:1px solid #ddd; box-shadow:0 10px 30px rgba(0,0,0,.08); padding:10mm 12mm; margin-bottom:12px; display:flex; flex-direction:column; position:relative; }
+    @media print{ body{ background:#fff; padding:0; } .toolbar{ display:none; } .page{ transform:none; border:none; box-shadow:none; width:auto; min-height:auto; padding:0; } @page{ size:A4 landscape; margin:10mm; } }
+
+    table{ border-collapse:collapse; width:100%; }
+    .t{ border:1px solid var(--borde); font-size:var(--fs-body); }
+    .t th,.t td{ border:1px solid var(--borde); padding:3px 4px; font-size:var(--fs-body); }
+    .t th{ background:var(--hdr-bg); color:var(--hdr-txt); }
+    .center{ text-align:center; }
+    .bold{ font-weight:bold; }
+    .small{ font-size:var(--fs-body); }
+    .title{ color:#000; font-weight:bold; text-align:center; margin:6px 0 4px; text-transform:uppercase; background:var(--hdr-bg); border:1px solid var(--borde); padding:3px 6px; font-size:var(--fs-title); }
+
+    .hdr2{ display:grid; grid-template-columns:55mm 1fr auto; align-items:center; column-gap:8px; margin-bottom:4px; }
+    .hdr2-center{ text-align:center; line-height:1.1; }
+    .hdr2-right{ text-align:right; line-height:1.1; }
+    .folio-number{ color:#c70000; font-weight:700; }
+    .accent-blue{ color:#1f5fff; font-weight:700; }
+
+    .datos-grid{ table-layout:fixed; font-size:var(--fs-body); }
+    .datos-grid th{ background:var(--hdr-bg); color:var(--hdr-txt); text-align:center; font-weight:700; }
+    .datos-grid td{ text-align:center; }
+
+    /* Tabla de bienes */
+    .bienes{ table-layout:fixed; font-size:var(--fs-body); }
+    .bienes th{ background:var(--hdr-bg); color:var(--hdr-txt); font-size:var(--fs-body); padding:2mm 1.5mm; }
+    .bienes th,.bienes td{ padding:2px 2px !important; vertical-align:middle; }
+    .bienes td .txt{ display:block; min-height:9mm; white-space:pre-wrap; word-break:break-word; }
+    .bienes tbody tr:nth-child(odd){ background:rgba(0,0,0,.02); }
+    .bienes th,.bienes td,.bienes td .txt{ text-align:center !important; }
+    .bienes td:nth-child(2) .txt, .bienes td:nth-child(8) .txt{ white-space:normal !important; overflow-wrap:anywhere !important; word-break:break-word !important; text-align:center !important; font-family:"Consolas","Courier New",monospace; }
+
+    /* Observaciones */
+    .meta-pie td#ObservacionesUsuario{ min-height:32mm; line-height:1.2; font-size:var(--fs-body); }
+    .meta-pie .lbl{ background:var(--hdr-bg); color:var(--hdr-txt); font-weight:700; }
+
+    /* Firmas */
+    .firmas td{ padding-top:2mm; text-align:center; vertical-align:bottom; }
+    .linea{ border:none; border-bottom:1px solid #000; font-weight:bold; line-height:1.05; margin-top:12mm; padding:0; font-size:var(--fs-body); text-transform:uppercase; }
+    .firmas .linea + .small{ margin-top:1mm; }
+    .firmas .small + .small{ margin-top:0.6mm; }
+    .firmas tr{ height:var(--firmas-row-height); }
+    .firmas td .small{ line-height:1.05; color:#1f5fff; }
+
+    .nota,.texto-legal,.importante,.footer{ font-size:var(--fs-body); }
+    .footer{ margin-top:auto; text-align:center; color:#555; letter-spacing:.2px; font-size:var(--footer-fs); transition:font-size .15s; }
+    .footer.compact{ font-size:calc(var(--fs-body) - 1px); }
+    .footer.tiny{ font-size:calc(var(--fs-body) - 2px); }
+    .importante .imp-label{ color:#c70000; font-weight:700; }
+
+    /* Compactación por densidad (solo alturas) */
+    .condensed .bienes td .txt{ min-height:7mm; }
+    .dense .bienes td .txt{ min-height:6.2mm; line-height:1.05; }
+    .ultra .bienes td .txt{ min-height:5mm; line-height:1.02; }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <div class="hint">Tip: llena los datos y exporta a PDF.</div>
+    <button class="btn primary" id="btn-pdf">Exportar PDF</button>
+  </div>
+  <div class="page-wrap">
+    <div class="page" id="page">
+      <div class="hdr2">
+        <div class="logo-cell"><div class="logo-box" id="Logo1"><img src="img/cie_jpe.jpg" alt="Logo CIE" style="width:50mm;height:20mm;object-fit:contain;"></div></div>
+        <div class="hdr2-center">
+          <div class="empresa-cell">Corporación Interamericana de Entretenimiento, S.A.B. de C.V.</div>
+          <div>Formatos Corporativos</div>
+          <div><span class="bold">Control de Activos Fijos</span></div>
+          <div class="bold">Cédula de Resguardo</div>
+        </div>
+        <div class="hdr2-right">
+          <div><span class="bold">Folio</span> <span id="Folio" class="folio-number"></span></div>
+          <div class="small">fecha elaboración</div>
+          <div id="FechaCorta" class="accent-blue"></div>
+          <div class="small">Hoja <b>1</b> de <b>1</b></div>
+        </div>
+      </div>
+      <table class="t datos datos-grid" style="margin-top:6px;">
+        <tr class="hdr-row"><th>Nombre</th><th>Cargo</th><th>No. Empleado</th><th>Bienes Localizados en:</th></tr>
+        <tr><td id="Nombre" contenteditable="true"></td><td id="Cargo" contenteditable="true"></td><td id="No_Empleado" contenteditable="true"></td><td id="Ubicacion_Bienes" contenteditable="true"></td></tr>
+        <tr class="hdr-row"><th>Empresa</th><th>Ubicación del Usuario</th><th>Departamento</th><th>Centro de Costos</th></tr>
+        <tr><td id="Empresa" contenteditable="true"></td><td id="Ubicacion_Usuario" contenteditable="true"></td><td id="Departamento" contenteditable="true"></td><td id="Centro_Costos" contenteditable="true"></td></tr>
+      </table>
+      <div class="title">DETALLE DE LOS BIENES ASIGNADOS A MI CARGO</div>
+      <div class="bienes-container">
+        <table class="t bienes" id="tabla-bienes">
+          <colgroup>
+            <col style="width:4%">  <!-- No. -->
+            <col style="width:12%"> <!-- No. Inventario CIE -->
+            <col style="width:6%">  <!-- Cantidad -->
+            <col style="width:16%"> <!-- Descripción -->
+            <col style="width:22%"> <!-- Características (ampliado) -->
+            <col style="width:8%">  <!-- Marca -->
+            <col style="width:8%">  <!-- Modelo -->
+            <col style="width:10%"> <!-- No. Serie -->
+            <col style="width:4%">  <!-- E.F. (reducido) -->
+            <col style="width:10%"> <!-- Ubicación -->
+          </colgroup>
+          <thead><tr class="center"><th>No.</th><th>No. Inventario CIE</th><th>Cantidad</th><th>Descripción</th><th>Características</th><th>Marca</th><th>Modelo</th><th>No. Serie</th><th>E.F.</th><th>Ubicación (Piso, área y sección)</th></tr></thead>
+          <tbody id="bienes-body"></tbody>
+        </table>
+      </div>
+      <div class="nota">Claves de Estado Físico (E.F.): N = Nuevo &nbsp; B = Bueno &nbsp; R = Regular &nbsp; M = Malo</div>
+      <div class="texto-legal" style="line-height:1.25; margin-top:2px;">
+        <p>Por lo anterior, me comprometo a hacer buen uso de los bienes asignados a mi cargo, en el entendido que cualquier deterioro de los mismos por mi negligencia me será descontado vía nómina el importe que resulte de la reparación o reposición de los mismos.</p>
+        <p>Declaro bajo protesta de decir verdad que el software que contiene el equipo, es el único autorizado y licenciado para permanecer en dicho equipo, asimismo el debido resguardo del software y la instalación de cualquier otro software ajeno al autorizado, será responsabilidad mía y en este acto acuerdo y asumo que cualquier sanción, multa o penalización que pudiera derivarse por tal motivo será mi responsabilidad y me obligo a sacar en paz y a salvo a Corporación Interamericana de Entretenimiento, S.A.B. de C.V. o cualquiera de sus subsidiarias por cualquier controversia derivada de lo anterior.</p>
+      </div>
+      <table class="t meta-pie" style="margin-top:6px;">
+        <tr><td class="lbl">Fecha de Inventario:</td><td id="FechaInventario_Larga" contenteditable="true"></td><td class="lbl">Empresa:</td><td id="EmpresaPie" contenteditable="true"></td><td class="lbl">Unidad de Negocio:</td><td id="UnidadNegocio" contenteditable="true"></td></tr>
+        <tr><td class="lbl">Observaciones del Usuario:</td><td id="ObservacionesUsuario" contenteditable="true" colspan="5"></td></tr>
+      </table>
+      <div class="importante"><span class="imp-label">Importante:</span> Deberá notificar cualquier cambio al área de Activo Fijo para evitar el pago de los bienes detallados por mal uso o extravío.</div>
+      <div class="title">AUTORIZACIONES</div>
+      <table class="t firmas"><tr><td><div class="linea" id="FirmanteNombre"></div><div class="small">Nombre</div><div id="FirmanteCargo" class="small"></div><div id="FirmanteFecha" class="small"></div></td><td><div class="linea">RODOLFO RAMOS PRIEGO</div><div class="small">Nombre</div><div class="small">COORDINADOR ACTIVO FIJO</div><div id="AF_Fecha" class="small"></div></td></tr></table>
+      <div class="footer">Original - Control de Activos | Copia - Usuario | Vers. 3 Noviembre 20, 2009 | FOC-AD-CAF-002-1-CIE</div>
+    </div>
+  </div>
+  <script>
+    function fechaCorta(d){ const m=["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"]; return String(d.getDate()).padStart(2,'0')+". "+m[d.getMonth()]+"."+String(d.getFullYear()).slice(-2); }
+    function fechaLarga(d){ const M=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]; return d.getDate()+" de "+M[d.getMonth()]+" de "+d.getFullYear(); }
+    const bodyTbl=document.getElementById('bienes-body');
+    function addRow(data={}){
+      const idx=bodyTbl.children.length+1;
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td class="center">${idx}</td><td><span class="txt" contenteditable="true">${data.NoInventario||''}</span></td><td><span class="txt center" contenteditable="true">${data.Cantidad||''}</span></td><td><span class="txt" contenteditable="true">${data.Descripcion||''}</span></td><td><span class="txt" contenteditable="true">${data.Caracteristicas||''}</span></td><td><span class="txt" contenteditable="true">${data.Marca||''}</span></td><td><span class="txt" contenteditable="true">${data.Modelo||''}</span></td><td><span class="txt" contenteditable="true">${data.Serie||''}</span></td><td><span class="txt center" contenteditable="true">${data.EF||''}</span></td><td><span class="txt" contenteditable="true">${data.Ubicacion||''}</span></td>`;
+      bodyTbl.appendChild(tr);
+    }
+    function setText(id,v){ const el=document.getElementById(id); if(el) el.textContent=v; }
+    function setEditable(id,v){ setText(id,v); }
+    window.addRow=addRow; window.setText=setText; window.setEditable=setEditable; window.fechaCorta=fechaCorta; window.fechaLarga=fechaLarga;
+    function optimizeLayout(){
+      const page = document.getElementById('page');
+      if(!page) return;
+      const targetPx = (()=>{ // altura A4 landscape interna aprox 210mm
+        const probe = document.createElement('div');
+        probe.style.height='210mm'; probe.style.position='absolute'; probe.style.visibility='hidden';
+        document.body.appendChild(probe); const h = probe.getBoundingClientRect().height; document.body.removeChild(probe); return h; })();
+      // función helper para saber si excede
+      const overflows = ()=> page.scrollHeight > targetPx + 2; // tolerancia
+      const rootStyle = document.documentElement.style;
+      let changed = false;
+      // 1. Reducir altura de firmas progresivamente
+      const alturas = ['28mm','24mm','20mm','18mm','16mm','15mm'];
+      for(const a of alturas){
+        if(overflows()){
+          if(getComputedStyle(document.documentElement).getPropertyValue('--firmas-row-height').trim() !== a){
+            rootStyle.setProperty('--firmas-row-height', a); changed = true;
+          }
+        }
+      }
+      // 2. Aplicar densidad a bienes
+      if(overflows()){
+        if(!page.classList.contains('condensed')){ page.classList.add('condensed'); changed = true; }
+      }
+      if(overflows()){
+        if(!page.classList.contains('dense')){ page.classList.add('dense'); changed = true; }
+      }
+      if(overflows()){
+        if(!page.classList.contains('ultra')){ page.classList.add('ultra'); changed = true; }
+      }
+      // 3. Comprimir footer
+      const footer = page.querySelector('.footer');
+      if(footer){
+        if(overflows() && !footer.classList.contains('compact')){ footer.classList.add('compact'); changed = true; }
+        if(overflows() && !footer.classList.contains('tiny')){ footer.classList.add('tiny'); changed = true; }
+      }
+      // 4. Si seguimos con overflow, reducir fuente global un paso (mínimo 8px)
+      if(overflows()){
+        const current = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--fs-body'));
+        if(current > 8){ rootStyle.setProperty('--fs-body', (current - 1)+'px'); changed = true; }
+      }
+      // 5. Reiterar si hubo cambios y aún overflow (máx 5 iteraciones)
+      if(changed){
+        let tries=0;
+        while(overflows() && tries < 5){
+          tries++;
+          const cur = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--fs-body'));
+          if(cur > 8){ rootStyle.setProperty('--fs-body', (cur - 1)+'px'); }
+          if(overflows() && !page.classList.contains('ultra')) page.classList.add('ultra');
+          if(overflows() && footer && !footer.classList.contains('tiny')) footer.classList.add('tiny');
+        }
+      }
+    }
+    window.optimizeLayout=optimizeLayout; document.addEventListener('DOMContentLoaded',()=> setTimeout(optimizeLayout,120));
+    // Ajustar addRow para re-optimizar
+    const originalAddRow = addRow;
+    window.addRow = function(data){ originalAddRow(data); optimizeLayout(); };
+    window.addEventListener('resize', ()=> optimizeLayout());
+    async function exportarPDF(){
+      optimizeLayout();
+      const { jsPDF }=window.jspdf;
+      const page=document.getElementById('page');
+      const clone=page.cloneNode(true);
+      clone.id='page-export';
+      const style=document.createElement('style');
+      style.textContent='#page-export{transform:none!important;width:297mm!important;} #page-export *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}';
+      clone.insertBefore(style,clone.firstChild);
+      clone.style.position='fixed'; clone.style.left='-10000px';
+      document.body.appendChild(clone);
+      const canvas=await html2canvas(clone,{scale:3,useCORS:true,backgroundColor:'#FFFFFF'});
+      const img=canvas.toDataURL('image/png');
+      document.body.removeChild(clone);
+      const pdf=new jsPDF('l','mm','a4');
+      const pageW=pdf.internal.pageSize.getWidth();
+      const pageH=pdf.internal.pageSize.getHeight();
+      const ratio=Math.min(pageW/canvas.width,pageH/canvas.height);
+      const w=canvas.width*ratio; const h=canvas.height*ratio;
+      pdf.addImage(img,'PNG',(pageW-w)/2,(pageH-h)/2,w,h);
+
+      // Construcción del nombre: CR_FOLIO_NOMBRES_APELLIDOS_FECHA(DD-MM-YY)
+      const norm = s=> (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+      const clean = s=> norm(String(s)).replace(/[^A-Za-z0-9]+/g,'_').replace(/^_+|_+$/g,'');
+      const splitNombre = full=>{
+        const parts=String(full||'').trim().split(/\s+/).filter(Boolean);
+        if(parts.length>=3){ return { nombres: parts.slice(0,-2).join(' '), apellidos: parts.slice(-2).join(' ') }; }
+        if(parts.length===2){ return { nombres: parts[0], apellidos: parts[1] }; }
+        return { nombres: parts[0]||'', apellidos: '' };
+      };
+      const folioTxt = (document.getElementById('Folio')?.textContent||'').trim() || 'SIN_FOLIO';
+      const nombreFuente = (document.getElementById('FirmanteNombre')?.textContent||document.getElementById('Nombre')?.textContent||'').trim();
+      const {nombres, apellidos} = splitNombre(nombreFuente);
+      const now=new Date(); const dd=String(now.getDate()).padStart(2,'0'); const mm=String(now.getMonth()+1).padStart(2,'0'); const yy=String(now.getFullYear()).slice(-2);
+      const fechaFmt = `${dd}-${mm}-${yy}`;
+      const folioPart = clean(folioTxt).toUpperCase();
+      const nombresPart = clean(nombres||'SIN_NOMBRE').toUpperCase();
+      const apellidosPart = clean(apellidos||'').toUpperCase();
+  const filename = `CR_${folioPart}_${fechaFmt}_${nombresPart}${apellidosPart?`_${apellidosPart}`:''}.pdf`;
+      pdf.save(filename);
+    }
+    document.getElementById('btn-pdf').addEventListener('click',exportarPDF);
+  </script>
+</body>
+</html>

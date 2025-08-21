@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CIE | Modelos</title>
+  <link rel="stylesheet" href="css/estilos.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body class="has-sidebar">
+  <!-- Navegación unificada expandida -->
+  <nav class="navbar navbar-dark cie-bg-dark d-lg-none fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="img/cie_sin_fondo.png" alt="CIE" height="36" class="rounded" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMovil" aria-controls="sidebarMovil" aria-label="Abrir menú">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
+  <div class="offcanvas offcanvas-start cie-bg-dark text-white" tabindex="-1" id="sidebarMovil" aria-labelledby="sidebarMovilLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title d-flex align-items-center gap-2" id="sidebarMovilLabel"><img src="img/cie_sin_fondo.png" alt="Logo" style="height:40px;width:auto;" class="rounded"> <span class="d-none">CIE Panel</span></h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column">
+      <ul class="nav flex-column flex-grow-1 small">
+        <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="usuarios.html"><i class="bi bi-person me-1"></i> Usuarios</a></li>
+        <li class="nav-item"><a class="nav-link" href="equipos.html"><i class="bi bi-laptop me-1"></i> Equipos</a></li>
+        <li class="nav-item"><a class="nav-link" href="inventario.html"><i class="bi bi-archive me-1"></i> Inventario</a></li>
+        <li class="nav-item"><a class="nav-link" href="altas_bajas.html"><i class="bi bi-arrow-left-right me-1"></i> Altas/Bajas</a></li>
+        <li class="nav-item"><a class="nav-link" href="garantias.html"><i class="bi bi-shield-check me-1"></i> Garantías</a></li>
+        <li class="nav-item"><a class="nav-link" href="dictamen_tecnico.html"><i class="bi bi-file-earmark-medical me-1"></i> Dictamen Técnico</a></li>
+        <li class="nav-item"><a class="nav-link" href="cedula_res.html"><i class="bi bi-file-earmark-text me-1"></i> Cédula Resguardo</a></li>
+        <li class="nav-item"><a class="nav-link active" href="modelos.html"><i class="bi bi-grid me-1"></i> Modelos</a></li>
+        <li class="nav-item"><a class="nav-link" href="historial.html"><i class="bi bi-clock-history me-1"></i> Historial</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-gear me-1"></i> Configuración</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-question-circle me-1"></i> Ayuda</a></li>
+      </ul>
+      <div class="mt-3 text-white-50 small text-center"><i class="bi bi-info-circle"></i> soporte@cie.com.mx</div>
+      <a class="btn btn-danger w-100 mt-3 d-flex align-items-center justify-content-center gap-2" href="#"><i class="bi bi-box-arrow-right"></i> <span class="fw-bold">Salir</span></a>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <nav class="col-lg-2 sidebar cie-bg-dark pt-4 d-lg-block d-none position-fixed top-0 start-0 h-100" style="z-index:1040; min-width:220px;">
+        <div class="d-flex flex-column h-100">
+          <div class="mb-4 px-3 text-center">
+            <a href="index.html" class="d-block">
+              <img src="img/cie_sin_fondo.png" alt="Logo CIE" class="sidebar-logo-img">
+            </a>
+          </div>
+          <ul class="nav flex-column flex-grow-1 small">
+            <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="usuarios.html"><i class="bi bi-person me-1"></i> Usuarios</a></li>
+            <li class="nav-item"><a class="nav-link" href="equipos.html"><i class="bi bi-laptop me-1"></i> Equipos</a></li>
+            <li class="nav-item"><a class="nav-link" href="inventario.html"><i class="bi bi-archive me-1"></i> Inventario</a></li>
+            <li class="nav-item"><a class="nav-link" href="altas_bajas.html"><i class="bi bi-arrow-left-right me-1"></i> Altas/Bajas</a></li>
+            <li class="nav-item"><a class="nav-link" href="garantias.html"><i class="bi bi-shield-check me-1"></i> Garantías</a></li>
+            <li class="nav-item"><a class="nav-link" href="dictamen_tecnico.html"><i class="bi bi-file-earmark-medical me-1"></i> Dictamen Técnico</a></li>
+            <li class="nav-item"><a class="nav-link" href="cedula_res.html"><i class="bi bi-file-earmark-text me-1"></i> Cédula Resguardo</a></li>
+            <li class="nav-item"><a class="nav-link active" href="modelos.html"><i class="bi bi-grid me-1"></i> Modelos</a></li>
+            <li class="nav-item"><a class="nav-link" href="historial.html"><i class="bi bi-clock-history me-1"></i> Historial</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-gear me-1"></i> Configuración</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-question-circle me-1"></i> Ayuda</a></li>
+          </ul>
+          <div class="mt-auto px-3 pb-3">
+            <hr class="bg-light">
+            <a class="btn btn-danger w-100 d-flex align-items-center justify-content-center gap-2" href="#"><i class="bi bi-box-arrow-right"></i> <span class="fw-bold">Salir</span></a>
+            <div class="mt-3 text-white-50 small text-center"><i class="bi bi-info-circle"></i> soporte@cie.com.mx</div>
+          </div>
+        </div>
+      </nav>
+      <main id="contenidoPrincipal" class="col-lg-10 ms-auto px-3 px-md-4 pt-5 pt-lg-4">
+        <!-- Banner visual superior -->
+        <div class="rounded-4 shadow-lg mb-4 p-0 cie-banner-bg position-relative overflow-hidden" style="background:linear-gradient(100deg,#fff 60%,#be2b3a0f 100%); min-height:128px; border-bottom: 5px solid #be2b3a22;">
+          <div class="row g-0 align-items-center" style="min-height:128px;">
+            <div class="col-12 col-md-9 ps-4 py-4 d-flex align-items-center gap-4">
+              <div class="d-none d-md-flex align-items-center justify-content-center" style="height:80px;width:80px;min-width:80px; background:linear-gradient(135deg,#be2b3a 60%,#a81e2a 100%); border-radius:1.5rem; box-shadow:0 4px 24px #be2b3a22;">
+                <i class="bi bi-cpu text-white" style="font-size:2.7rem;"></i>
+              </div>
+              <div class="flex-grow-1">
+                <h1 class="fw-bold mb-1" style="color:#be2b3a;letter-spacing:0.01em; font-size:2.1rem; text-shadow:0 2px 12px #be2b3a11;">Catálogo de Modelos y Marcas</h1>
+                <div class="text-secondary fw-semibold" style="font-size:1.13rem;">Visualiza, filtra y agrega equipos por <span class="text-danger">marca</span>, <span class="text-primary">modelo</span> y <span class="text-info">categoría</span>.</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-3 d-flex justify-content-md-end align-items-center pe-4 py-4">
+              <button class="btn btn-danger d-flex align-items-center gap-2 px-4 py-2 shadow rounded-3 fw-bold" data-bs-toggle="modal" data-bs-target="#modalAgregarEquipo" style="font-size:1.08rem;letter-spacing:0.01em;">
+                <i class="bi bi-plus-circle" style="font-size:1.35em;"></i> <span>Agregar equipo</span>
+              </button>
+            </div>
+          </div>
+          <div class="position-absolute top-0 end-0 opacity-25 d-none d-md-block" style="pointer-events:none;z-index:0;">
+            <i class="bi bi-layers-half" style="font-size:7.5rem;color:#be2b3a22;"></i>
+          </div>
+        </div>
+        <div class="row align-items-center mb-4 g-2">
+          <div class="col-12 col-md-8 d-flex align-items-center gap-2 flex-wrap mb-2 mb-md-0">
+            <div class="input-group input-group-sm shadow-sm rounded-3 bg-white border border-1" style="min-width:220px;max-width:320px;">
+              <span class="input-group-text bg-white border-0"><i class="bi bi-funnel"></i></span>
+              <select class="form-select border-0 bg-white fw-semibold" id="filtroCategoria" style="font-weight:500;">
+                <option value="">Todas las categorías</option>
+                <option value="Laptop">Laptops</option>
+                <option value="Monitor">Monitores</option>
+                <option value="Docking">Dockings</option>
+                <option value="Accesorio">Accesorios</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 d-flex justify-content-md-end align-items-center gap-2 flex-wrap mt-2 mt-md-0 d-md-none">
+            <button class="btn btn-danger d-flex align-items-center gap-2 px-4 py-2 shadow rounded-3 fw-bold w-100" data-bs-toggle="modal" data-bs-target="#modalAgregarEquipo" style="font-size:1.08rem;letter-spacing:0.01em;">
+              <i class="bi bi-plus-circle" style="font-size:1.35em;"></i> <span>Agregar equipo</span>
+            </button>
+          </div>
+        </div>
+        <!-- CATEGORÍA: Laptops -->
+        <div class="categoria-bar barra-laptop card border-0 shadow-sm mb-4 rounded-4 bg-white">
+          <div class="card-body py-3 px-4 d-flex align-items-center gap-3 barra-categoria barra-laptop-bg">
+            <i class="bi bi-laptop display-6 text-white"></i>
+            <h4 class="mb-0 fw-bold text-white">Laptops</h4>
+            <span class="badge bg-primary-subtle text-primary ms-2">Equipos portátiles</span>
+          </div>
+        </div>
+        <div class="row g-4 mb-4" id="laptops">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 equipo-tarjeta" data-categoria="Laptop">
+            <div class="card shadow border-0 rounded-4 h-100 equipo-card-hover">
+              <div class="card-header bg-white border-0 text-center rounded-top-4 py-3">
+                <img src="img/logos/Dell_Logo.svg" alt="Dell" style="height:32px;object-fit:contain;max-width:90px;">
+            <span class="badge bg-primary-subtle text-primary ms-2">Laptop</span>
+              </div>
+              <div class="card-body p-3">
+                <div class="text-center mb-2">
+                  <img src="img/latitude5420.png" alt="Latitude 5420" class="rounded shadow-sm" style="max-width:90px;max-height:60px;object-fit:contain;">
+                </div>
+                <h6 class="fw-bold mb-2 text-center">Dell Latitude 5420</h6>
+                <ul class="list-unstyled mb-0 small">
+                  <li><i class="bi bi-cpu me-1"></i> Intel Core i5 11th Gen</li>
+                  <li><i class="bi bi-memory me-1"></i> 16 GB RAM</li>
+                  <li><i class="bi bi-hdd me-1"></i> 512 GB SSD</li>
+                  <li><i class="bi bi-display me-1"></i> 14" FHD</li>
+                  <li><i class="bi bi-battery-full me-1"></i> Batería 63Wh</li>
+                  <li><i class="bi bi-windows me-1"></i> Windows 11 Pro</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 equipo-tarjeta" data-categoria="Laptop">
+            <div class="card shadow border-0 rounded-4 h-100 equipo-card-hover">
+              <div class="card-header bg-white border-0 text-center rounded-top-4 py-3">
+                <img src="img/logos/HP_logo.svg" alt="HP" style="height:32px;object-fit:contain;max-width:90px;">
+            <span class="badge bg-primary-subtle text-primary ms-2">Laptop</span>
+              </div>
+              <div class="card-body p-3">
+                <div class="text-center mb-2">
+                  <img src="img/elitebook840.png" alt="EliteBook 840" class="rounded shadow-sm" style="max-width:90px;max-height:60px;object-fit:contain;">
+                </div>
+                <h6 class="fw-bold mb-2 text-center">HP EliteBook 840</h6>
+                <ul class="list-unstyled mb-0 small">
+                  <li><i class="bi bi-cpu me-1"></i> Intel Core i7 10th Gen</li>
+                  <li><i class="bi bi-memory me-1"></i> 16 GB RAM</li>
+                  <li><i class="bi bi-hdd me-1"></i> 512 GB SSD</li>
+                  <li><i class="bi bi-display me-1"></i> 14" FHD</li>
+                  <li><i class="bi bi-battery-full me-1"></i> Batería 53Wh</li>
+                  <li><i class="bi bi-windows me-1"></i> Windows 10 Pro</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 equipo-tarjeta" data-categoria="Laptop">
+            <div class="card shadow border-0 rounded-4 h-100 equipo-card-hover">
+              <div class="card-header bg-white border-0 text-center rounded-top-4 py-3">
+                <img src="img/logos/Lenovo_logo.svg" alt="Lenovo" style="height:32px;object-fit:contain;max-width:90px;">
+            <span class="badge bg-primary-subtle text-primary ms-2">Laptop</span>
+              </div>
+              <div class="card-body p-3">
+                <div class="text-center mb-2">
+                  <img src="img/thinkpadt14.png" alt="ThinkPad T14" class="rounded shadow-sm" style="max-width:90px;max-height:60px;object-fit:contain;">
+                </div>
+                <h6 class="fw-bold mb-2 text-center">Lenovo ThinkPad T14</h6>
+                <ul class="list-unstyled mb-0 small">
+                  <li><i class="bi bi-cpu me-1"></i> AMD Ryzen 5 PRO</li>
+                  <li><i class="bi bi-memory me-1"></i> 16 GB RAM</li>
+                  <li><i class="bi bi-hdd me-1"></i> 512 GB SSD</li>
+                  <li><i class="bi bi-display me-1"></i> 14" FHD</li>
+                  <li><i class="bi bi-battery-full me-1"></i> Batería 50Wh</li>
+                  <li><i class="bi bi-windows me-1"></i> Windows 10 Pro</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- MacBook -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 equipo-tarjeta" data-categoria="Laptop">
+            <div class="card shadow border-0 rounded-4 h-100 equipo-card-hover border border-2 border-primary-subtle">
+              <div class="card-header bg-white border-0 text-center rounded-top-4 py-3">
+                <img src="img/logos/Apple_logo_black.svg" alt="Apple" style="height:32px;object-fit:contain;max-width:90px;">
+            <span class="badge bg-primary-subtle text-primary ms-2">Laptop</span>
+              </div>
+              <div class="card-body p-3">
+                <div class="text-center mb-2">
+                  <img src="img/macbookpro14.png" alt="MacBook Pro 14" class="rounded shadow-sm" style="max-width:90px;max-height:60px;object-fit:contain;">
+                </div>
+                <h6 class="fw-bold mb-2 text-center">Apple MacBook Pro 14" M1</h6>
+                <ul class="list-unstyled mb-0 small">
+                  <li><i class="bi bi-cpu me-1"></i> Apple M1</li>
+                  <li><i class="bi bi-memory me-1"></i> 16 GB RAM</li>
+                  <li><i class="bi bi-hdd me-1"></i> 512 GB SSD</li>
+                  <li><i class="bi bi-display me-1"></i> 14" Liquid Retina</li>
+                  <li><i class="bi bi-battery-full me-1"></i> Batería 70Wh</li>
+                  <li><i class="bi bi-apple me-1"></i> macOS Sonoma</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- CATEGORÍA: Monitores -->
+        <div class="categoria-bar barra-monitores card border-0 shadow-sm mb-4 rounded-4 bg-white">
+          <div class="card-body py-3 px-4 d-flex align-items-center gap-3 barra-categoria barra-monitores-bg">
+            <i class="bi bi-display display-6 text-white"></i>
+            <h4 class="mb-0 fw-bold text-white">Monitores</h4>
+            <span class="badge bg-white text-info ms-2">Pantallas y visualización</span>
+          </div>
+        </div>
+        <div class="row g-4 mb-4" id="monitores">
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card shadow-lg border-0 rounded-4 h-100">
+              <div class="card-header bg-light border-0 text-center rounded-top-4">
+                <img src="img/logos/Dell_Logo.svg" alt="Dell" style="height:40px;object-fit:contain;max-width:100px;">
+                <span class="badge bg-info-subtle text-info ms-2">Monitor</span>
+              </div>
+              <div class="card-body p-4">
+                <h5 class="fw-bold mb-2 text-center">Dell P2419H</h5>
+                <ul class="list-unstyled mb-3">
+                  <li><i class="bi bi-display me-1"></i> 24" FHD IPS</li>
+                  <li><i class="bi bi-arrows-fullscreen me-1"></i> 1920x1080</li>
+                  <li><i class="bi bi-plug me-1"></i> HDMI, DisplayPort, VGA</li>
+                  <li><i class="bi bi-arrows-move me-1"></i> Ajuste altura/inclinación</li>
+                </ul>
+                <div class="text-center">
+                  <img src="img/p2419h.png" alt="Dell P2419H" class="rounded shadow-sm" style="max-width:120px;max-height:80px;object-fit:contain;">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card shadow-lg border-0 rounded-4 h-100">
+              <div class="card-header bg-light border-0 text-center rounded-top-4">
+                <img src="img/logos/HP_logo.svg" alt="HP" style="height:40px;object-fit:contain;max-width:100px;">
+                <span class="badge bg-info-subtle text-info ms-2">Monitor</span>
+              </div>
+              <div class="card-body p-4">
+                <h5 class="fw-bold mb-2 text-center">HP E24 G4</h5>
+                <ul class="list-unstyled mb-3">
+                  <li><i class="bi bi-display me-1"></i> 24" FHD IPS</li>
+                  <li><i class="bi bi-arrows-fullscreen me-1"></i> 1920x1080</li>
+                  <li><i class="bi bi-plug me-1"></i> HDMI, DisplayPort, VGA</li>
+                  <li><i class="bi bi-arrows-move me-1"></i> Ajuste altura/inclinación</li>
+                </ul>
+                <div class="text-center">
+                  <img src="img/e24g4.png" alt="HP E24 G4" class="rounded shadow-sm" style="max-width:120px;max-height:80px;object-fit:contain;">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- CATEGORÍA: Dockings -->
+        <div class="categoria-bar barra-dockings card border-0 shadow-sm mb-4 rounded-4 bg-white">
+          <div class="card-body py-3 px-4 d-flex align-items-center gap-3 barra-categoria barra-dockings-bg">
+            <i class="bi bi-box display-6 text-white"></i>
+            <h4 class="mb-0 fw-bold text-white">Dockings</h4>
+            <span class="badge bg-white text-warning ms-2">Bases y conectividad</span>
+          </div>
+        </div>
+        <div class="row g-4 mb-4" id="dockings">
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card shadow-lg border-0 rounded-4 h-100">
+              <div class="card-header bg-light border-0 text-center rounded-top-4">
+                <img src="img/dell_logo.png" alt="Dell" style="height:40px;object-fit:contain;">
+                <span class="badge bg-warning-subtle text-warning ms-2">Docking</span>
+              </div>
+              <div class="card-body p-4">
+                <h5 class="fw-bold mb-2 text-center">Dell WD19</h5>
+                <ul class="list-unstyled mb-3">
+                  <li><i class="bi bi-usb-symbol me-1"></i> USB-C, 3x USB-A, HDMI, DP</li>
+                  <li><i class="bi bi-lightning me-1"></i> 130W Power Delivery</li>
+                  <li><i class="bi bi-laptop me-1"></i> Compatible Dell/HP/Lenovo</li>
+                </ul>
+                <div class="text-center">
+                  <img src="img/wd19.png" alt="Dell WD19" class="rounded shadow-sm" style="max-width:120px;max-height:80px;object-fit:contain;">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- CATEGORÍA: Accesorios -->
+        <div class="categoria-bar barra-accesorios card border-0 shadow-sm mb-4 rounded-4 bg-white">
+          <div class="card-body py-3 px-4 d-flex align-items-center gap-3 barra-categoria barra-accesorios-bg">
+            <i class="bi bi-keyboard display-6 text-white"></i>
+            <h4 class="mb-0 fw-bold text-white">Accesorios</h4>
+            <span class="badge bg-white ms-2" style="color:#6a1b9a;">Complementos y periféricos</span>
+          </div>
+        </div>
+        <div class="row g-4 mb-4" id="accesorios">
+        <!-- Modal para agregar equipo -->
+        <div class="modal fade" id="modalAgregarEquipo" tabindex="-1" aria-labelledby="modalAgregarEquipoLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down">
+            <div class="modal-content shadow border-0 cie-modal">
+              <form id="formAgregarEquipo" autocomplete="off" class="needs-validation" novalidate enctype="multipart/form-data">
+                <div class="modal-header bg-danger text-white align-items-center">
+                  <div class="d-flex align-items-center gap-2 flex-grow-1">
+                    <i class="bi bi-laptop display-6"></i>
+                    <div>
+                      <h5 class="modal-title mb-0" id="modalAgregarEquipoLabel">Agregar equipo</h5>
+                      <small class="text-white-50">Completa los campos para registrar un nuevo equipo</small>
+                    </div>
+                  </div>
+                  <div class="ms-auto ps-2">
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar" style="float:right;"></button>
+                  </div>
+                </div>
+                <div class="modal-body py-4 px-3">
+                  <div class="row g-4">
+                    <div class="col-12 col-md-6">
+                      <label for="marcaEquipo" class="form-label fw-semibold"><i class="bi bi-building me-1"></i> Marca</label>
+                      <input type="text" class="form-control" id="marcaEquipo" required placeholder="Ej: Dell, HP, Lenovo, Apple">
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <label for="modeloEquipo" class="form-label fw-semibold"><i class="bi bi-cpu me-1"></i> Modelo</label>
+                      <input type="text" class="form-control" id="modeloEquipo" required placeholder="Ej: Latitude 5420, MacBook Pro 14">
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <label for="categoriaEquipo" class="form-label fw-semibold"><i class="bi bi-tags me-1"></i> Categoría</label>
+                      <select class="form-select" id="categoriaEquipo" required>
+                        <option value="">Selecciona...</option>
+                        <option value="Laptop">Laptop</option>
+                        <option value="Monitor">Monitor</option>
+                        <option value="Docking">Docking</option>
+                        <option value="Accesorio">Accesorio</option>
+                      </select>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <label for="imagenEquipo" class="form-label fw-semibold"><i class="bi bi-image me-1"></i> Imagen</label>
+                      <input type="file" class="form-control" id="imagenEquipo" accept="image/*">
+                    </div>
+                    <!-- Campos dinámicos -->
+                    <div class="col-12" id="camposLaptop" style="display:none;">
+                      <div class="row g-2">
+                        <div class="col-12 col-md-4">
+                          <label class="form-label">Procesador</label>
+                          <input type="text" class="form-control" id="procesadorLaptop" placeholder="Ej: Intel Core i5 11th Gen">
+                        </div>
+                        <div class="col-12 col-md-4">
+                          <label class="form-label">RAM</label>
+                          <select class="form-select" id="ramEquipo">
+                            <option value="">Selecciona...</option>
+                            <option>8 GB</option>
+                            <option>16 GB</option>
+                            <option>32 GB</option>
+                            <option>64 GB</option>
+                          </select>
+                        </div>
+                        <div class="col-12 col-md-4">
+                          <label class="form-label">Almacenamiento</label>
+                          <select class="form-select" id="almacenamientoEquipo">
+                            <option value="">Selecciona...</option>
+                            <option>256 GB SSD</option>
+                            <option>512 GB SSD</option>
+                            <option>1 TB SSD</option>
+                            <option>2 TB SSD</option>
+                          </select>
+                        </div>
+                        <div class="col-12 col-md-4">
+                          <label class="form-label">Pantalla</label>
+                          <input type="text" class="form-control" id="pantallaLaptop" placeholder="Ej: 14'' FHD">
+                        </div>
+                        <div class="col-12 col-md-4">
+                          <label class="form-label">Batería</label>
+                          <input type="text" class="form-control" id="bateriaLaptop" placeholder="Ej: 63Wh">
+                        </div>
+                        <div class="col-12 col-md-4">
+                          <label class="form-label">Sistema</label>
+                          <select class="form-select" id="sistemaEquipo">
+                            <option value="">Selecciona...</option>
+                            <option>Windows 7 Pro</option>
+                            <option>Windows 8.1 Pro</option>
+                            <option>Windows 10 Home</option>
+                            <option>Windows 10 Pro</option>
+                            <option>Windows 11 Home</option>
+                            <option>Windows 11 Pro</option>
+                            <option>macOS Monterey</option>
+                            <option>macOS Ventura</option>
+                            <option>macOS Sonoma</option>
+                            <option>Linux Ubuntu</option>
+                            <option>Linux Fedora</option>
+                            <option>Linux Mint</option>
+                            <option>Otro</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12" id="camposMonitor" style="display:none;">
+                      <div class="row g-2">
+                        <div class="col-12 col-md-3">
+                          <label class="form-label">Tamaño</label>
+                          <input type="text" class="form-control" id="tamanoMonitor" placeholder="Ej: 24''">
+                        </div>
+                        <div class="col-12 col-md-3">
+                          <label class="form-label">Resolución</label>
+                          <input type="text" class="form-control" id="resolucionMonitor" placeholder="Ej: 1920x1080">
+                        </div>
+                        <div class="col-12 col-md-3">
+                          <label class="form-label">Tipo de panel</label>
+                          <input type="text" class="form-control" id="panelMonitor" placeholder="Ej: IPS">
+                        </div>
+                        <div class="col-12 col-md-3">
+                          <label class="form-label">Entradas</label>
+                          <input type="text" class="form-control" id="entradasMonitor" placeholder="Ej: HDMI, DisplayPort, VGA">
+                        </div>
+                        <div class="col-12 col-md-6">
+                          <label class="form-label">Ajustes</label>
+                          <input type="text" class="form-control" id="ajustesMonitor" placeholder="Ej: Altura, inclinación">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12" id="camposDocking" style="display:none;">
+                      <div class="row g-2">
+                        <div class="col-12 col-md-4">
+                          <label class="form-label">Puertos</label>
+                          <input type="text" class="form-control" id="puertosDocking" placeholder="Ej: USB-C, HDMI, DP">
+                        </div>
+                        <div class="col-12 col-md-4">
+                          <label class="form-label">Compatibilidad</label>
+                          <input type="text" class="form-control" id="compatibilidadDocking" placeholder="Ej: Dell/HP/Lenovo">
+                        </div>
+                        <div class="col-12 col-md-4">
+                          <label class="form-label">Potencia</label>
+                          <input type="text" class="form-control" id="potenciaDocking" placeholder="Ej: 130W Power Delivery">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12" id="camposAccesorio" style="display:none;">
+                      <div class="row g-2">
+                        <div class="col-12 col-md-4">
+                          <label class="form-label">Tipo</label>
+                          <select class="form-select" id="tipoAccesorio">
+                            <option value="">Selecciona...</option>
+                            <option>Teclado</option>
+                            <option>Mouse</option>
+                            <option>Webcam</option>
+                            <option>Otro</option>
+                          </select>
+                        </div>
+                        <div class="col-12 col-md-4">
+                          <label class="form-label">Características</label>
+                          <input type="text" class="form-control" id="caracteristicasAccesorio" placeholder="Ej: Bluetooth, Inalámbrico">
+                        </div>
+                        <div class="col-12 col-md-4">
+                          <label class="form-label">Duración batería</label>
+                          <input type="text" class="form-control" id="bateriaAccesorio" placeholder="Ej: 2 años">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-end flex-wrap gap-2 bg-light border-0">
+                  <div class="w-100 d-flex flex-row-reverse gap-2 flex-wrap justify-content-end">
+                    <button type="submit" class="btn btn-danger px-4">
+                      <i class="bi bi-check-circle"></i> Agregar equipo
+                    </button>
+                    <button type="reset" class="btn btn-outline-danger px-4">
+                      <i class="bi bi-eraser"></i> Limpiar
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+          <div class="col-12 col-md-6 col-lg-4 equipo-tarjeta" data-categoria="Accesorio">
+            <div class="card shadow-lg border-0 rounded-4 h-100 equipo-card-hover">
+              <div class="card-header bg-white border-0 text-center rounded-top-4 py-3">
+                <img src="img/logos/logitech-g-logo-editorial-free-vector.svg" alt="Logitech" style="height:32px;object-fit:contain;max-width:90px;">
+            <span class="badge bg-purple-subtle text-purple ms-2">Teclado</span>
+              </div>
+              <div class="card-body p-3">
+                <div class="text-center mb-2">
+                  <img src="img/k380.png" alt="Logitech K380" class="rounded shadow-sm" style="max-width:90px;max-height:60px;object-fit:contain;">
+                </div>
+                <h6 class="fw-bold mb-2 text-center">Logitech K380</h6>
+                <ul class="list-unstyled mb-0 small">
+                  <li><i class="bi bi-bluetooth me-1"></i> Bluetooth multidispositivo</li>
+                  <li><i class="bi bi-battery me-1"></i> 2 años de batería</li>
+                  <li><i class="bi bi-keyboard me-1"></i> Compacto y portátil</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <script src="js/equipos.js"></script>
+  <script>
+    // Filtro de tarjetas por categoría (oculta secciones y barras de categoría vacías)
+    document.addEventListener('DOMContentLoaded', function() {
+      const filtro = document.getElementById('filtroCategoria');
+      const secciones = [
+        {id: 'laptops', categoria: 'Laptop', barra: '.barra-laptop'},
+        {id: 'monitores', categoria: 'Monitor', barra: '.barra-monitores'},
+        {id: 'dockings', categoria: 'Docking', barra: '.barra-dockings'},
+        {id: 'accesorios', categoria: 'Accesorio', barra: '.barra-accesorios'}
+      ];
+      filtro.addEventListener('change', function() {
+        const categoria = filtro.value;
+        secciones.forEach(sec => {
+          const section = document.getElementById(sec.id);
+          const barra = document.querySelector(sec.barra);
+          if (!categoria || categoria === sec.categoria) {
+            section.style.display = '';
+            if (barra) barra.style.display = '';
+          } else {
+            section.style.display = 'none';
+            if (barra) barra.style.display = 'none';
+          }
+        });
+        document.querySelectorAll('.equipo-tarjeta').forEach(function(card) {
+          if (!categoria || card.dataset.categoria === categoria) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+
+      // Modal: mostrar campos según categoría
+      const categoriaEquipo = document.getElementById('categoriaEquipo');
+      const camposLaptop = document.getElementById('camposLaptop');
+      const camposMonitor = document.getElementById('camposMonitor');
+      const camposDocking = document.getElementById('camposDocking');
+      const camposAccesorio = document.getElementById('camposAccesorio');
+      if (categoriaEquipo) {
+        categoriaEquipo.addEventListener('change', function() {
+          camposLaptop.style.display = this.value === 'Laptop' ? '' : 'none';
+          camposMonitor.style.display = this.value === 'Monitor' ? '' : 'none';
+          camposDocking.style.display = this.value === 'Docking' ? '' : 'none';
+          camposAccesorio.style.display = this.value === 'Accesorio' ? '' : 'none';
+        });
+      }
+    });
+  </script>
+  <style>
+    /* Mejoras visuales para botones del modal y acciones */
+    .modal-footer .btn { min-width: 140px; font-weight: 500; border-radius: 0.7rem; }
+    .modal-footer .btn-danger { background: linear-gradient(90deg,#be2b3a 80%,#a81e2a 100%); border: none; }
+    .modal-footer .btn-outline-danger { border-radius: 0.7rem; }
+    @media (max-width: 575px) {
+      .modal-footer .btn { width: 100%; min-width: unset; margin-bottom: 6px; }
+      .modal-footer .d-flex { flex-direction: column-reverse !important; align-items: stretch !important; }
+    }
+    /* Organización visual de botones y filtros */
+    .input-group > .form-select { border-top-left-radius: 0; border-bottom-left-radius: 0; }
+    .input-group-text { border-radius: 0.7rem 0 0 0.7rem; background: #fff !important; }
+    .btn-danger, .btn-danger:focus, .btn-danger:active {
+      box-shadow: 0 2px 8px #be2b3a22;
+      background: linear-gradient(90deg,#be2b3a 80%,#a81e2a 100%);
+      border: none;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      transition: background 0.18s, box-shadow 0.18s;
+    }
+    .btn-danger:hover {
+      background: linear-gradient(90deg,#a81e2a 60%,#be2b3a 100%);
+      box-shadow: 0 4px 16px #be2b3a33;
+    }
+    .btn-outline-danger {
+      border-width: 2px;
+      font-weight: 500;
+      border-radius: 0.7rem;
+      transition: border-color 0.18s, color 0.18s;
+    }
+    .btn-outline-danger:hover {
+      background: #fff0f1;
+      border-color: #be2b3a;
+      color: #be2b3a;
+    }
+    .btn:active, .btn:focus {
+      outline: none !important;
+      box-shadow: 0 0 0 2px #be2b3a33 !important;
+    }
+    /* Filtros y acciones */
+    .input-group.input-group-sm {
+      border-radius: 0.7rem;
+      box-shadow: 0 2px 8px #be2b3a11;
+      border: 1.5px solid #ececec;
+      background: #fff;
+    }
+
+    /* Tarjetas de equipos - mejoras visuales */
+    .equipo-tarjeta .card {
+      min-height: 340px;
+      max-width: 100%;
+      border-radius: 1.5rem;
+      box-shadow: 0 6px 32px #be2b3a11, 0 2px 12px #be2b3a22;
+      border: 1.5px solid #e6e6e6;
+      transition: box-shadow 0.22s, border-color 0.22s, transform 0.18s;
+      background: linear-gradient(135deg, #fff 80%, #f8f9fa 100%);
+      margin-bottom: 0.5rem;
+    }
+    .equipo-tarjeta .card-header {
+      background: #f8f9fa !important;
+      border-radius: 1.5rem 1.5rem 0 0 !important;
+      border-bottom: 1px solid #ececec;
+      padding-top: 1.2rem !important;
+      padding-bottom: 1.2rem !important;
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+    }
+    .equipo-tarjeta .card-body {
+      padding-top: 1.2rem !important;
+      padding-bottom: 1.2rem !important;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 210px;
+    }
+    .equipo-tarjeta .card-title, .equipo-tarjeta h6, .equipo-tarjeta h5 {
+      font-size: 1.13rem;
+      font-weight: 700;
+      margin-bottom: 0.7rem;
+      color: #be2b3a;
+      letter-spacing: 0.01em;
+      text-align: center;
+      min-height: 2.2em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .equipo-tarjeta .card img, .equipo-tarjeta img {
+      filter: drop-shadow(0 2px 8px #be2b3a11);
+      margin: 0 auto;
+      display: block;
+    }
+    .equipo-tarjeta .list-unstyled li {
+      margin-bottom: 0.18rem;
+      font-size: 0.98em;
+      color: #444;
+      display: flex;
+      align-items: center;
+      gap: 0.3em;
+      padding-left: 0.2em;
+    }
+    .equipo-tarjeta .badge {
+      font-size: 0.85em;
+      padding: 0.4em 0.9em;
+      border-radius: 0.7em;
+      box-shadow: 0 1px 4px #be2b3a11;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+    .equipo-card-hover:hover {
+      box-shadow: 0 0 0 4px #be2b3a33, 0 8px 32px #be2b3a22, 0 4px 24px #0001;
+      transform: translateY(-6px) scale(1.04);
+      border-color: #be2b3a !important;
+      z-index: 2;
+    }
+    /* Barras de categoría visuales */
+    .barra-categoria {
+      border-radius: 1.2rem 1.2rem 0 0 !important;
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 1.2rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+      box-shadow: 0 2px 12px #0001;
+      border-bottom: 3px solid #fff;
+    }
+    .barra-laptop-bg {
+      background: linear-gradient(90deg,#1a237e 80%,#3949ab 100%);
+    }
+    .barra-monitores-bg {
+      background: linear-gradient(90deg,#01579b 80%,#29b6f6 100%);
+    }
+    .barra-dockings-bg {
+      background: linear-gradient(90deg,#b28704 80%,#ffe082 100%);
+    }
+    .barra-accesorios-bg {
+      background: linear-gradient(90deg,#6a1b9a 80%,#ce93d8 100%);
+    }
+    .barra-categoria .badge {
+      font-size: 1em;
+      font-weight: 700;
+      padding: 0.5em 1.2em;
+      border-radius: 1em;
+      box-shadow: 0 2px 8px #0001;
+    }
+    @media (max-width: 575px) {
+      .equipo-tarjeta .card {
+        min-height: 220px;
+        border-radius: 1.1rem;
+      }
+      .equipo-tarjeta .card-header {
+        border-radius: 1.1rem 1.1rem 0 0 !important;
+        min-height: 48px;
+        gap: 0.4rem;
+      }
+      .equipo-tarjeta .card-body {
+        min-height: 120px;
+        padding: 0.7rem 0.5rem !important;
+      }
+      .equipo-tarjeta .card-title, .equipo-tarjeta h6, .equipo-tarjeta h5 {
+        font-size: 1.01rem;
+        min-height: 1.5em;
+      }
+      .barra-categoria {
+        min-height: 44px;
+        font-size: 1.01rem;
+        gap: 0.5rem;
+        padding: 0.7rem 0.5rem !important;
+      }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/nav.js"></script>
+</body>
+</html>

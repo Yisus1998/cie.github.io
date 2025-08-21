@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CIE | Garantías</title>
+<link rel="stylesheet" href="css/estilos.css">
+<!-- Ajuste de formato para homologar con Altas/Bajas -->
+<style>
+    /* Homologación rápida con altas_bajas.html */
+    body{background:#f5f6f8;}
+    th.sortable{cursor:pointer;user-select:none;white-space:nowrap;}
+    th.sortable .sort-ind{font-size:.65rem;margin-left:.25rem;opacity:.7;}
+    .table-responsive{max-height:55vh;}
+    .kpi-card .kpi-value{font-size:1.4rem;font-weight:600;}
+    @media (max-width:991.98px){ .table-responsive{max-height:none;} }
+</style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</style><!-- estilos movidos a estilos.css -->
+</head>
+<body class="has-sidebar">
+<a href="#contenidoPrincipal" class="visually-hidden-focusable position-absolute top-0 start-0 m-2 btn btn-danger btn-sm">Saltar al contenido</a>
+
+<!-- Nav móvil -->
+<nav class="navbar navbar-dark cie-bg-dark d-lg-none fixed-top">
+ <div class="container-fluid">
+  <a class="navbar-brand d-flex align-items-center" href="index.html">
+   <img src="img/cie_sin_fondo.png" alt="CIE" height="36" class="rounded">
+  </a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMovil" aria-controls="sidebarMovil" aria-label="Abrir menú">
+   <span class="navbar-toggler-icon"></span>
+  </button>
+ </div>
+</nav>
+<div class="offcanvas offcanvas-start cie-bg-dark text-white" tabindex="-1" id="sidebarMovil">
+ <div class="offcanvas-header">
+  <h5 class="offcanvas-title d-flex align-items-center gap-2">
+   <img src="img/cie_sin_fondo.png" alt="Logo" style="height:40px" class="rounded">
+  </h5>
+  <button class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+ </div>
+ <div class="offcanvas-body d-flex flex-column">
+  <ul class="nav flex-column flex-grow-1 small">
+   <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
+   <li class="nav-item"><a class="nav-link" href="usuarios.html"><i class="bi bi-person me-1"></i> Usuarios</a></li>
+   <li class="nav-item"><a class="nav-link" href="equipos.html"><i class="bi bi-laptop me-1"></i> Equipos</a></li>
+   <li class="nav-item"><a class="nav-link" href="inventario.html"><i class="bi bi-archive me-1"></i> Inventario</a></li>
+    <li class="nav-item"><a class="nav-link" href="altas_bajas.html"><i class="bi bi-arrow-left-right me-1"></i> Altas/Bajas</a></li>
+    <li class="nav-item"><a class="nav-link active" href="garantias.html"><i class="bi bi-shield-check me-1"></i> Garantías</a></li>
+    <li class="nav-item"><a class="nav-link" href="dictamen_tecnico.html"><i class="bi bi-file-earmark-medical me-1"></i> Dictamen Técnico</a></li>
+    <li class="nav-item"><a class="nav-link" href="cedula_res.html"><i class="bi bi-file-earmark-text me-1"></i> Cédula Resguardo</a></li>
+    <li class="nav-item"><a class="nav-link" href="modelos.html"><i class="bi bi-grid me-1"></i> Modelos</a></li>
+    <li class="nav-item"><a class="nav-link" href="historial.html"><i class="bi bi-clock-history me-1"></i> Historial</a></li>
+    <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-gear me-1"></i> Configuración</a></li>
+    <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-question-circle me-1"></i> Ayuda</a></li>
+  </ul>
+  <div class="mt-3 text-white-50 small text-center"><i class="bi bi-info-circle"></i> soporte@cie.com.mx</div>
+  <a class="btn btn-danger w-100 mt-3 d-flex align-items-center justify-content-center gap-2" href="#"><i class="bi bi-box-arrow-right"></i> <span class="fw-bold">Salir</span></a>
+ </div>
+</div>
+
+<div class="container-fluid">
+ <div class="row">
+  <!-- Sidebar desktop -->
+  <nav class="col-lg-2 sidebar cie-bg-dark pt-4 d-lg-block d-none position-fixed top-0 start-0 h-100" style="z-index:1040;min-width:220px;">
+   <div class="d-flex flex-column h-100">
+    <div class="mb-4 px-3 text-center">
+     <a href="index.html"><img src="img/cie_sin_fondo.png" alt="Logo CIE" class="sidebar-logo-img"></a>
+    </div>
+    <ul class="nav flex-column flex-grow-1 small">
+     <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
+     <li class="nav-item"><a class="nav-link" href="usuarios.html"><i class="bi bi-person me-1"></i> Usuarios</a></li>
+     <li class="nav-item"><a class="nav-link" href="equipos.html"><i class="bi bi-laptop me-1"></i> Equipos</a></li>
+     <li class="nav-item"><a class="nav-link" href="inventario.html"><i class="bi bi-archive me-1"></i> Inventario</a></li>
+    <li class="nav-item"><a class="nav-link" href="altas_bajas.html"><i class="bi bi-arrow-left-right me-1"></i> Altas/Bajas</a></li>
+    <li class="nav-item"><a class="nav-link active" href="garantias.html"><i class="bi bi-shield-check me-1"></i> Garantías</a></li>
+    <li class="nav-item"><a class="nav-link" href="dictamen_tecnico.html"><i class="bi bi-file-earmark-medical me-1"></i> Dictamen Técnico</a></li>
+    <li class="nav-item"><a class="nav-link" href="cedula_res.html"><i class="bi bi-file-earmark-text me-1"></i> Cédula Resguardo</a></li>
+    <li class="nav-item"><a class="nav-link" href="modelos.html"><i class="bi bi-grid me-1"></i> Modelos</a></li>
+    <li class="nav-item"><a class="nav-link" href="historial.html"><i class="bi bi-clock-history me-1"></i> Historial</a></li>
+    <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-gear me-1"></i> Configuración</a></li>
+    <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-question-circle me-1"></i> Ayuda</a></li>
+    </ul>
+    <div class="mt-auto px-3 pb-3">
+     <hr class="bg-light">
+     <a class="btn btn-danger w-100 d-flex align-items-center justify-content-center gap-2" href="#"><i class="bi bi-box-arrow-right"></i> <span class="fw-bold">Salir</span></a>
+     <div class="mt-3 text-white-50 small text-center"><i class="bi bi-info-circle"></i> soporte@cie.com.mx</div>
+    </div>
+   </div>
+  </nav>
+
+    <main id="contenidoPrincipal" class="col-lg-10 ms-auto px-4 pt-4" role="main">
+     <!-- Encabezado estilo unificado -->
+     <section class="cie-section-bar rounded-4 px-3 px-md-4 py-3 d-flex flex-column flex-md-row align-items-center gap-3 mb-4" style="min-height:80px;">
+         <div class="flex-shrink-0 d-flex align-items-center justify-content-center" style="width:44px;height:44px;">
+             <i class="bi bi-shield-check" style="font-size:2rem;color:var(--cie-primary);"></i>
+         </div>
+         <div class="flex-grow-1 text-center text-md-start">
+             <h1 class="fw-semibold mb-1" style="font-size:1.35rem;color:var(--cie-primary);letter-spacing:.01em;">Gestión de Garantías</h1>
+             <div class="text-secondary small fw-semibold">Seguimiento de vigencias, vencimientos y cobertura global.</div>
+         </div>
+                 <!-- Barra de acciones movida abajo -->
+     </section>
+
+    <!-- KPIs unificados -->
+    <div class="row g-3 mb-4 kpi-grid" id="kpiRow">
+         <div class="col-6 col-lg-3">
+             <div class="card border-0 shadow-sm kpi-card h-100">
+                 <div class="kpi-card-body d-flex align-items-center gap-3">
+                     <div class="kpi-icon-wrap"><i class="bi bi-check-circle-fill text-success" style="font-size:2rem;"></i></div>
+                     <div class="kpi-text">
+                         <div class="kpi-label mini-label">Activas</div>
+                         <div class="kpi-value text-success" id="kpiActivas">0</div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+         <div class="col-6 col-lg-3">
+             <div class="card border-0 shadow-sm kpi-card h-100">
+                 <div class="kpi-card-body d-flex align-items-center gap-3">
+                     <div class="kpi-icon-wrap"><i class="bi bi-hourglass-split text-warning" style="font-size:2rem;"></i></div>
+                     <div class="kpi-text">
+                         <div class="kpi-label mini-label">Próx. 30 días</div>
+                         <div class="kpi-value text-warning" id="kpiProximas">0</div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+         <div class="col-6 col-lg-3">
+             <div class="card border-0 shadow-sm kpi-card h-100">
+                 <div class="kpi-card-body d-flex align-items-center gap-3">
+                     <div class="kpi-icon-wrap"><i class="bi bi-exclamation-octagon-fill text-danger" style="font-size:2rem;"></i></div>
+                     <div class="kpi-text">
+                         <div class="kpi-label mini-label">Vencidas</div>
+                         <div class="kpi-value text-danger" id="kpiVencidas">0</div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+         <div class="col-6 col-lg-3">
+             <div class="card border-0 shadow-sm kpi-card h-100">
+                 <div class="kpi-card-body d-flex align-items-center gap-3">
+                     <div class="kpi-icon-wrap"><i class="bi bi-graph-up text-primary" style="font-size:2rem;"></i></div>
+                     <div class="kpi-text">
+                         <div class="kpi-label mini-label">Cobertura %</div>
+                         <div class="kpi-value text-primary" id="kpiCobertura">0%</div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+
+                        <!-- Toolbar estilo Altas/Bajas -->
+                        <div class="d-flex flex-wrap align-items-center gap-2 mb-3" id="toolbarGarantias">
+                            <div class="input-group input-group-sm" style="max-width:320px;">
+                                <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                                <input type="text" id="busquedaGlobal" class="form-control" placeholder="Buscar inventario, equipo, marca..." autocomplete="off" aria-label="Búsqueda garantías">
+                                <button class="btn btn-outline-secondary" id="btnClearSearch" type="button" data-bs-toggle="tooltip" data-bs-title="Limpiar"><i class="bi bi-x"></i></button>
+                            </div>
+                            <div class="ms-auto d-flex flex-wrap gap-2">
+                                <button class="btn btn-outline-success btn-sm" id="btnExportCsv" type="button" data-bs-toggle="tooltip" data-bs-title="Exportar CSV"><i class="bi bi-file-earmark-spreadsheet"></i><span class="d-none d-md-inline ms-1"> CSV</span></button>
+                                <button class="btn btn-outline-danger btn-sm" id="btnExportPdf" type="button" data-bs-toggle="tooltip" data-bs-title="Exportar PDF"><i class="bi bi-filetype-pdf"></i><span class="d-none d-md-inline ms-1"> PDF</span></button>
+                                <button class="btn btn-outline-primary btn-sm" id="btnImportGarantias" type="button" data-bs-toggle="tooltip" data-bs-title="Importar Excel"><i class="bi bi-upload"></i><span class="d-none d-md-inline ms-1"> Importar</span></button>
+                                <!-- Botón de densidad eliminado -->
+                                <button class="btn btn-danger btn-sm" id="btnNuevaGarantia" type="button" data-bs-toggle="modal" data-bs-target="#modalGarantia"><i class="bi bi-plus-circle"></i><span class="d-none d-sm-inline ms-1"> Registrar</span></button>
+                            </div>
+                        </div>
+
+                        <!-- Filtros simples estilo Altas/Bajas -->
+                        <div class="card shadow-sm mb-3" id="cardFiltrosGarantias">
+                            <div class="card-body">
+                                <form id="formFiltros" class="row g-3 align-items-end" autocomplete="off">
+                                    <div class="col-6 col-md-3 col-lg-2">
+                                        <label class="form-label" for="filtroMarca">Marca</label>
+                                        <input type="text" id="filtroMarca" class="form-control" placeholder="HP / DELL" list="dlMarcas">
+                                    </div>
+                                    <div class="col-6 col-md-3 col-lg-2">
+                                        <label class="form-label" for="filtroStatus">Estado</label>
+                                        <select id="filtroStatus" class="form-select">
+                                            <option value="">Todos</option>
+                                            <option value="OK">Activa</option>
+                                            <option value="WARN">Próx. 30 días</option>
+                                            <option value="EXP">Vencida</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6 col-md-3 col-lg-2">
+                                        <label class="form-label" for="fechaDesde">Vence desde</label>
+                                        <input type="date" id="fechaDesde" class="form-control">
+                                    </div>
+                                    <div class="col-6 col-md-3 col-lg-2">
+                                        <label class="form-label" for="fechaHasta">Vence hasta</label>
+                                        <input type="date" id="fechaHasta" class="form-control">
+                                    </div>
+                                    <div class="col-12 col-lg-4 d-flex gap-2 flex-wrap">
+                                        <button type="submit" class="btn btn-danger"><i class="bi bi-funnel"></i> Aplicar</button>
+                                        <button type="button" class="btn btn-outline-secondary" id="btnLimpiarFiltros"><i class="bi bi-eraser"></i> Limpiar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+     <!-- Tabla estilo Altas/Bajas -->
+     <div class="card shadow-sm mb-4" id="listadoSection">
+         <div class="card-header d-flex flex-wrap align-items-center gap-2 py-2">
+             <strong class="text-danger d-flex align-items-center gap-1"><i class="bi bi-list-ul"></i> Garantías</strong>
+             <div class="ms-auto small text-secondary" id="lblRegistros"></div>
+             <div class="d-flex align-items-center gap-1 small">Mostrar
+                 <select id="pageSize" class="form-select form-select-sm ms-1" style="width:auto;">
+                     <option value="5">5</option>
+                     <option value="10" selected>10</option>
+                     <option value="20">20</option>
+                     <option value="50">50</option>
+                 </select>
+             </div>
+             <button type="button" class="btn btn-outline-secondary btn-sm ms-2" id="btnToggleFs" data-bs-toggle="tooltip" data-bs-title="Fullscreen tabla"><i class="bi bi-fullscreen"></i></button>
+         </div>
+         <div class="table-responsive">
+             <table class="table table-hover align-middle table-striped mb-0" id="tablaGarantias">
+                 <thead class="table-light">
+                     <tr>
+                         <th class="sortable" data-field="inventario">Inventario <span class="sort-ind"></span></th>
+                         <th class="sortable" data-field="equipo">Equipo <span class="sort-ind"></span></th>
+                         <th class="sortable" data-field="marca">Marca <span class="sort-ind"></span></th>
+                         <th class="sortable" data-field="modelo">Modelo <span class="sort-ind"></span></th>
+                         <th class="sortable" data-field="serie">Serie <span class="sort-ind"></span></th>
+                         <th class="sortable" data-field="inicio">Inicio <span class="sort-ind"></span></th>
+                         <th class="sortable" data-field="fin">Fin <span class="sort-ind"></span></th>
+                         <th class="sortable" data-field="dias">Días <span class="sort-ind"></span></th>
+                         <th>Estado</th>
+                         <th>Acciones</th>
+                     </tr>
+                 </thead>
+                 <tbody></tbody>
+             </table>
+         </div>
+         <div class="p-2 border-top bg-light">
+             <ul class="pagination pagination-sm mb-0" id="paginador" aria-label="Paginación"></ul>
+         </div>
+         <div class="text-center py-4 d-none" id="tablaVacia"><i class="bi bi-inbox fs-4 d-block text-secondary"></i><span class="text-muted small">Sin registros</span></div>
+     </div>
+    <!-- (Opcional) Leyenda / Tips removidos para alineación estricta con Altas/Bajas -->
+    </main>
+ </div>
+</div>
+
+<!-- Modal Registro (estilo unificado) -->
+<div class="modal fade" id="modalGarantia" tabindex="-1" aria-hidden="true" aria-labelledby="tituloModal">
+ <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down">
+     <div class="modal-content cie-modal">
+      <div class="modal-header py-2">
+          <h5 class="modal-title mb-0 d-flex align-items-center gap-2" id="tituloModal"><i class="bi bi-shield-plus text-danger"></i><span>Registrar Garantía</span></h5>
+          <!-- Indicadores de estado/días eliminados -->
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+     <form id="formGarantia" autocomplete="off" novalidate class="needs-validation">
+        <div class="modal-body pt-3 pb-2">
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <div class="row g-3 align-items-end">
+                                                        <div class="col-12 col-sm-6 col-md-3">
+                                        <label class="form-label small fw-semibold" for="inventario">Número de Inventario *</label>
+                                        <input type="text" id="inventario" class="form-control auto-upper" required pattern="[0-9A-Za-z_-]{3,40}" placeholder="Ej: CM16EQ0046">
+                                                            <!-- Hint removido -->
+                                    </div>
+                                                        <div class="col-12 col-sm-6 col-md-2">
+                                        <label class="form-label small fw-semibold" for="equipo">Equipo *</label>
+                                        <input id="equipo" class="form-control auto-upper" required list="dlEquipos" placeholder="LAPTOP">
+                                    </div>
+                                                        <div class="col-12 col-sm-6 col-md-2">
+                                        <label class="form-label small fw-semibold" for="marca">Marca *</label>
+                                        <input id="marca" class="form-control auto-upper" required list="dlMarcas" placeholder="HP / DELL">
+                                    </div>
+                                                        <div class="col-12 col-sm-6 col-md-3">
+                                        <label class="form-label small fw-semibold" for="modelo">Modelo *</label>
+                                        <input id="modelo" class="form-control auto-upper" required list="dlModelos" placeholder="PROBOOK 440 G9">
+                                    </div>
+                                                        <div class="col-12 col-sm-6 col-md-2">
+                                        <label class="form-label small fw-semibold" for="serie">Serie *</label>
+                                        <input id="serie" class="form-control auto-upper" required placeholder="Nº Serie" minlength="3" maxlength="60" pattern="[0-9A-Za-z-]{3,60}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <hr class="my-2">
+                                <div class="row g-3 align-items-end">
+                                    <div class="col-6 col-md-2">
+                                        <label class="form-label small fw-semibold" for="inicio">Inicio *</label>
+                                        <input type="date" id="inicio" class="form-control" required>
+                                    </div>
+                                    <div class="col-6 col-md-2">
+                                        <label class="form-label small fw-semibold" for="fin">Fin *</label>
+                                        <input type="date" id="fin" class="form-control" required>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <label class="form-label small fw-semibold d-block">Duración</label>
+                                        <div class="form-control bg-light" style="height:auto;min-height:38px;display:flex;align-items:center;">
+                                            <span id="duracionInfo" class="fw-semibold small text-secondary">Seleccione fechas</span>
+                                        </div>
+                                    </div>
+                                                        <!-- Notas movido abajo -->
+                                </div>
+                            </div>
+                                                <!-- Bloque Notas completo -->
+                                                <div class="col-12">
+                                                    <hr class="my-2">
+                                                    <div class="mb-2 d-flex align-items-center gap-2">
+                                                        <i class="bi bi-journal-text text-danger"></i>
+                                                        <span class="small fw-semibold text-uppercase" style="letter-spacing:.06em;">Notas / Cobertura Detallada</span>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <textarea id="notas" class="form-control" style="min-height:160px;resize:vertical;" maxlength="500" placeholder="Describe condiciones, cobertura, SLA, exclusiones, partes incluidas, tiempos de respuesta, observaciones adicionales..."></textarea>
+                                                        <div class="d-flex justify-content-end"><span class="counter" id="notasCount">0/500</span></div>
+                                                    </div>
+                                                </div>
+                        </div>
+        </div>
+                                <div class="modal-footer py-2 justify-content-between flex-wrap gap-2">
+                                    <small class="text-secondary">Campos * obligatorios</small>
+                                    <div class="d-flex gap-2 ms-auto">
+                                        <button type="reset" class="btn btn-outline-secondary btn-sm"><i class="bi bi-eraser"></i> Limpiar</button>
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-check-circle"></i> Guardar</button>
+                                    </div>
+                                </div>
+         </form>
+    </div>
+ </div>
+</div>
+
+<!-- Datalists -->
+<datalist id="dlEquipos">
+ <option>LAPTOP</option><option>MONITOR</option><option>IMPRESORA</option><option>TABLET</option><option>SMARTPHONE</option>
+ <option>SWITCH</option><option>ROUTER</option><option>TECLADO</option><option>MOUSE</option><option>DOCKING STATION</option>
+</datalist>
+<datalist id="dlMarcas">
+ <option>HP</option><option>DELL</option><option>LENOVO</option><option>APPLE</option><option>ASUS</option><option>ACER</option>
+ <option>MSI</option><option>SAMSUNG</option><option>MICROSOFT</option><option>HUAWEI</option><option>XIAOMI</option>
+</datalist>
+<datalist id="dlModelos">
+ <option>PROBOOK 440 G9</option><option>LATITUDE 5440</option><option>ELITEBOOK 840</option><option>THINKPAD T14</option><option>MACBOOK PRO</option>
+</datalist>
+
+<div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/garantias.js"></script>
+<script src="js/nav.js"></script>
+<!-- Librería XLSX -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.19.3/dist/xlsx.full.min.js"></script>
+<!-- Modal Import Garantías -->
+<div class="modal fade" id="modalImportGarantias" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable modal-fullscreen-md-down">
+        <div class="modal-content cie-modal">
+            <div class="modal-header py-2 bg-danger text-white">
+                <h5 class="modal-title mb-0"><i class="bi bi-upload me-2"></i>Importar Garantías</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3 small">
+                    <div class="col-12 col-md-5">
+                        <label class="form-label" for="fileImportGarantias">Archivo .xlsx / .xls</label>
+                        <input type="file" id="fileImportGarantias" class="form-control form-control-sm" accept=".xlsx,.xls" />
+                        <div class="form-text">Columnas: <code>Inventario, Equipo, Marca, Modelo, Serie, Inicio, Fin</code>. Notas opcional.</div>
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <div class="border rounded p-2 h-100 bg-light" style="min-height:140px;">
+                            <div id="importPreviewGarantias" class="small text-muted">Seleccione un archivo...</div>
+                        </div>
+                    </div>
+                    <div class="col-12"><div id="importResumenGarantias" class="fw-semibold small"></div></div>
+                </div>
+            </div>
+            <div class="modal-footer py-2 d-flex flex-wrap gap-2">
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" id="btnDescargarPlantillaGarantias"><i class="bi bi-filetype-xlsx"></i> Plantilla</button>
+                <button type="button" class="btn btn-primary btn-sm" id="btnProcesarImportGarantias" disabled><i class="bi bi-check-circle"></i> Procesar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+// Import Garantías (se apoya en funciones internas de garantias.js a través de STATE global si fuera expuesto; aquí replicamos parseo simple)
+(function(){
+    let importBuffer=[];
+    function toastG(msg,type){ let c=document.getElementById('toastContainer'); if(!c){ c=document.createElement('div'); c.id='toastContainer'; c.className='toast-container'; document.body.appendChild(c);} const el=document.createElement('div'); el.className='text-white small px-3 py-2 rounded shadow-sm'; el.style.background= type==='success'? '#198754': type==='danger'? '#dc3545': type==='warning'? '#ffc107':'#0d6efd'; el.textContent=msg; c.appendChild(el); setTimeout(()=>{el.style.transition='opacity .4s'; el.style.opacity='0'; setTimeout(()=>el.remove(),400);},3000); }
+    function getState(){ try{return JSON.parse(localStorage.getItem('garantiasData')||'[]');}catch{return [];} }
+    function setState(data){ try{ localStorage.setItem('garantiasData', JSON.stringify(data)); }catch(e){} }
+    function handleFile(e){ const file=e.target.files?.[0]; importBuffer=[]; document.getElementById('importPreviewGarantias').textContent=''; document.getElementById('importResumenGarantias').textContent=''; document.getElementById('btnProcesarImportGarantias').disabled=true; if(!file) return; if(file.size>5*1024*1024){ toastG('Archivo grande','danger'); return; } if(!window.XLSX){ toastG('Falta XLSX','danger'); return; } const reader=new FileReader(); reader.onload=evt=>{ try{ const wb=XLSX.read(new Uint8Array(evt.target.result),{type:'array'}); const ws=wb.Sheets[wb.SheetNames[0]]; const json=XLSX.utils.sheet_to_json(ws,{defval:''}); if(!json.length){ toastG('Hoja vacía','warning'); return; } const req=['Inventario','Equipo','Marca','Modelo','Serie','Inicio','Fin']; const falta=req.filter(c=>!Object.keys(json[0]).includes(c)); if(falta.length){ toastG('Faltan: '+falta.join(', '),'danger'); return; } const existing=getState(); let duplicados=0, invalidos=0; json.forEach(r=>{ const inv=(r['Inventario']||'').toString().trim().toUpperCase(); const equipo=(r['Equipo']||'').toString().trim().toUpperCase(); const marca=(r['Marca']||'').toString().trim().toUpperCase(); const modelo=(r['Modelo']||'').toString().trim().toUpperCase(); const serie=(r['Serie']||'').toString().trim().toUpperCase(); const inicio=(r['Inicio']||'').toString().trim(); const fin=(r['Fin']||'').toString().trim(); const notas=(r['Notas']||'').toString().trim(); if(!(inv && equipo && marca && modelo && serie && inicio && fin)){ invalidos++; return; } if(!/^[0-9A-Z_-]{3,40}$/.test(inv)){ invalidos++; return; } if(existing.some(x=>x.inventario===inv && x.serie===serie)){ duplicados++; return; } importBuffer.push({ id:crypto.randomUUID?crypto.randomUUID():Math.random().toString(36).slice(2)+Date.now(), inventario:inv,equipo,marca,modelo,serie,inicio,fin,notas }); }); document.getElementById('importPreviewGarantias').innerHTML=`<div class='small'>Filas: ${json.length}<br>Nuevos válidos: <span class='text-success fw-semibold'>${importBuffer.length}</span><br>Duplicados: ${duplicados}<br>Inválidos: ${invalidos}</div>`; document.getElementById('importResumenGarantias').textContent=`${importBuffer.length} listo(s)`; document.getElementById('btnProcesarImportGarantias').disabled=importBuffer.length===0; }catch(err){ console.error(err); toastG('Error leyendo Excel','danger'); } }; reader.readAsArrayBuffer(file); }
+    function procesar(){ if(!importBuffer.length) return; const data=getState(); data.push(...importBuffer); setState(data); importBuffer=[]; toastG('Importado(s)','success'); document.getElementById('btnProcesarImportGarantias').disabled=true; document.getElementById('importResumenGarantias').textContent='Completado'; location.reload(); }
+    function plantilla(){ if(!window.XLSX){ toastG('Falta XLSX','danger'); return; } const headers=['Inventario','Equipo','Marca','Modelo','Serie','Inicio','Fin','Notas']; const ejemplo=['INV00001','LAPTOP','DELL','LATITUDE','ABC123','2024-01-01','2025-01-01','COBERTURA 1 AÑO']; const ws=XLSX.utils.aoa_to_sheet([headers,ejemplo]); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'PlantillaGarantias'); const out=XLSX.write(wb,{bookType:'xlsx',type:'array'}); const blob=new Blob([out],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='plantilla_garantias.xlsx'; document.body.appendChild(a); a.click(); a.remove(); }
+    document.getElementById('btnImportGarantias')?.addEventListener('click',()=>{ document.getElementById('fileImportGarantias').value=''; document.getElementById('importPreviewGarantias').textContent=''; document.getElementById('importResumenGarantias').textContent=''; document.getElementById('btnProcesarImportGarantias').disabled=true; new bootstrap.Modal(document.getElementById('modalImportGarantias')).show(); });
+    document.getElementById('fileImportGarantias')?.addEventListener('change', handleFile);
+    document.getElementById('btnProcesarImportGarantias')?.addEventListener('click', procesar);
+    document.getElementById('btnDescargarPlantillaGarantias')?.addEventListener('click', plantilla);
+})();
+</script>
+</body>
+</html>
